@@ -3,31 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>CSS Selectors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="pages/about.html">About</a></li>
-                <li><a href="pages/articles.html">Articles</a></li>
-                <li><a href="pages/gallery.html">Gallery</a></li>
-                <li><a href="pages/form.html">Form</a></li>
-                <li><a href="pages/contacts.html">Contacts</a></li>
-                <li><a href="pages/anchors.html">Anchors</a></li>
-            </ul>
+    <div class="container content-box">
+        <div class="container border-box">
+            <p>one</p>
+        </div>
+    </div>
+
+    <div class="container content-box">
+        <h2>two</h2>
+    </div>
+
+    <div class="container border-box">
+        <p class="highlight">three</p>
+    </div>
+
+    <div class="container content-box">
+        <div id="main-content">four</div>
+    </div>
+
+    <div class="container border-box">
+        <input type="text" value="Applies to input with type='text'">
+    </div>
+
+    <div class="container content-box">
+        <ul class="menu">
+            <li>five</li>
+        </ul>
+    </div>
+
+    <div class="container border-box">
+        <section>
+            <h3>Section Heading</h3>
+            <article>
+                <h4>Article Heading</h4>
+                six
+            </article>
+        </section>
+    </div>
+
+    <div class="container content-box">
+        <p class="first">seven</p>
+        <p class="second">eight</p>
+    </div>
+
+    <div class="container border-box" data-role="main">
+        <span>nine</span>
+    </div>
+
+    <div class="container content-box">
+        <nav id="main-nav" class="navigation">
+            <a href="#">ten</a>
         </nav>
-    </header>
-    
-    <main>
-        <h1>Hello, I hope you enjoy your stay with us!</h1>
-        <p>First page.</p>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 All Rights Reserved</p>
-    </footer>
+    </div>
 </body>
 </html>
