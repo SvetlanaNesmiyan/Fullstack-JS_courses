@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Позиціонування</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+     .position-container {
+  border: 2px solid #333;
+  padding: 20px;
+  margin: 20px;
+  height: 400px;
+  position: relative;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(0, 0, 255, 0.5);
+  border: 2px solid blue;
+}
+
+.static {
+  position: static;
+}
+
+.relative {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 255, 0, 0.5);
+  border-color: green;
+}
+
+.absolute {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  background-color: rgba(255, 0, 0, 0.5);
+  border-color: red;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 0, 0.8);
+  border-color: orange;
+  z-index: 1000;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  background-color: rgba(128, 0, 128, 0.5);
+  border-color: purple;
+}
+
+.long-content {
+  height: 1000px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Позиціонування елементів</h1>
+        <a href="index.html">На головну</a>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Типи позиціонування</h2>
+            
+            <div class="position-container">
+                <div class="box static">Static (за замовчуванням)</div>
+                <div class="box relative">Relative (зсув від нормального положення)</div>
+                <div class="box absolute">Absolute (відносно батьківського контейнера з position ≠ static)</div>
+                <div class="box fixed">Fixed (відносно вікна браузера)</div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Sticky vs Fixed</h2>
+            
+            <div class="long-content">
+                <p>Прокрутіть сторінку, щоб побачити різницю між sticky та fixed.</p>
+                
+                <div class="box sticky" style="width: auto;">Sticky - прилипає при прокрутці</div>
+                
+                <p>Хранительница Берегов в Wuthering Waves — пятизвездочный персонаж элемента Спектро, использующий в качестве оружия Выпрямитель.</p>
+                <p>Хранительница Берегов в Wuthering Waves — пятизвездочный персонаж элемента Спектро, использующий в качестве оружия Выпрямитель.</p>
+                <p>Хранительница Берегов в Wuthering Waves — пятизвездочный персонаж элемента Спектро, использующий в качестве оружия Выпрямитель.</p>
+            </div>
+        </section>
+    </main>
+    
+    <div class="box fixed">Fixed - завжди на одному місці</div>
+</body>
+</html>
