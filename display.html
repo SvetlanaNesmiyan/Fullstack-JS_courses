@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Властивість display</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+            .container {
+        position: relative;
+        height: 500px;
+        margin: 20px 0;
+        border: 2px dashed #7f8c8d;
+        padding: 15px;
+    }
+    
+    .box {
+        border: 2px solid #333;
+        padding: 10px;
+        margin: 10px;
+        background-color: #f0f0f0;
+        transition: all 0.3s ease;
+    }
+    
+    .box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .inline-box {
+        display: inline;
+        background-color: #fde8e8;
+        color: #c0392b;
+        padding: 3px 6px;
+    }
+    
+    .block-box {
+        display: block;
+        background-color: #e8f4fc;
+        color: #2980b9;
+    }
+    
+    .inline-block-box {
+        display: inline-block;
+        background-color: #e8f8f0;
+        color: #27ae60;
+    }
+    
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+    }
+    
+    .flex-item {
+        flex: 1 1 200px;
+    }
+    
+    .box-sizing-content {
+        box-sizing: content-box;
+        width: 200px;
+        padding: 20px;
+        border: 5px solid #e74c3c;
+        background-color: #fde8e8;
+        margin-bottom: 20px;
+    }
+    
+    .box-sizing-border {
+        box-sizing: border-box;
+        width: 200px;
+        padding: 20px;
+        border: 5px solid #2ecc71;
+        background-color: #e8f8f0;
+    }
+    
+    .position-example {
+        width: 100px;
+        height: 100px;
+        background-color: lightcoral;
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .static { 
+        position: static;
+        background-color: #3498db;
+    }
+    
+    .relative { 
+        position: relative; 
+        top: 20px;
+        left: 20px;
+        background-color: #9b59b6;
+    }
+    
+    .absolute { 
+        position: absolute; 
+        top: 50px;
+        left: 50px;
+        background-color: #e67e22;
+    }
+    
+    .fixed {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #e74c3c;
+        z-index: 1000;
+    }
+    
+    .sticky {
+        position: sticky;
+        top: 10px;
+        background-color: #2ecc71;
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding: 15px;
+        }
+        
+        header {
+            padding: 15px;
+        }
+        
+        main {
+            padding: 15px;
+        }
+        
+        .flex-container {
+            flex-direction: column;
+        }
+        
+        .flex-item {
+            flex: 1 1 auto;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Властивість display</h1>
+        <a href="index.html">На головну</a>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Різні значення display</h2>
+            
+            <h3>display: inline</h3>
+            <div class="inline-box">I 1</div>
+            <div class="inline-box">I 2</div>
+            <div class="inline-box">I3</div>
+            
+            <h3>display: block</h3>
+            <div class="block-box">Bl 1</div>
+            <div class="block-box">Bl 2</div>
+            <div class="block-box">Bl 3</div>
+            
+            <h3>display: inline-block</h3>
+            <div class="inline-block-box">I-b1</div>
+            <div class="inline-block-box">I-b 2</div>
+            <div class="inline-block-box">I-b 3</div>
+            
+            <h3>display: flex</h3>
+            <div class="flex-container">
+                <div class="flex-item box">Flex item 1</div>
+                <div class="flex-item box">Flex item 2</div>
+                <div class="flex-item box">Flex item 3</div>
+                <div class="flex-item box">Flex item 4</div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Box-sizing</h2>
+            
+            <div class="box-sizing-content">
+                <h3>box-sizing: content-box</h3>
+            </div>
+            
+            <div class="box-sizing-border">
+                <h3>box-sizing: border-box</h3>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
