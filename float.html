@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Float та clear</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .float-container {
+    border: 2px solid #34495e;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    overflow: auto; 
+}
+
+.float-left {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background-color: #3498db;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.float-right {
+    float: right;
+    width: 100px;
+    height: 100px;
+    background-color: #e74c3c;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.clear-left {
+    clear: left;
+    background-color: #d5f5e3;
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 4px solid #2ecc71;
+}
+
+.clear-both {
+    clear: both;
+    background-color: #fef9e7;
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 4px solid #f39c12;
+}
+
+.column {
+    float: left;
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.column-left {
+    width: 30%;
+    background-color: #3498db;
+    border-radius: 5px 0 0 5px;
+}
+
+.column-center {
+    width: 40%;
+    background-color: #2ecc71;
+}
+
+.column-right {
+    width: 30%;
+    background-color: #e74c3c;
+    border-radius: 0 5px 5px 0;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.float-container p {
+    text-align: justify;
+    margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    header {
+        padding: 15px;
+    }
+    
+    .float-left, 
+    .float-right {
+        width: 80px;
+        height: 80px;
+        font-size: 0.8em;
+    }
+    
+    .column-left,
+    .column-center,
+    .column-right {
+        width: 100%;
+        float: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Float та clear</h1>
+        <a href="index.html">На головну</a>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Базове використання float</h2>
+            <div class="float-container">
+                <div class="float-left">Float left</div>
+                <p>Цей текст обтікає елемент з float:left.</p>
+            </div>
+            
+            <div class="float-container">
+                <div class="float-right">Float right</div>
+                <p>Цей текст обтікає елемент з float:right.</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Використання clear</h2>
+            <div class="float-container">
+                <div class="float-left">Float left</div>
+                <div class="float-right">Float right</div>
+                <p>Цей текст обтікає обидва float елементи. </p>
+                <p class="clear-left">Цей абзац має clear:left і не буде обтікати left float.</p>
+                <p>Цей текст знову обтікає float елементи.</p>
+                <p class="clear-both">Цей абзац має clear:both і не буде обтікати жодні float елементи.</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Float для створення колонок</h2>
+            <div class="float-container">
+                <div style="float: left; width: 30%; background-color: lightblue; padding: 10px;">
+                    Ліва колонка (30%)
+                </div>
+                <div style="float: left; width: 40%; background-color: lightgreen; padding: 10px;">
+                    Центральна колонка (40%)
+                </div>
+                <div style="float: left; width: 30%; background-color: lightcoral; padding: 10px;">
+                    Права колонка (30%)
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
