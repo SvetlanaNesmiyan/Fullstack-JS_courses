@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блокові та інлайнові елементи</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .block-example {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-left: 5px solid #3498db;
+}
+
+.block-example h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.block-example div {
+    background-color: #e8f4fc;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 3px;
+    border: 1px solid #bdc3c7;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.block-example div:hover {
+    transform: translateX(5px);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.inline-example {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-left: 5px solid #e74c3c;
+}
+
+.inline-example h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.inline-example p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.inline-example span {
+    background-color: #fde8e8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border-bottom: 2px solid #e74c3c;
+    color: #c0392b;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.inline-example span:hover {
+    background-color: #fad2d2;
+}
+
+.mixed-example {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-left: 5px solid #2ecc71;
+}
+
+.mixed-example h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.mixed-example div {
+    background-color: #e8f8f0;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 3px;
+    border: 1px solid #2ecc71;
+}
+
+.mixed-example span {
+    display: inline-block;
+    background-color: #fde8e8;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 3px;
+    border: 1px dashed #e74c3c;
+    color: #c0392b;
+}
+
+.mixed-example div span {
+    background-color: #d5f5e3;
+    border: 1px solid #27ae60;
+    color: #27ae60;
+}
+
+.not-recommended {
+    color: #e74c3c;
+    font-weight: bold;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    header {
+        padding: 15px;
+    }
+    
+    main {
+        padding: 15px;
+    }
+    
+    .block-example, 
+    .inline-example, 
+    .mixed-example {
+        padding: 15px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Блокові та інлайнові елементи</h1>
+        <a href="index.html">На головну</a>
+    </header>
+    
+    <main>
+        <div class="block-example">
+            <h2>Блокові елементи (div)</h2>
+            <div>Eлемент 1</div>
+            <div>Eлемент 2</div>
+            <div>Eлемент 3</div>
+        </div>
+        
+        <div class="inline-example">
+            <h2>Інлайнові елементи (span)</h2>
+            <p>Це абзац з <span>інлайновим елементом</span> всередині.</p>
+            <p>Ще один абзац з <span>іншим інлайновим</span> елементом.</p>
+        </div>
+        
+        <div class="mixed-example">
+            <h2>Змішаний приклад</h2>
+            <div>Блоковий елемент з <span>інлайновим всередині</span></div>
+            <span>Інлайновий елемент з <div>блоковим всередині (не рекомендується)</div></span>
+        </div>
+    </main>
+</body>
+</html>
