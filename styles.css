@@ -1,0 +1,92 @@
+.container {
+    display: flex;
+    border: 2px solid #a52121;
+    margin: 20px;
+    padding: 10px;
+    background-color: #d6dcff;
+}
+
+.block {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(68, 255, 171);
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+}
+
+.large {
+    width: 150px;
+    height: 220px;
+}
+
+.rectangular {
+    width: 200px;
+    height: 100px;
+}
+
+.layout1 {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.layout2 {
+    flex-direction: row;
+}
+
+.layout2 .left {
+    flex: 1;
+}
+
+.layout2 .right-group {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.layout3 {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.layout3 .left-group,
+.layout3 .right-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.layout4 {
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.layout4 .right-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.layout4 .column-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout5 {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout5 .center-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.layout5 .column-group {
+    display: flex;
+    flex-direction: column;
+}
