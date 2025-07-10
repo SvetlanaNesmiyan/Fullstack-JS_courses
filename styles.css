@@ -1,9 +1,15 @@
+/* styles.css */
 :root {
   --primary-color: #1a3c5e;
   --secondary-color: #f5f5f5;
   --text-color: #333;
+  --light-text: #fff;
   --font-primary: 'Arial', sans-serif;
   --font-secondary: 'Helvetica', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -14,83 +20,165 @@ body {
   line-height: 1.6;
 }
 
-nav {
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header {
   background: var(--secondary-color);
-  padding: 20px;
+  padding: 20px 0;
+}
+
+.nav {
   display: flex;
-  justify-content: center;
+  top: 79px;
+  left: 399px; 
   gap: 20px;
 }
 
-nav a {
+.nav__link {
   color: var(--primary-color);
   text-decoration: none;
   font-family: var(--font-secondary);
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-.section {
-  padding: 40px 20px;
-  text-align: center;
+.hero {
+  background: var(--secondary-color);
+  padding: 80px 0;
 }
 
-.section h1 {
-  font-size: 2em;
+.hero__content {
+  max-width: 600px;
+}
+
+.hero__title {
+  font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-.section p {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.section:first-child {
-  text-align: left;
-  padding-left: 100px;
-}
-
-.section:first-child .content {
-  max-width: 600px;
+.hero__text {
+  margin-bottom: 30px;
 }
 
 .button {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 12px 30px;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--light-text);
   text-decoration: none;
-  margin-top: 20px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
-.projects {
-  background: var(--primary-color);
-  color: white;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 20px;
+.button:hover {
+  background-color: darken(var(--primary-color), 10%);
 }
 
-.projects div {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.projects div::before {
-  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>');
-  width: 24px;
-  height: 24px;
-}
-
-.image-section iframe {
-  max-width: 100%;
-  height: auto;
-}
-
-footer {
-  background: var(--primary-color);
-  color: white;
+.about, .process {
+  padding: 60px 0;
   text-align: center;
-  padding: 20px;
 }
-  
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.section-text {
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.stats {
+  background: var(--primary-color);
+  color: var(--light-text);
+  padding: 60px 0;
+}
+
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start; /* Иконка и текст начинаются слева */
+  gap: 15px; /* Сохраняем отступ между иконкой и текстом */
+}
+
+.stat-icon {
+  align-self: flex-start;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.stat-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Текст выравнивается по левому краю */
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 992px) {
+  .stats__grid {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  background: var(--primary-color);
+  color: var(--light-text);
+  padding: 30px 0;
+  text-align: center;
+}
+
+.footer__text {
+  margin: 0;
+}
