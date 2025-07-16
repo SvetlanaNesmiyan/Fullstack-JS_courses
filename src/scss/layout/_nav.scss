@@ -1,0 +1,32 @@
+.nav {
+  @include flex-center(row, 20px);
+  top: 79px;
+  left: 399px; // (Not needed unless positioned)
+
+  &__link {
+    color: $primary-color;
+    text-decoration: none;
+    font-family: $font-secondary;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    @include respond(md) {
+      font-size: 12px;
+      padding: 5px 8px;
+    }
+
+    @include respond(xs) {
+      width: 100%;
+      padding: 8px 0;
+    }
+  }
+
+  @include respond(md) {
+    gap: 10px;
+  }
+
+  @include respond(xs) {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

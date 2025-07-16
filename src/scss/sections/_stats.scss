@@ -1,0 +1,85 @@
+.stats {
+  background: $primary-color;
+  color: $light-text;
+  padding: 50px 0;
+
+  @include respond(sm) { padding: 40px 0; }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+
+    @include respond(lg) {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 30px;
+    }
+    @include respond(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include respond(xs) {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+  }
+
+  .stat-item {
+    @include flex-center(row, 15px);
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    @include respond(md) {
+      justify-content: center;
+    }
+    @include respond(sm) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    @include respond(xs) {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .stat-icon {
+      align-self: flex-start;
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+
+      @include respond(sm) {
+        align-self: center;
+      }
+    }
+
+    .stat-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      @include respond(sm) {
+        align-items: center;
+      }
+
+      @include respond(xs) {
+        align-items: flex-start;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}

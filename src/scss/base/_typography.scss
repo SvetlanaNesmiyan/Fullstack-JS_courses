@@ -1,0 +1,16 @@
+body {
+  font-family: $font-primary;
+  color: $text-color;
+  line-height: 1.6;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.section-text {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  padding: 0 15px;
+}

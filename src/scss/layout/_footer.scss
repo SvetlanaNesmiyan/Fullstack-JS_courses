@@ -1,0 +1,15 @@
+.footer {
+  background: $primary-color;
+  color: $light-text;
+  padding: 25px 0;
+  text-align: center;
+
+  &__text {
+    margin: 0;
+    font-size: 14px;
+
+    @include respond(xxs) {
+      font-size: 12px;
+    }
+  }
+}

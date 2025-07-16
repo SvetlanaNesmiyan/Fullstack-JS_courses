@@ -1,0 +1,13 @@
+.button {
+  @include button-style;
+
+  @include respond(sm) {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+
+  @include respond(xxs) {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,30 @@
+.hero {
+  background: $secondary-color;
+  padding: 60px 0;
+
+  &__content {
+    max-width: 600px;
+  }
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+
+    @include respond(lg) { font-size: 1.8rem; }
+    @include respond(md) { font-size: 1.6rem; }
+    @include respond(sm) { font-size: 1.5rem; }
+    @include respond(xs) { font-size: 1.4rem; }
+    @include respond(xxs) { font-size: 1.3rem; }
+  }
+
+  &__text {
+    margin-bottom: 30px;
+
+    @include respond(sm) {
+      font-size: 14px;
+    }
+  }
+
+  @include respond(lg) { padding: 50px 0; }
+  @include respond(sm) { padding: 40px 0; }
+}

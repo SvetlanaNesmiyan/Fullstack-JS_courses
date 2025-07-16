@@ -1,0 +1,6 @@
+.process {
+  padding: 50px 0;
+  text-align: center;
+
+  @include respond(sm) { padding: 40px 0; }
+}
