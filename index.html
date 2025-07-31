@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive website</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/main-content.css">
+    <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Responsive website</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Головна</a></li>
+                    <li class="dropdown">
+                        <a href="#services">Послуги <span class="accordion-icon">▼</span></a>
+                        <div class="dropdown-content">
+                            <a href="#web">Веб-розробка</a>
+                            <a href="#design">Дизайн</a>
+                            <a href="#seo">SEO Оптимізація</a>
+                            <a href="#marketing">Цифровий Маркетинг</a>
+                        </div>
+                    </li>
+                    <li><a href="#portfolio">Портфоліо</a></li>
+                    <li class="dropdown">
+                        <a href="#about">Про нас <span class="accordion-icon">▼</span></a>
+                        <div class="dropdown-content">
+                            <a href="#team">Наша команда</a>
+                            <a href="#history">Історія</a>
+                            <a href="#values">Цінності</a>
+                        </div>
+                    </li>
+                    <li><a href="#contact">Контакти</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <aside class="column left-column">
+            <h2>Наші роботи</h2>
+            <div class="slider">
+                <div class="slides">
+                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
+                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
+                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
+                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn active"></button>
+                <button class="slider-btn"></button>
+                <button class="slider-btn"></button>
+                <button class="slider-btn"></button>
+            </div>
+            
+            <div class="info-box">
+                <p>Наші проекти створені з урахуванням сучасних тенденцій та вимог користувачів.</p>
+            </div>
+        </aside>
+        
+        <main class="column main-column">
+            <h2 class="section-title">Інформація <span class="highlight">про послуги</span></h2>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Веб-розробка</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Ми спеціалізуємося на створенні сучасних, адаптивних веб-сайтів, які ідеально працюють на будь-яких пристроях. Наш підхід включає:</p>
+                        <ul>
+                            <li>Адаптивний дизайн</li>
+                            <li>Оптимізацію швидкості завантаження</li>
+                            <li>Чистий та структурований код</li>
+                            <li>Інтеграцію з соціальними мережами</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>UI/UX Дизайн</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Наші дизайнери створюють інтуїтивно зрозумілі та естетично привабливі інтерфейси, що забезпечують чудовий досвід користувача:</p>
+                        <ul>
+                            <li>Прототипування та макети</li>
+                            <li>Тестування юзабіліті</li>
+                            <li>Створення дизайн-систем</li>
+                            <li>Анімація інтерфейсів</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>SEO Оптимізація</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Покращіть видимість вашого сайту в пошукових системах за допомогою наших професійних SEO послуг:</p>
+                        <ul>
+                            <li>Технічний аудит сайту</li>
+                            <li>Оптимізацію контенту</li>
+                            <li>Побудова посилань</li>
+                            <li>Аналіз ключових слів</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Зв'яжіться з нами</h2>
+            <div class="form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Ім'я:</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон:</label>
+                        <input type="tel" id="phone" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Послуга:</label>
+                        <select id="service" class="form-control" required>
+                            <option value="">Оберіть послугу</option>
+                            <option value="web">Веб-розробка</option>
+                            <option value="design">Дизайн</option>
+                            <option value="seo">SEO Оптимізація</option>
+                            <option value="marketing">Цифровий Маркетинг</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Повідомлення:</label>
+                        <textarea id="message" class="form-control" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary">Надіслати</button>
+                        <button type="reset" class="btn btn-reset">Очистити</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        
+        <aside class="column right-column">
+            <h2>Останні новини</h2>
+            
+            <div class="card">
+                <h3>Нові тенденції</h3>
+                <p>Досліджуємо новітні тренди у світі веб-дизайну, включаючи неоморфізм, темні режими та мікроанімації.</p>
+            </div>
+            
+            <div class="card">
+                <h3>SEO у 2025: що змінилося?</h3>
+                <p>,,,</p>
+            </div>
+            
+            <div class="card">
+                <h3>Як збільшити конверсію сайту</h3>
+                <p>Практичні поради щодо покращення юзабіліті та збільшення конверсії вашого веб-сайту.</p>
+            </div>
+            
+            <div class="info-box">
+                <p>Підпишіться на нашу розсилку, щоб отримувати останні новини та корисні поради!</p>
+            </div>
+        </aside>
+        
+        <footer>
+            <div class="footer-section">
+                <h3>Про компанію</h3>
+                <p>....</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">ig</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Навігація</h3>
+                <ul>
+                    <li><a href="#home">Головна</a></li>
+                    <li><a href="#services">Послуги</a></li>
+                    <li><a href="#portfolio">Портфоліо</a></li>
+                    <li><a href="#about">Про нас</a></li>
+                    <li><a href="#contact">Контакти</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Контакти</h3>
+                <ul>
+                    <li>Адреса: вул. Валентиніська, 3-А, Харків</li>
+                    <li>Телефон: +380 99 070 3125</li>
+                    <li>Email: info@company.com</li>
+                    <li>Години роботи: Пн-Пт 9:00-18:00</li>
+                </ul>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Всі права захищені.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="scripts/main.js" defer></script>
+    <script src="scripts/slider.js" defer></script>
+    <script src="scripts/accordion.js" defer></script>
+    <script src="scripts/form.js" defer></script>
+</body>
+</html>
