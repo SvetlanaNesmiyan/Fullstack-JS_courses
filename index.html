@@ -1,227 +1,345 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive website</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
-    <link rel="stylesheet" href="styles/main-content.css">
-    <link rel="stylesheet" href="styles/footer.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMAJI Coffee - Our Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">Responsive website</div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Головна</a></li>
-                    <li class="dropdown">
-                        <a href="#services">Послуги <span class="accordion-icon">▼</span></a>
-                        <div class="dropdown-content">
-                            <a href="#web">Веб-розробка</a>
-                            <a href="#design">Дизайн</a>
-                            <a href="#seo">SEO Оптимізація</a>
-                            <a href="#marketing">Цифровий Маркетинг</a>
-                        </div>
-                    </li>
-                    <li><a href="#portfolio">Портфоліо</a></li>
-                    <li class="dropdown">
-                        <a href="#about">Про нас <span class="accordion-icon">▼</span></a>
-                        <div class="dropdown-content">
-                            <a href="#team">Наша команда</a>
-                            <a href="#history">Історія</a>
-                            <a href="#values">Цінності</a>
-                        </div>
-                    </li>
-                    <li><a href="#contact">Контакти</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <aside class="column left-column">
-            <h2>Наші роботи</h2>
-            <div class="slider">
-                <div class="slides">
-                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
-                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
-                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
-                    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800&q=80')"></div>
+  <body>
+    <header>
+      <div class="container header-container">
+        <div class="logo">IMAJI<span> Coffee.</span></div>
+
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Story</a></li>
+            <li><a href="#" class="active">Menu</a></li>
+            <li><a href="#">Space</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">News</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-buttons">
+          <button class="cart-btn">
+            <i class="fas fa-shopping-cart"></i> Cart
+            <span class="cart-count">(2)</span>
+          </button>
+          <button class="signin-btn">Sign In</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="menu-header">
+      <div class="container">
+        <h1>Our Menu</h1>
+        <p class="menu-description">
+          IMAJI Coffee provides a variety of high quality coffee and drinks and
+          flavors that are suitable for you to support and cheer up your day. We
+          also provide coffee to accompany you at home along with the equipment.
+        </p>
+
+        <div class="filters-container">
+          <div class="filters">
+            <div class="filter-group">
+              <div class="filter-header">
+                <span class="filter-label">Search</span>
+                <button class="clear-btn">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+              <div class="filter-controls">
+                <input
+                  type="text"
+                  class="search-input"
+                  placeholder="Q: Enter keyword"
+                />
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <span class="filter-label">Price</span>
+                <button class="clear-btn">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+              <div class="filter-controls">
+                <div class="checkbox-container">
+                  <input type="checkbox" id="under10" />
+                  <label for="under10">Under $10</label>
                 </div>
+              </div>
             </div>
-            <div class="slider-controls">
-                <button class="slider-btn active"></button>
-                <button class="slider-btn"></button>
-                <button class="slider-btn"></button>
-                <button class="slider-btn"></button>
+
+            <div class="filter-group">
+              <div class="filter-header">
+                <span class="filter-label">Sort By</span>
+                <button class="clear-btn">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+              <div class="filter-controls">
+                <select class="filter-select">
+                  <option>Best Selling</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Newest</option>
+                </select>
+              </div>
             </div>
-            
-            <div class="info-box">
-                <p>Наші проекти створені з урахуванням сучасних тенденцій та вимог користувачів.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="container">
+      <div class="menu-tabs">
+        <button class="tab active">COFFEE AND BEVERAGE</button>
+        <button class="tab">FOOD AND SNACK</button>
+        <button class="tab">IMAJI COFFEE AT HOME</button>
+      </div>
+
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/ristretto-bianco.png" alt="Ristretto Bianco" />
+          </div>
+          <div class="product-info">
+            <h3>RISTRETTO BIANCO</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-        </aside>
-        
-        <main class="column main-column">
-            <h2 class="section-title">Інформація <span class="highlight">про послуги</span></h2>
-            
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>Веб-розробка</span>
-                        <span class="accordion-icon">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Ми спеціалізуємося на створенні сучасних, адаптивних веб-сайтів, які ідеально працюють на будь-яких пристроях. Наш підхід включає:</p>
-                        <ul>
-                            <li>Адаптивний дизайн</li>
-                            <li>Оптимізацію швидкості завантаження</li>
-                            <li>Чистий та структурований код</li>
-                            <li>Інтеграцію з соціальними мережами</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>UI/UX Дизайн</span>
-                        <span class="accordion-icon">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Наші дизайнери створюють інтуїтивно зрозумілі та естетично привабливі інтерфейси, що забезпечують чудовий досвід користувача:</p>
-                        <ul>
-                            <li>Прототипування та макети</li>
-                            <li>Тестування юзабіліті</li>
-                            <li>Створення дизайн-систем</li>
-                            <li>Анімація інтерфейсів</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>SEO Оптимізація</span>
-                        <span class="accordion-icon">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p>Покращіть видимість вашого сайту в пошукових системах за допомогою наших професійних SEO послуг:</p>
-                        <ul>
-                            <li>Технічний аудит сайту</li>
-                            <li>Оптимізацію контенту</li>
-                            <li>Побудова посилань</li>
-                            <li>Аналіз ключових слів</li>
-                        </ul>
-                    </div>
-                </div>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/iced-creamy-latte.png" alt="Iced Creamy Latte" />
+          </div>
+          <div class="product-info">
+            <h3>ICED CREAMY LATTE</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-            
-            <h2>Зв'яжіться з нами</h2>
-            <div class="form-container">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Ім'я:</label>
-                        <input type="text" id="name" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Телефон:</label>
-                        <input type="tel" id="phone" class="form-control">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="service">Послуга:</label>
-                        <select id="service" class="form-control" required>
-                            <option value="">Оберіть послугу</option>
-                            <option value="web">Веб-розробка</option>
-                            <option value="design">Дизайн</option>
-                            <option value="seo">SEO Оптимізація</option>
-                            <option value="marketing">Цифровий Маркетинг</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Повідомлення:</label>
-                        <textarea id="message" class="form-control" rows="4" required></textarea>
-                    </div>
-                    
-                    <div class="form-buttons">
-                        <button type="submit" class="btn btn-primary">Надіслати</button>
-                        <button type="reset" class="btn btn-reset">Очистити</button>
-                    </div>
-                </form>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/cappuccino.png" alt="Cappuccino" />
+          </div>
+          <div class="product-info">
+            <h3>CAPPUCCINO</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-        </main>
-        
-        <aside class="column right-column">
-            <h2>Останні новини</h2>
-            
-            <div class="card">
-                <h3>Нові тенденції</h3>
-                <p>Досліджуємо новітні тренди у світі веб-дизайну, включаючи неоморфізм, темні режими та мікроанімації.</p>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/iced-long-black.png" alt="Iced Long Black" />
+          </div>
+          <div class="product-info">
+            <h3>ICED LONG BLACK</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-            
-            <div class="card">
-                <h3>SEO у 2025: що змінилося?</h3>
-                <p>,,,</p>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/milk-coffee-regal.png" alt="Milk Coffee Regal" />
+          </div>
+          <div class="product-info">
+            <h3>MILK COFFEE REGAL</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-            
-            <div class="card">
-                <h3>Як збільшити конверсію сайту</h3>
-                <p>Практичні поради щодо покращення юзабіліті та збільшення конверсії вашого веб-сайту.</p>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/orange-juice.png" alt="Orange Juice" />
+          </div>
+          <div class="product-info">
+            <h3>ORANGE JUICE</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-            
-            <div class="info-box">
-                <p>Підпишіться на нашу розсилку, щоб отримувати останні новини та корисні поради!</p>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/soda-beverage.png" alt="Soda Beverage" />
+          </div>
+          <div class="product-info">
+            <h3>SODA BEVERAGE</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-        </aside>
-        
-        <footer>
-            <div class="footer-section">
-                <h3>Про компанію</h3>
-                <p>....</p>
-                <div class="social-links">
-                    <a href="#" class="social-icon">f</a>
-                    <a href="#" class="social-icon">in</a>
-                    <a href="#" class="social-icon">t</a>
-                    <a href="#" class="social-icon">ig</a>
-                </div>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="sale-badge">SALE</div>
+          <div class="product-image">
+            <img src="img/iced-coffee-with-milk.png" alt="Iced Coffee With Milk" />
+          </div>
+          <div class="product-info">
+            <h3>ICED COFFEE WITH MILK</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+              <span class="old-price">$6.00</span>
             </div>
-            
-            <div class="footer-section">
-                <h3>Навігація</h3>
-                <ul>
-                    <li><a href="#home">Головна</a></li>
-                    <li><a href="#services">Послуги</a></li>
-                    <li><a href="#portfolio">Портфоліо</a></li>
-                    <li><a href="#about">Про нас</a></li>
-                    <li><a href="#contact">Контакти</a></li>
-                </ul>
+            <button class="app-offer">Get 20% Off in App</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">
+            <img src="img/iced-americano.png" alt="Iced Americano" />
+          </div>
+          <div class="product-info">
+            <h3>ICED AMERICANO</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
             </div>
-            
-            <div class="footer-section">
-                <h3>Контакти</h3>
-                <ul>
-                    <li>Адреса: вул. Валентиніська, 3-А, Харків</li>
-                    <li>Телефон: +380 99 070 3125</li>
-                    <li>Email: info@company.com</li>
-                    <li>Години роботи: Пн-Пт 9:00-18:00</li>
-                </ul>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">
+            <img src="img/vegan-iced-latte.png" alt="Vegan Iced Latte" />
+          </div>
+          <div class="product-info">
+            <h3>VEGAN ICED LATTE</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
             </div>
-            
-            <div class="copyright">
-                <p>&copy; 2025 Всі права захищені.</p>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">
+            <img src="img/iced-chocolate.png" alt="Iced Chocolate" />
+          </div>
+          <div class="product-info">
+            <h3>ICED CHOCOLATE</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
             </div>
-        </footer>
-    </div>
-    
-    <script src="scripts/main.js" defer></script>
-    <script src="scripts/slider.js" defer></script>
-    <script src="scripts/accordion.js" defer></script>
-    <script src="scripts/form.js" defer></script>
-</body>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">
+            <img src="img/autumnal-coffee.png" alt="Autumnal Coffee" />
+          </div>
+          <div class="product-info">
+            <h3>AUTUMNAL COFFEE</h3>
+            <p class="availability">Only at Cafe and Delivery</p>
+            <div class="price">
+              <span class="current-price">$5.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="load-more">
+        <button class="load-more-btn">Load More</button>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-location">
+          <h2>Our Location</h2>
+          <p>Jl. Bangkringan No 19, RT.11/RW.2, Kota Surabaya, 60124</p>
+          <p><strong>Customer Service +6282-2876-6862</strong></p>
+          <p><strong>We Are Open from Sun - Mon 10 AM - 22 PM</strong></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="delivery-order">
+          <div class="social-icons">
+            <a href="#"
+              ><img src="img/spotify.png" alt="Spotify" width="24" height="24"
+            /></a>
+            <a href="#"
+              ><img src="img/instagram.png" alt="Instagram" width="24" height="24"
+            /></a>
+            <a href="#"
+              ><img src="img/tiktok.png" alt="TikTok" width="24" height="24"
+            /></a>
+            <a href="#"
+              ><img src="img/youtube.png" alt="YouTube" width="24" height="24"
+            /></a>
+            <a href="#"
+              ><img src="img/twitter.png" alt="Twitter" width="24" height="24"
+            /></a>
+            <a href="#"
+              ><img src="img/telegram.png" alt="Telegram" width="24" height="24"
+            /></a>
+          </div>
+
+          <h3>Delivery Order</h3>
+          <div class="app-store-badge">
+            <img src="img/1.png" alt="Download on the App Store" />
+          </div>
+          <div class="google-play-badge">
+            <img src="img/2.png" alt="GET FOR Google Play" />
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="copyright">© 2023 IMAJI COFFEE, All rights reserved</div>
+          <div class="footer-links">
+            <a href="#">Terms and Conditions</a> |
+            <a href="#">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
