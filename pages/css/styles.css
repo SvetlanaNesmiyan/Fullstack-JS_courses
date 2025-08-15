@@ -701,30 +701,29 @@ footer {
     gap: 10px;
   }
 
-  .footer-links {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-  }
-
-  .delivery-order {
-    align-items: center;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
-
-  .copyright,
-  .footer-links {
-    text-align: center;
-    width: 100%;
+  /* Исправленное выравнивание для кнопки Load More */
+  .load-more {
+    display: flex;
+    justify-content: center;
   }
 
   .social-icons {
     flex-wrap: wrap;
     justify-content: center;
+  }
+  
+  /* Новые стили для нижнего колонтитула */
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .copyright, .footer-links {
+    text-align: center;
   }
 }
