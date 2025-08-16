@@ -3,675 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMAJI Coffee - Premium Coffee Experience</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #3A2E26;
-            --secondary: #E6D7C4;
-            --accent: #C69C6D;
-            --light: #F8F5F0;
-            --dark: #2D231B;
-            --sale: #E74C3C;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--primary);
-            line-height: 1.6;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: var(--primary);
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            color: var(--secondary);
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--accent);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .cart-icon {
-            position: relative;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -12px;
-            background-color: var(--sale);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.6rem 1.5rem;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-signin {
-            background-color: transparent;
-            color: var(--secondary);
-            border: 2px solid var(--accent);
-        }
-
-        .btn-signin:hover {
-            background-color: var(--accent);
-            color: var(--primary);
-        }
-
-        .btn-cart {
-            background-color: var(--accent);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-cart:hover {
-            background-color: #b88652;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(58, 46, 38, 0.8), rgba(58, 46, 38, 0.8)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--light);
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            letter-spacing: 3px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .hero h2 {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 2.5rem;
-            letter-spacing: 2px;
-        }
-
-        .btn-hero {
-            background-color: var(--accent);
-            color: var(--primary);
-            font-size: 1.2rem;
-            padding: 1rem 2.5rem;
-            font-weight: 700;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-hero:hover {
-            background-color: #b88652;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* Featured Products */
-        .featured {
-            padding: 5rem 2rem;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            position: relative;
-            display: inline-block;
-            margin-bottom: 3rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--accent);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .sale-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--sale);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .product-image {
-            height: 200px;
-            background-color: #eee;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-name {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .product-availability {
-            color: #27ae60;
-            font-weight: 500;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        .product-price {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .current-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .old-price {
-            font-size: 1.1rem;
-            color: #95a5a6;
-            text-decoration: line-through;
-        }
-
-        .app-discount {
-            background-color: var(--secondary);
-            color: var(--primary);
-            padding: 0.5rem;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        /* Footer Styles */
-        footer {
-            background-color: var(--primary);
-            color: var(--secondary);
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 3rem;
-        }
-
-        .footer-location h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-
-        .footer-location p {
-            margin-bottom: 0.8rem;
-            line-height: 1.7;
-        }
-
-        .footer-location strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .divider {
-            width: 1px;
-            background-color: rgba(230, 215, 196, 0.3);
-        }
-
-        .delivery-order {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(230, 215, 196, 0.1);
-            border-radius: 50%;
-            color: var(--secondary);
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
-
-        .social-icons a:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .delivery-order h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-        }
-
-        .app-badges {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .app-store-badge, .google-play-badge {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .app-store-badge:hover, .google-play-badge:hover {
-            background-color: rgba(198, 156, 109, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .app-store-badge i, .google-play-badge i {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-
-        .badge-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .badge-text span:first-child {
-            font-size: 0.8rem;
-        }
-
-        .badge-text span:last-child {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .footer-bottom {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 2.5rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(230, 215, 196, 0.2);
-        }
-
-        .copyright {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .footer-links a {
-            color: var(--secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-            
-            .divider {
-                width: 100%;
-                height: 1px;
-            }
-            
-            .hero h1 {
-                font-size: 3.5rem;
-            }
-            
-            nav ul {
-                gap: 1.2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            
-            .hero {
-                padding: 4rem 1.5rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .hero h2 {
-                font-size: 1.5rem;
-            }
-            
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .footer-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .auth-buttons {
-                flex-direction: column;
-                width: 100%;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
+    <title>IMAJI Coffee - Product Detail</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="logo">IMAJI <span>Coffee.</span></div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Story</a></li>
-                <li><a href="#" class="active">Menu</a></li>
-                <li><a href="#">Space</a></li>
-                <li><a href="#">Community</a></li>
-                <li><a href="#">News</a></li>
-                <li class="cart-icon">
-                    <a href="#">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">2</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="auth-buttons">
-            <button class="btn btn-signin">Sign In</button>
-            <button class="btn btn-cart">
-                <i class="fas fa-shopping-cart"></i> Cart
-            </button>
+        <div class="container header-container">
+            <div class="logo">IMAJI<span> Coffee.</span></div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Story</a></li>
+                    <li><a href="index.html" class="active">Menu</a></li>
+                    <li><a href="#">Space</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-buttons">
+                <button class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                    <span class="cart-count">(2)</span>
+                </button>
+                <button class="signin-btn">Sign In</button>
+            </div>
         </div>
     </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>IMAJI COFFEE</h1>
-        <h2>CLASSIC</h2>
-        <button class="btn btn-hero">Add to Cart</button>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="featured">
-        <h2 class="section-title">You May Also Like</h2>
-        <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="sale-badge">SALE</div>
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="AT HOME HOUSE BLEND">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">AT HOME HOUSE BLEND</h3>
-                    <p class="product-availability">Available Buy at Website</p>
-                    <div class="product-price">
-                        <span class="current-price">$5.00</span>
-                        <span class="old-price">$6.00</span>
-                    </div>
-                    <div class="app-discount">Get 20% Off in App</div>
-                </div>
+    
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="#">Home</a> > 
+            <a href="#">Menu</a> > 
+            <span>Detail</span>
+        </div>
+    </div>
+    
+    <!-- Product Detail -->
+    <div class="container">
+        <section class="product-detail">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="At Home - Classic">
             </div>
-
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="sale-badge">SALE</div>
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="AT HOME ARABICA">
+            
+            <div class="product-info">
+                <h1 class="product-title">At Home - Classic</h1>
+                
+                <div class="price-container">
+                    <span class="current-price">$4.00</span>
+                    <span class="old-price">$6.00</span>
+                    <button class="app-offer">Get 20% Off in App</button>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-name">AT HOME ARABICA</h3>
-                    <p class="product-availability">Available Buy at Website</p>
-                    <div class="product-price">
-                        <span class="current-price">$5.00</span>
-                        <span class="old-price">$6.00</span>
-                    </div>
-                    <div class="app-discount">Get 20% Off in App</div>
+                
+                <div class="description">
+                    <p>An all-time favorite blend with citrus fruit character, caramel flavors, and a pleasant faintly floral aroma. Locked scent: Excelso prevents air from entering the packaging with a locked aroma, ensuring the coffee's freshness.</p>
                 </div>
+                
+                <h3 class="section-title">Storage Way:</h3>
+                <div class="description">
+                    <p>To maintain the taste of coffee and the freshness of the aroma, store Excelso coffee in an airtight.</p>
+                </div>
+                
+                <button class="add-to-cart">Add to Cart</button>
             </div>
-
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="sale-badge">SALE</div>
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="AT HOME LUWAK">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">AT HOME LUWAK</h3>
-                    <p class="product-availability">Available Buy at Website</p>
-                    <div class="product-price">
-                        <span class="current-price">$5.00</span>
-                        <span class="old-price">$6.00</span>
-                    </div>
-                    <div class="app-discount">Get 20% Off in App</div>
-                </div>
+        </section>
+    </div>
+    
+    <!-- Related Products -->
+    <section class="related-products">
+        <div class="container">
+            <div class="section-header">
+                <h2>You May Also Like</h2>
             </div>
-
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="sale-badge">SALE</div>
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=627&q=80" alt="AT HOME LUWAK">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">AT HOME LUWAK</h3>
-                    <p class="product-availability">Available Buy at Website</p>
-                    <div class="product-price">
-                        <span class="current-price">$5.00</span>
-                        <span class="old-price">$6.00</span>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="sale-badge">SALE</div>
+                    <div class="product-image-small">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="House Blend">
                     </div>
-                    <div class="app-discount">Get 20% Off in App</div>
+                    <div class="product-info-small">
+                        <h3>AT HOME HOUSE BLEND</h3>
+                        <p class="availability">Available Buy at Website</p>
+                        <div class="price-small">
+                            <span class="current-price-small">$5.00</span>
+                            <span class="old-price-small">$6.00</span>
+                        </div>
+                        <button class="app-offer-small">Get 20% Off in App</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="sale-badge">SALE</div>
+                    <div class="product-image-small">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Arabica">
+                    </div>
+                    <div class="product-info-small">
+                        <h3>AT HOME ARABICA</h3>
+                        <p class="availability">Available Buy at Website</p>
+                        <div class="price-small">
+                            <span class="current-price-small">$5.00</span>
+                            <span class="old-price-small">$6.00</span>
+                        </div>
+                        <button class="app-offer-small">Get 20% Off in App</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="sale-badge">SALE</div>
+                    <div class="product-image-small">
+                        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Luwak">
+                    </div>
+                    <div class="product-info-small">
+                        <h3>AT HOME LUWAK</h3>
+                        <p class="availability">Available Buy at Website</p>
+                        <div class="price-small">
+                            <span class="current-price-small">$5.00</span>
+                            <span class="old-price-small">$6.00</span>
+                        </div>
+                        <button class="app-offer-small">Get 20% Off in App</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="sale-badge">SALE</div>
+                    <div class="product-image-small">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Luwak">
+                    </div>
+                    <div class="product-info-small">
+                        <h3>AT HOME LUWAK</h3>
+                        <p class="availability">Available Buy at Website</p>
+                        <div class="price-small">
+                            <span class="current-price-small">$5.00</span>
+                            <span class="old-price-small">$6.00</span>
+                        </div>
+                        <button class="app-offer-small">Get 20% Off in App</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-location">
-                <h2>Our Location</h2>
-                <p>Jl. Bangkringan No 19, RT.11/RW.2, Kota Surabaya, 60124</p>
-                <p><strong>Customer Service +6282-2876-6862</strong></p>
-                <p><strong>We Are Open from Sun - Mon 10 AM - 22 PM</strong></p>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="delivery-order">
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-spotify"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-location">
+                    <h2>Our Location</h2>
+                    <p>Jl. Bangkringen No 19, RTII/RW2, Kota Surabaya, 60124</p>
+                    <p><strong>Customer Service +6282-2876-6862</strong></p>
+                    <p><strong>We Are Open from Sun – Mon 10 AM - 22 PM</strong></p>
                 </div>
-
-                <h3>Delivery Order</h3>
-                <div class="app-badges">
-                    <div class="app-store-badge">
-                        <i class="fab fa-apple"></i>
-                        <div class="badge-text">
-                            <span>Download on the</span>
-                            <span>App Store</span>
-                        </div>
+                
+                <div class="delivery-order">
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-spotify"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
                     </div>
-                    <div class="google-play-badge">
-                        <i class="fab fa-google-play"></i>
-                        <div class="badge-text">
-                            <span>GET IT ON</span>
-                            <span>Google Play</span>
+                    
+                    <h3>Delivery Order</h3>
+                    <div class="app-badges">
+                        <div class="app-badge">
+                            <i class="fab fa-apple" style="font-size: 24px; color: #fff;"></i>
+                            <span style="margin-left: 10px; color: #fff; font-weight: 500;">App Store</span>
+                        </div>
+                        <div class="app-badge">
+                            <i class="fab fa-google-play" style="font-size: 20px; color: #fff;"></i>
+                            <span style="margin-left: 10px; color: #fff; font-weight: 500;">Google Play</span>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
             <div class="footer-bottom">
                 <div class="copyright">© 2023 IMAJI COFFEE, All rights reserved</div>
                 <div class="footer-links">
@@ -681,27 +194,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Simple cart functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.btn-hero, .product-card');
-            const cartCount = document.querySelector('.cart-count');
-            let count = parseInt(cartCount.textContent);
-            
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    count++;
-                    cartCount.textContent = count;
-                    
-                    // Add animation
-                    cartCount.style.transform = 'scale(1.5)';
-                    setTimeout(() => {
-                        cartCount.style.transform = 'scale(1)';
-                    }, 300);
-                });
-            });
-        });
-    </script>
 </body>
 </html>
