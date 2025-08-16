@@ -9,6 +9,23 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
   <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      .product-card:nth-child(4n+1) .product-image {
+      --product-bg-color: #F9E4D4; /* Бежевый */
+    }
+    
+    .product-card:nth-child(4n+2) .product-image {
+      --product-bg-color: #F7D4D4; /* Розовый */
+    }
+    
+    .product-card:nth-child(4n+3) .product-image {
+      --product-bg-color: #F9E4D4; /* Бежевый */
+    }
+    
+    .product-card:nth-child(4n+4) .product-image {
+      --product-bg-color: #F7D4D4; /* Розовый */
+    }
+    </style>
 </head>
 <body>
   <header>
@@ -176,7 +193,6 @@
           <div class="price">
             <span class="current-price">$5.00</span>
           </div>
-          <button class="app-offer">Get 20% Off in App</button>
         </div>
       </div>
 
@@ -204,6 +220,7 @@
           <div class="price">
             <span class="current-price">$5.00</span>
           </div>
+            <button class="app-offer">Get 20% Off in App</button>
         </div>
       </div>
 
