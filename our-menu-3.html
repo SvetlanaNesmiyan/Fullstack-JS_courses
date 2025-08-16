@@ -9,25 +9,44 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
   <link rel="stylesheet" href="css/styles.css" />
-    <style>
-      .product-card:nth-child(4n+1) .product-image {
-      --product-bg-color: #F9E4D4; /* Бежевый */
+  <style>
+    /* Стили только для страницы IMAJI COFFEE AT HOME */
+    body.menu-home .product-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #F9E4D4; /* Базовый цвет фона */
     }
     
-    .product-card:nth-child(4n+2) .product-image {
-      --product-bg-color: #F7D4D4; /* Розовый */
+    body.menu-home .product-image img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+      z-index: 2;
+      position: relative;
     }
-    
-    .product-card:nth-child(4n+3) .product-image {
-      --product-bg-color: #F9E4D4; /* Бежевый */
+
+    /* Цвета фона для конкретных продуктов */
+    body.menu-home .product-card:nth-child(1) .product-image { background-color: #53557D; }
+    body.menu-home .product-card:nth-child(2) .product-image { background-color: #86664E; }
+    body.menu-home .product-card:nth-child(3) .product-image { background-color: #3F8B71; }
+    body.menu-home .product-card:nth-child(4) .product-image { background-color: #F9E4D4; } /* WHITE MUG - базовый */
+    body.menu-home .product-card:nth-child(5) .product-image { background-color: #824D34; }
+    body.menu-home .product-card:nth-child(6) .product-image { background-color: #494947; }
+    body.menu-home .product-card:nth-child(7) .product-image { background-color: #A77E61; }
+    body.menu-home .product-card:nth-child(8) .product-image { background-color: #F9E4D4; } /* COFFEE TEMPER - базовый */
+    body.menu-home .product-card:nth-child(9) .product-image { background-color: #F9E4D4; } /* FRENCH PRESS 8 CUPS - базовый */
+    body.menu-home .product-card:nth-child(10) .product-image { background-color: #F9E4D4; } /* GLASS TEA POT - базовый */
+    body.menu-home .product-card:nth-child(11) .product-image { background-color: #F9E4D4; } /* FRENCH PRESS 3 CUP - базовый */
+    body.menu-home .product-card:nth-child(12) .product-image { background-color: #F9E4D4; } /* MOKA POT - базовый */
+
+    /* Серый фон для товара OUT OF STOCK */
+    body.menu-home .out-of-stock + .product-image {
+      background-color: #D4D4D4 !important;
     }
-    
-    .product-card:nth-child(4n+4) .product-image {
-      --product-bg-color: #F7D4D4; /* Розовый */
-    }
-    </style>
+  </style>
 </head>
-<body>
+<body class="menu-home"> <!-- Добавлен класс для этой страницы -->
   <header>
     <div class="container header-container">
       <div class="logo">IMAJI<span> Coffee.</span></div>
