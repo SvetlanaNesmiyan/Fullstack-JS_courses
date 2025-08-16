@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMAJI Coffee - Our Menu</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMAJI Coffee - Our Menu</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
 <body>
   <header>
     <div class="container header-container">
@@ -102,17 +102,46 @@
   <main class="container">
     <div class="menu-tabs">
       <a href="index.html" class="tab">COFFEE AND BEVERAGE</a>
-      <a href="our-menu-2.html" class="tab active">FOOD AND SNACK</a>
-      <a href="our-menu-3.html" class="tab">IMAJI COFFEE AT HOME</a>
+      <a href="our-menu-2.html" class="tab">FOOD AND SNACK</a>
+      <a href="our-menu-3.html" class="tab active">IMAJI COFFEE AT HOME</a>
     </div>
 
     <div class="products-grid">
+      <!-- Ряд 1 -->
       <div class="product-card">
         <div class="product-image">
-          <img src="img/seafood-lunch.png" alt="Seafood Lunch" />
+          <img src="img/at-home-house-blend.png" alt="AT HOME HOUSE BLEND" />
         </div>
         <div class="product-info">
-          <h3>SEAFOOD LUNCH</h3>
+          <h3>AT HOME HOUSE BLEND</h3>
+          <p class="availability">Available Buy at Website</p>
+          <div class="price">
+            <span class="current-price">$5.00</span>
+          </div>
+          <button class="app-offer">Get 20% Off in App</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="img/at-home-arabica.png" alt="AT HOME ARABICA" />
+        </div>
+        <div class="product-info">
+          <h3>AT HOME ARABICA</h3>
+          <p class="availability">Available Buy at Website</p>
+          <div class="price">
+            <span class="current-price">$5.00</span>
+          </div>
+          <button class="app-offer">Get 20% Off in App</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="img/at-home-classic.png" alt="AT HOME CLASSIC" />
+        </div>
+        <div class="product-info">
+          <h3>AT HOME CLASSIC</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
             <span class="current-price">$5.00</span>
@@ -123,13 +152,25 @@
 
       <div class="product-card">
         <div class="product-image">
-          <img
-            src="img/french-toast.png"
-            alt="French Toast with Sugar"
-          />
+          <img src="img/white-mug.png" alt="WHITE MUG" />
         </div>
         <div class="product-info">
-          <h3>FRENCH TOAST WITH SUGAR</h3>
+          <h3>WHITE MUG</h3>
+          <p class="availability">Only at Cafe and Delivery</p>
+          <div class="price">
+            <span class="current-price">$5.00</span>
+          </div>
+          <button class="app-offer">Get 20% Off in App</button>
+        </div>
+      </div>
+
+      <!-- Ряд 2 -->
+      <div class="product-card">
+        <div class="product-image">
+          <img src="img/at-home-kalosi.png" alt="AT HOME KALOSI" />
+        </div>
+        <div class="product-info">
+          <h3>AT HOME KALOSI</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
             <span class="current-price">$5.00</span>
@@ -139,43 +180,11 @@
       </div>
 
       <div class="product-card">
-        <div class="sale-badge">SALE</div>
         <div class="product-image">
-          <img src="img/chocolate-croissant.png" alt="Chocolate Croissant" />
+          <img src="img/at-home-luwak.png" alt="AT HOME LUWAK" />
         </div>
         <div class="product-info">
-          <h3>CHOCOLATE CROISSANT</h3>
-          <p class="availability">Only at Cafe and Delivery</p>
-          <div class="price">
-            <span class="current-price">$5.00</span>
-            <span class="old-price">$6.00</span>
-          </div>
-          <button class="app-offer">Get 20% Off in App</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="sale-badge">SALE</div>
-        <div class="product-image">
-          <img src="img/potato-wedges.png" alt="Potato Wedges" />
-        </div>
-        <div class="product-info">
-          <h3>POTATO WEDGES</h3>
-          <p class="availability">Only at Cafe and Delivery</p>
-          <div class="price">
-            <span class="current-price">$5.00</span>
-            <span class="old-price">$6.00</span>
-          </div>
-          <button class="app-offer">Get 20% Off in App</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-image">
-          <img src="img/brownies.png" alt="Brownies" />
-        </div>
-        <div class="product-info">
-          <h3>BROWNIES</h3>
+          <h3>AT HOME LUWAK</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
             <span class="current-price">$5.00</span>
@@ -187,10 +196,10 @@
       <div class="product-card">
         <div class="out-of-stock">OUT OF STOCK</div>
         <div class="product-image">
-          <img src="img/banana-cake.png" alt="Banana Cake" />
+          <img src="img/at-home-robusta.png" alt="AT HOME ROBUSTA" />
         </div>
         <div class="product-info">
-          <h3>BANANA CAKE</h3>
+          <h3>AT HOME ROBUSTA</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
             <span class="current-price">$5.00</span>
@@ -200,27 +209,10 @@
 
       <div class="product-card">
         <div class="product-image">
-          <img src="img/sandwiches-and-pickles.png" alt="Sandwiches and Pickles" />
+          <img src="img/coffee-temper-58mm.png" alt="COFFEE TEMPER 58 MM" />
         </div>
         <div class="product-info">
-          <h3>SANDWICHES AND PICKLES</h3>
-          <p class="availability">Only at Cafe and Delivery</p>
-          <div class="price">
-            <span class="current-price">$5.00</span>
-          </div>
-          <button class="app-offer">Get 20% Off in App</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-image">
-          <img
-            src="img/spaghetti-bolognese.png"
-            alt="Spaghetti Bolognese"
-          />
-        </div>
-        <div class="product-info">
-          <h3>SPAGHETTI BOLOGNESE</h3>
+          <h3>COFFEE TEMPER 58 MM</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
             <span class="current-price">$5.00</span>
@@ -229,47 +221,16 @@
         </div>
       </div>
 
+      <!-- Ряд 3 -->
       <div class="product-card">
         <div class="product-image">
-          <img src="img/sandwich-vegan.png" alt="Sandwich Vegan" />
+          <img src="img/french-press-8-cups.png" alt="FRENCH PRESS 8 CUPS" />
         </div>
         <div class="product-info">
-          <h3>SANDWICH VEGAN</h3>
+          <h3>FRENCH PRESS 8 CUPS</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
-            <span class="current-price">$5.00</span>
-          </div>
-          <button class="app-offer">Get 20% Off in App</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="sale-badge">SALE</div>
-        <div class="product-image">
-          <img src="img/eggs-benedict-burger.png" alt="Eggs Benedict Burger" />
-        </div>
-        <div class="product-info">
-          <h3>EGGS BENEDICT BURGER</h3>
-          <p class="availability">Only at Cafe and Delivery</p>
-          <div class="price">
-            <span class="current-price">$5.00</span>
-            <span class="old-price">$6.00</span>
-          </div>
-          <button class="app-offer">Get 20% Off in App</button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="sale-badge">SALE</div>
-        <div class="product-image">
-          <img src="img/corn-cheese-sandwich.png" alt="Corn Cheese Sandwich" />
-        </div>
-        <div class="product-info">
-          <h3>CORN CHEESE SANDWICH</h3>
-          <p class="availability">Only at Cafe and Delivery</p>
-          <div class="price">
-            <span class="current-price">$5.00</span>
-            <span class="old-price">$6.00</span>
+            <span class="current-price">$25.00</span>
           </div>
           <button class="app-offer">Get 20% Off in App</button>
         </div>
@@ -277,13 +238,41 @@
 
       <div class="product-card">
         <div class="product-image">
-          <img src="img/buttermilk-waffle.png" alt="Buttermilk Waffle" />
+          <img src="img/glass-tea-pot-teiera.png" alt="GLASS TEA POT TEIERA (6 CUPS)" />
         </div>
         <div class="product-info">
-          <h3>BUTTERMILK WAFFLE</h3>
+          <h3>GLASS TEA POT TEIERA (6 CUPS)</h3>
           <p class="availability">Only at Cafe and Delivery</p>
           <div class="price">
-            <span class="current-price">$5.00</span>
+            <span class="current-price">$13.00</span>
+          </div>
+          <button class="app-offer">Get 20% Off in App</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="img/french-press-3-cup.png" alt="FRENCH PRESS 3 CUP" />
+        </div>
+        <div class="product-info">
+          <h3>FRENCH PRESS 3 CUP</h3>
+          <p class="availability">Only at Cafe and Delivery</p>
+          <div class="price">
+            <span class="current-price">$20.00</span>
+          </div>
+          <button class="app-offer">Get 20% Off in App</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="img/moka-pot.png" alt="MOKA POT" />
+        </div>
+        <div class="product-info">
+          <h3>MOKA POT</h3>
+          <p class="availability">Only at Cafe and Delivery</p>
+          <div class="price">
+            <span class="current-price">$20.00</span>
           </div>
           <button class="app-offer">Get 20% Off in App</button>
         </div>
@@ -335,8 +324,6 @@
               height="24"
           /></a>
         </div>
-
-
       </div>
 
       <div class="footer-bottom">
