@@ -31,7 +31,7 @@ This is a responsive e-commerce website for a coffee shop called "IMAJI Coffee."
 7. **Footer** with additional links and social media
 
 ## Installation
-No installation required - simply open the `index.html` file in any modern web browser.
+No installation required - simply open the `index.html` file in any modern web browser./ Use a direct link to this site https://svetlananesmiyan.github.io/Fullstack-JS_courses/
 
 ## Customization
 To customize this project:
