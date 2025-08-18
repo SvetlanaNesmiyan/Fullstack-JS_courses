@@ -394,20 +394,17 @@
     }
 
     .app-offer {
-      background-color: #3a2c1e;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 4px;
-      width: 100%;
-      cursor: pointer;
-      transition: background 0.3s;
-      font-size: 14px;
-      margin-top: auto;
-    }
-
-    .app-offer:hover {
-      background-color: #5a3f2b;
+    color: #A27B5C;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 14px;
+    margin-top: auto;
+    background: white;
+    text-align: left; 
     }
 
     .load-more {
