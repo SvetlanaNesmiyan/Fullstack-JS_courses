@@ -1,45 +1,56 @@
-console.log('#8. JavaScript homework example file')
+console.log('#9. JavaScript homework example file')
 
 /*
  * #1
  */
-function createDomElement(tagName, textContent, container) {
-  const element = document.createElement(tagName);
-  element.textContent = textContent;
-  container.appendChild(element);
-  return element;
+function handleButtonClick(buttonId, message) {
+  const button = document.getElementById(buttonId);
+  if (button) {
+    button.addEventListener('click', function() {
+      console.log(message);
+    });
+  } else {
+    console.error(`Button with id '${buttonId}' not found`);
+  }
 }
+
 
 /*
  * #2
  */
-function setUserInfoCookie(key, value) {
-  const encodedKey = encodeURIComponent(key);
-  const encodedValue = encodeURIComponent(value);
-  const cookieValue = `${encodedKey}=${encodedValue}`;
-  
-  const expirationDate = new Date();
-  expirationDate.setTime(expirationDate.getTime() + 10 * 1000); // 10 секунд
-  
-  document.cookie = `userInfo=${cookieValue}; expires=${expirationDate.toUTCString()}; path=/`;
-  
-  console.log(`User information saved to cookie: ${key}=${value}`);
+function trackMousePosition() {
+  document.addEventListener('mousemove', function(event) {
+    console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
+  });
 }
 
 
 /*
  * #3
  */
-function saveUserInfo(key, value) {
-  sessionStorage.setItem(key, value);
-  console.log(`Saved ${key}: ${value}`);
+function createTestList() {
+  document.body.innerHTML = `
+    <ul id="testList">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    `
 }
 
-function getUserInfo(key) {
-  const value = sessionStorage.getItem(key);
-  console.log(`Retrieved ${key}: ${value}`);
-  return value;
+function setupEventDelegation(selector) {
+  const list = document.querySelector(selector);
+  if (list) {
+    list.addEventListener('click', function(event) {
+      if (event.target.tagName === 'LI') {
+        const itemText = event.target.textContent.trim();
+        console.log(`Item clicked: ${itemText}`);
+      }
+    });
+  } else {
+    console.error(`Element with selector '${selector}' not found`);
+  }
 }
 
 
-export { createDomElement, setUserInfoCookie, saveUserInfo, getUserInfo }
+export { handleButtonClick, trackMousePosition, setupEventDelegation }
