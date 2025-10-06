@@ -1,87 +1,45 @@
+console.log('#8. JavaScript homework example file')
+
 /*
  * #1
  */
-function sumArray(numbers) {
-  return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+function createDomElement(tagName, textContent, container) {
+  const element = document.createElement(tagName);
+  element.textContent = textContent;
+  container.appendChild(element);
+  return element;
 }
-
-const exampleArray = [1, 2, 3, 4, 5]
-const sum = sumArray(exampleArray)
-console.log('Сума елементів масиву:', sum) 
 
 /*
  * #2
  */
-function doubleArrayElements(numbers) {
-  return numbers.map(number => number * 2);
+function setUserInfoCookie(key, value) {
+  const encodedKey = encodeURIComponent(key);
+  const encodedValue = encodeURIComponent(value);
+  const cookieValue = `${encodedKey}=${encodedValue}`;
+  
+  const expirationDate = new Date();
+  expirationDate.setTime(expirationDate.getTime() + 10 * 1000); // 10 секунд
+  
+  document.cookie = `userInfo=${cookieValue}; expires=${expirationDate.toUTCString()}; path=/`;
+  
+  console.log(`User information saved to cookie: ${key}=${value}`);
 }
 
-const exampleArray2 = [1, 2, 3, 4, 5]
-const doubledArray = doubleArrayElements(exampleArray2)
-console.log('Подвоєні елементи масиву:', doubledArray)
 
 /*
  * #3
  */
-class SkillsManager {
-  constructor() {
-    this.skills = [];
-  }
-
-  addSkill(skill) {
-    if (typeof skill === 'string' && skill.length >= 2) {
-      this.skills.push(skill);
-      return skill;
-    }
-    return null;
-  }
-
-  getAllSkills() {
-    return this.skills;
-  }
+function saveUserInfo(key, value) {
+  sessionStorage.setItem(key, value);
+  console.log(`Saved ${key}: ${value}`);
 }
 
-const skillsManager = new SkillsManager()
-
-console.log(skillsManager.addSkill('JavaScript'))
-console.log(skillsManager.addSkill('CSS'))
-console.log(skillsManager.addSkill('A')) 
-console.log(skillsManager.addSkill(123)) 
-console.log(skillsManager.getAllSkills())
-
-/*
- * #4
- */
-function DateCalculator(initialDate) {
-  let currentDate = new Date(initialDate);
-  
-  this.addDays = function(days) {
-    currentDate.setDate(currentDate.getDate() + days);
-    return this;
-  }
-
-  this.subtractDays = function(days) {
-    currentDate.setDate(currentDate.getDate() - days);
-    return this;
-  }
-
-  this.getResult = function() {
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
+function getUserInfo(key) {
+  const value = sessionStorage.getItem(key);
+  console.log(`Retrieved ${key}: ${value}`);
+  return value;
 }
 
-const dateCalculator = new DateCalculator('2023-01-01')
-dateCalculator.addDays(5)
-console.log(dateCalculator.getResult())
 
-dateCalculator.subtractDays(3)
-console.log(dateCalculator.getResult())
-
-const anotherDate = new DateCalculator('2023-12-25')
-anotherDate.addDays(10)
-console.log(anotherDate.getResult())
-
-export { doubleArrayElements, sumArray, SkillsManager, DateCalculator }
+export { createDomElement, setUserInfoCookie, saveUserInfo, getUserInfo }
