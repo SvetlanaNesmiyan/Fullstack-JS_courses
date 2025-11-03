@@ -1,7 +1,6 @@
 class MovieSearch {
     constructor() {
-        this.API_KEY = 'http://www.omdbapi.com/?t=Young+Royals'; 
-        this.API_KEY = 'http://www.omdbapi.com/?t=Terrifier'; 
+        this.API_KEY = '91fe1953'; 
         this.BASE_URL = 'https://www.omdbapi.com/';
         this.currentPage = 1;
         this.currentSearch = '';
@@ -244,17 +243,17 @@ class MovieSearch {
                     <h2 class="movie-detail-title">${movie.Title}</h2>
                     <div class="movie-detail-meta">
                         <span class="movie-year">${movie.Year}</span>
-                        <span class="movie-detail-rating">⭐ ${movie.imdbRating}</span>
-                        <span>${movie.Runtime}</span>
+                        ${movie.imdbRating !== 'N/A' ? `<span class="movie-detail-rating">⭐ ${movie.imdbRating}</span>` : ''}
+                        ${movie.Runtime !== 'N/A' ? `<span>${movie.Runtime}</span>` : ''}
                     </div>
                     <p class="movie-detail-plot">${movie.Plot}</p>
                     <ul class="movie-detail-list">
-                        <li><strong>Режисер:</strong> ${movie.Director}</li>
-                        <li><strong>Актори:</strong> ${movie.Actors}</li>
-                        <li><strong>Жанр:</strong> ${movie.Genre}</li>
-                        <li><strong>Країна:</strong> ${movie.Country}</li>
-                        <li><strong>Мова:</strong> ${movie.Language}</li>
-                        <li><strong>Нагороди:</strong> ${movie.Awards}</li>
+                        ${movie.Director !== 'N/A' ? `<li><strong>Режисер:</strong> ${movie.Director}</li>` : ''}
+                        ${movie.Actors !== 'N/A' ? `<li><strong>Актори:</strong> ${movie.Actors}</li>` : ''}
+                        ${movie.Genre !== 'N/A' ? `<li><strong>Жанр:</strong> ${movie.Genre}</li>` : ''}
+                        ${movie.Country !== 'N/A' ? `<li><strong>Країна:</strong> ${movie.Country}</li>` : ''}
+                        ${movie.Language !== 'N/A' ? `<li><strong>Мова:</strong> ${movie.Language}</li>` : ''}
+                        ${movie.Awards !== 'N/A' ? `<li><strong>Нагороди:</strong> ${movie.Awards}</li>` : ''}
                     </ul>
                 </div>
             </div>
