@@ -1,6 +1,6 @@
 class MovieSearch {
     constructor() {
-        this.API_KEY = 'your_api_key_here';
+        this.API_KEY = 'http://www.omdbapi.com/?i=tt3896198&apikey=91fe1953';
         this.BASE_URL = 'https://www.omdbapi.com/';
         this.currentPage = 1;
         this.currentSearch = '';
