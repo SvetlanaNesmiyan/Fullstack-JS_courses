@@ -24,33 +24,17 @@
                     >
                     <div class="search-icon">🔍</div>
                 </div>
-            </div>
-
-            <!-- Панель фільтрів -->
-            <div class="filters-bar" id="filtersBar" style="display: none;">
-                <div class="filters-container">
-                    <div class="filter-group">
-                        <span class="filter-label">Тип:</span>
-                        <div class="filter-options">
-                            <button class="filter-btn active" data-type="">Всі</button>
-                            <button class="filter-btn" data-type="movie">Фільми</button>
-                            <button class="filter-btn" data-type="series">Серіали</button>
-                            <button class="filter-btn" data-type="episode">Епізоди</button>
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <span class="filter-label">Рік:</span>
-                        <div class="filter-options">
-                            <button class="filter-btn active" data-year="">Всі роки</button>
-                            <button class="filter-btn" data-year="2024">2024</button>
-                            <button class="filter-btn" data-year="2023">2023</button>
-                            <button class="filter-btn" data-year="2022">2022</button>
-                            <button class="filter-btn" data-year="2021">2021</button>
-                            <button class="filter-btn" data-year="2020">2020</button>
-                            <button class="filter-btn more-years">Більше...</button>
-                        </div>
-                    </div>
+                <div class="filters">
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">Всі типи</option>
+                        <option value="movie">Фільми</option>
+                        <option value="series">Серіали</option>
+                        <option value="episode">Епізоди</option>
+                    </select>
+                    <select id="yearFilter" class="filter-select">
+                        <option value="">Всі роки</option>
+                        <!-- Роки будуть додані через JavaScript -->
+                    </select>
                 </div>
             </div>
 
@@ -84,15 +68,6 @@
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
             <div class="modal-body" id="modalBody"></div>
-        </div>
-    </div>
-
-    <!-- Модальне вікно для вибору років -->
-    <div class="modal" id="yearsModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeYearsModal">&times;</span>
-            <h3>Оберіть рік</h3>
-            <div class="years-grid" id="yearsGrid"></div>
         </div>
     </div>
 
