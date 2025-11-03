@@ -1,6 +1,7 @@
 class MovieSearch {
     constructor() {
-        this.API_KEY = 'http://www.omdbapi.com/?i=tt3896198&apikey=91fe1953'; 
+        this.API_KEY = 'http://www.omdbapi.com/?t=Young+Royals'; 
+        this.API_KEY = 'http://www.omdbapi.com/?t=Terrifier'; 
         this.BASE_URL = 'https://www.omdbapi.com/';
         this.currentPage = 1;
         this.currentSearch = '';
