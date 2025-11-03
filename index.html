@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search - Пошук фільмів</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🎬 Movie Search</h1>
+            <p class="subtitle">Знайдіть ваші улюблені фільми та серіали</p>
+        </header>
+
+        <main class="main">
+            <div class="search-container">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Введіть назву фільму або серіалу..."
+                        class="search-input"
+                    >
+                    <div class="search-icon">🔍</div>
+                </div>
+                <div class="filters">
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">Всі типи</option>
+                        <option value="movie">Фільми</option>
+                        <option value="series">Серіали</option>
+                        <option value="episode">Епізоди</option>
+                    </select>
+                    <select id="yearFilter" class="filter-select">
+                        <option value="">Всі роки</option>
+                        <!-- Роки будуть додані через JavaScript -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Пошук...</p>
+            </div>
+
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
+
+            <div class="results-container" id="resultsContainer">
+                <div class="results-stats" id="resultsStats" style="display: none;"></div>
+                <div class="results-grid" id="resultsGrid"></div>
+                <div class="load-more" id="loadMore" style="display: none;">
+                    <button id="loadMoreBtn" class="load-more-btn">Завантажити ще</button>
+                </div>
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <p>Нічого не знайдено. Спробуйте змінити запит.</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Дані надані <a href="http://www.omdbapi.com/" target="_blank">OMDb API</a></p>
+        </footer>
+    </div>
+
+    <!-- Модальне вікно для детальної інформації -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
