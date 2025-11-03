@@ -269,6 +269,86 @@ class MovieSearch {
         document.body.style.overflow = 'hidden';
     }
 
+createMovieCard(movie) {
+    const card = document.createElement('div');
+    card.className = 'movie-card';
+    
+    card.innerHTML = `
+        <div class="movie-content">
+            ${movie.Poster !== 'N/A' ? 
+                `<img src="${movie.Poster}" alt="${movie.Title}" class="movie-poster" onerror="this.src='placeholder-image.jpg'">` 
+                : '<div class="no-poster">No Image</div>'
+            }
+            <div class="movie-details-expanded">
+                <h3 class="movie-title-expanded">${this.createUkrainianTitle(movie)}</h3>
+                <div class="movie-meta">
+                    <span class="movie-year">${movie.Year}</span>
+                    <span class="movie-type">${this.translateType(movie.Type)}</span>
+                </div>
+                <p class="movie-description">${this.generateDescription(movie)}</p>
+                <div class="movie-actions">
+                    <button class="watch-btn" onclick="event.stopPropagation(); this.watchMovie('${movie.imdbID}')">
+                        Дивитися онлайн
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    card.addEventListener('click', () => {
+        this.showMovieDetails(movie.imdbID);
+    });
+
+    return card;
+}
+
+createUkrainianTitle(movie) {
+    const type = this.translateType(movie.Type);
+    const currentYear = new Date().getFullYear();
+    const year = movie.Year.split('–')[0];
+    
+    if (movie.Type === 'series') {
+        const seasonMatch = movie.Title.match(/Season (\d+)/i);
+        const season = seasonMatch ? seasonMatch[1] : this.detectSeason(movie);
+        
+        return `${type} ${movie.Title} ${season} сезон онлайн`;
+    } else {
+        return `${type} ${movie.Title} онлайн`;
+    }
+}
+
+translateType(type) {
+    const types = {
+        'movie': 'Фільм',
+        'series': 'Серіал',
+        'episode': 'Епізод'
+    };
+    return types[type] || type;
+}
+
+detectSeason(movie) {
+    if (movie.Title.toLowerCase().includes('season')) {
+        const seasonMatch = movie.Title.match(/season\s*(\d+)/i);
+        return seasonMatch ? seasonMatch[1] : '1';
+    }
+    return '1';
+}
+
+generateDescription(movie) {
+    const type = this.translateType(movie.Type).toLowerCase();
+    const currentYear = new Date().getFullYear();
+    
+    if (movie.Type === 'series') {
+        const season = this.detectSeason(movie);
+        return `Дивіться ${type} "${movie.Title}" ${season} сезон у високій якості. Українською мовою з субтитрами.`;
+    } else {
+        return `Дивіться ${type} "${movie.Title}" у високій якості. Українською мовою з субтитрами.`;
+    }
+}
+
+watchMovie(imdbID) {
+    alert(`Перегляд фільму з ID: ${imdbID}\n(Це демонстраційна функція)`);
+}
     closeMovieModal() {
         this.movieModal.style.display = 'none';
         document.body.style.overflow = 'auto';
@@ -287,7 +367,6 @@ class MovieSearch {
         this.resultsStats.style.display = 'block';
     }
 
-    // Методи для управління відображенням станів
     showLoading() {
         this.loading.style.display = 'block';
         this.hideAllContainers();
@@ -328,12 +407,10 @@ class MovieSearch {
     }
 }
 
-// Ініціалізація додатку
 document.addEventListener('DOMContentLoaded', () => {
     new MovieSearch();
 });
 
-// Обробка помилок зображень
 window.addEventListener('error', function(e) {
     if (e.target.tagName === 'IMG') {
         e.target.src = 'placeholder-image.jpg';
