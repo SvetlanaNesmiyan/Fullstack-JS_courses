@@ -1,27 +1,16 @@
-console.log('#19. TypeScript homework example file')
+console.log('#20. TypeScript homework example file')
 
 /*
  * #1
  */
 
-function sumArray(numbers: number[]): number {
-  if (numbers.length === 0) {
-    return 0
-  }
-  return numbers.reduce((sum, num) => sum + num, 0)
-}
-
-/*
- * #2
- */
-
-type User = {
+interface PersonInterface {
   name: string
   age: number
   isActive: boolean
 }
 
-function createUser(name: string, age: number, isActive: boolean = true): User {
+function createPerson(name: string, age: number, isActive: boolean): PersonInterface {
   return {
     name,
     age,
@@ -30,29 +19,54 @@ function createUser(name: string, age: number, isActive: boolean = true): User {
 }
 
 /*
- * #3
+ * #2
  */
 
-enum OrderStatus {
-  Pending = 'Pending',
-  Shipped = 'Shipped',
-  Delivered = 'Delivered',
-  Cancelled = 'Cancelled'
+function LogMethodCalls(target: any, propertyName: string, propertyDescriptor: PropertyDescriptor): PropertyDescriptor | void {
+  const originalMethod = propertyDescriptor.value
+
+  propertyDescriptor.value = function (...args: any[]) {
+    console.log(`Calling "${propertyName}" with arguments: ${args.join(', ')}`)
+    return originalMethod.apply(this, args)
+  }
+
+  return propertyDescriptor
 }
 
-function getOrderStatus(status: OrderStatus): string {
-  switch (status) {
-    case OrderStatus.Pending:
-      return 'Замовлення очікує на обробку'
-    case OrderStatus.Shipped:
-      return 'Замовлення було відправлено'
-    case OrderStatus.Delivered:
-      return 'Замовлення доставлено'
-    case OrderStatus.Cancelled:
-      return 'Замовлення скасовано'
-    default:
-      throw new Error('Невідомий статус замовлення')
+class Calculator {
+  @LogMethodCalls
+  add(a: number, b: number): number {
+    return a + b
+  }
+
+  @LogMethodCalls
+  multiply(a: number, b: number): number {
+    return a * b
   }
 }
 
-export { sumArray, createUser, OrderStatus, getOrderStatus }
+/*
+ * #3
+ */
+
+namespace UserProfile {
+  export interface ProfileInterface {
+    id: string
+    name: string
+    email: string
+  }
+
+  function generateId(): string {
+    return Math.random().toString(36).substring(2, 12)
+  }
+
+  export function createProfile(name: string, email: string): ProfileInterface {
+    return {
+      id: generateId(),
+      name,
+      email
+    }
+  }
+}
+
+export { createPerson, Calculator, UserProfile }
