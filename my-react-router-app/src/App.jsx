@@ -1,7 +1,6 @@
 import { Outlet, NavLink } from 'react-router';
 import './App.css';
 
-// Динамічне створення маршрутів з масиву об'єктів
 export const routes = [
   {
     path: '/',
@@ -20,7 +19,6 @@ export const routes = [
   },
 ];
 
-// Компоненти
 function Home() {
   return (
     <div className="page">
@@ -57,7 +55,6 @@ function Contact() {
   );
 }
 
-// Layout компонент з навігацією
 function Layout() {
   return (
     <div className="app">
@@ -85,7 +82,6 @@ function Layout() {
   );
 }
 
-// Експортуємо функцію для створення роутера
 export function createRoutes() {
   return [
     {
