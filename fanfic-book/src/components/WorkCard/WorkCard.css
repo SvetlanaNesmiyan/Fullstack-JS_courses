@@ -1,0 +1,283 @@
+/**
+ * Work Card Component Styles (Шапка произведения)
+ */
+
+/* CSS Custom Properties */
+:root {
+  --work-card-bg: #2d1b4e;
+  --work-card-bg-secondary: #241540;
+  --work-card-border: #4a3670;
+  --work-card-text: #ffffff;
+  --work-card-text-secondary: #b8a8c9;
+  --work-card-accent: #9b6dd4;
+  --work-card-accent-hover: #b589e0;
+  --work-card-rating-nc: #e74c3c;
+  --work-card-status-complete: #27ae60;
+  --work-card-likes: #e74c3c;
+  --work-card-tag-bg: #3d2a5f;
+  --work-card-tag-hover: #4a3670;
+}
+
+/* Work Card Container */
+.work-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  background: var(--work-card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--work-card-border);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Work ID */
+.work-card__id {
+  font-size: 12px;
+  color: var(--work-card-text-secondary);
+  margin-bottom: 12px;
+}
+
+/* Title */
+.work-card__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--work-card-text);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+/* Meta (Genre and Rating) */
+.work-card__meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.work-card__genre {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--work-card-accent);
+  color: var(--work-card-text);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.work-card__rating {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--work-card-rating-nc);
+  color: var(--work-card-text);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Status */
+.work-card__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.work-card__status-label {
+  font-size: 14px;
+  color: var(--work-card-text-secondary);
+}
+
+.work-card__status-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--work-card-status-complete);
+}
+
+/* Statistics - Likes */
+.work-card__stats {
+  margin-bottom: 20px;
+}
+
+.work-card__likes-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--work-card-bg-secondary);
+  border: 1px solid var(--work-card-border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.work-card__likes-btn:hover {
+  background: var(--work-card-border);
+  transform: scale(1.02);
+}
+
+.work-card__likes-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--work-card-likes);
+}
+
+.work-card__likes-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--work-card-text);
+}
+
+/* Info Rows (Fandom, Pairing, Size) */
+.work-card__fandom,
+.work-card__pairing,
+.work-card__size {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.work-card__label {
+  color: var(--work-card-text-secondary);
+  margin-right: 8px;
+}
+
+.work-card__fandom-link {
+  color: var(--work-card-accent-hover);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.work-card__fandom-link:hover {
+  color: var(--work-card-accent);
+  text-decoration: underline;
+}
+
+.work-card__pairing-value,
+.work-card__size-value {
+  color: var(--work-card-text);
+}
+
+/* Tags */
+.work-card__tags {
+  margin: 20px 0;
+}
+
+.work-card__tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.work-card__tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--work-card-tag-bg);
+  color: var(--work-card-text-secondary);
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.work-card__tag:hover {
+  background: var(--work-card-tag-hover);
+  color: var(--work-card-text);
+}
+
+/* Description */
+.work-card__description {
+  margin: 24px 0;
+  padding: 16px;
+  background: var(--work-card-bg-secondary);
+  border-radius: 8px;
+  border-left: 3px solid var(--work-card-accent);
+}
+
+.work-card__description p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--work-card-text);
+  white-space: pre-line;
+}
+
+/* Actions */
+.work-card__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--work-card-border);
+}
+
+.work-card__action-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.work-card__action-btn--primary {
+  background: var(--work-card-accent);
+  color: var(--work-card-text);
+}
+
+.work-card__action-btn--primary:hover {
+  background: var(--work-card-accent-hover);
+}
+
+.work-card__action-btn--secondary {
+  background: var(--work-card-bg-secondary);
+  color: var(--work-card-text);
+  border: 1px solid var(--work-card-border);
+}
+
+.work-card__action-btn--secondary:hover {
+  background: var(--work-card-border);
+}
+
+.work-card__action-btn--tertiary {
+  background: transparent;
+  color: var(--work-card-text-secondary);
+  border: 1px solid var(--work-card-border);
+}
+
+.work-card__action-btn--tertiary:hover {
+  background: var(--work-card-bg-secondary);
+  color: var(--work-card-text);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .work-card {
+    padding: 16px;
+    margin: 0 12px;
+  }
+
+  .work-card__title {
+    font-size: 1.5rem;
+  }
+
+  .work-card__actions {
+    flex-direction: column;
+  }
+
+  .work-card__action-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-card__meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .work-card__likes-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

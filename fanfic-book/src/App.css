@@ -1,0 +1,41 @@
+/**
+ * App Component Styles
+ */
+
+/* App Container */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Content Area */
+.app__main {
+  flex: 1;
+  padding-top: 160px; /* Offset for fixed header */
+  padding-bottom: 40px;
+}
+
+/* App Content */
+.app__content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .app__main {
+    padding-top: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app__main {
+    padding-top: 220px;
+  }
+  
+  .app__content {
+    padding: 12px;
+  }
+}
