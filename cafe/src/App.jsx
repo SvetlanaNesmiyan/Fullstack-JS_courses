@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts, loadMoreProducts, setSearchQuery, setSortBy, setUnderPrice, clearFilters, setActiveCategory } from './redux/slices/productsSlice'
 import { addToCart } from './redux/slices/cartSlice'
+import ContactForm from './components/Form'
 
 function App() {
   const dispatch = useDispatch()
@@ -250,6 +251,9 @@ function App() {
           </div>
         )}
       </main>
+
+      {/* Contact Form */}
+      <ContactForm />
 
       {/* Footer */}
       <footer>

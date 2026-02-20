@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "formik": "^2.4.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^9.0.4"
+    "react-redux": "^9.0.4",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

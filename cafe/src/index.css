@@ -968,3 +968,113 @@ body.menu-home .product-info h3 a:hover {
   color: #e74c3c;
   font-size: 18px;
 }
+
+/* Contact Form Styles */
+.form-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-container h2 {
+  font-size: 28px;
+  color: #3a2c1e;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.form-description {
+  color: #666;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #3a2c1e;
+  font-weight: 500;
+}
+
+.required {
+  color: #e74c3c;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #8b5a2b;
+  box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.1);
+}
+
+.form-group input.input-error,
+.form-group textarea.input-error {
+  border-color: #e74c3c;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.submit-btn {
+  background-color: #8b5a2b;
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #6d4720;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    margin: 40px 20px;
+    padding: 25px;
+  }
+  
+  .form-container h2 {
+    font-size: 24px;
+  }
+}
