@@ -1,118 +1,47 @@
-# IMAJI Coffee - React Redux Project
+# README: IMAJI Coffee. Website
 
-Це React-проект кафе IMAJI Coffee з використанням Redux Toolkit для управління станом додатка та Formik + Yup для роботи з формами.
+![IMAJI Coffee.Screenshot](<img width="1401" height="707" alt="Снимок экрана 2025-08-18 в 18 56 28" src="https://github.com/user-attachments/assets/87d1f556-cec7-4eed-ad99-37863d5678e8" />
+)
 
-## Опис проекту
+## Overview
+This is a responsive e-commerce website for a coffee shop called "IMAJI Coffee.". The site features a modern design with coffee-themed aesthetics and includes all essential sections for an online coffee business.
 
-IMAJI Coffee - це веб-сайт кафе з меню, що включає каву, напої та їжу. Проект побудований з використанням:
+[View Live Demo] **https://home-work-liart.vercel.app**
 
-- **Vite** - інструмент збірки
-- **React** - бібліотека для створення інтерфейсу
-- **Redux Toolkit** - для управління станом додатка
-- **Formik** - для керування станом форми
-- **Yup** - для валідації даних форми
-- **createAsyncThunk** - для асинхронних операцій
+## Features
+- **Responsive Design**: Works on mobile, tablet, and desktop devices
+- **Product Catalog**: Grid layout for coffee products with filtering options
+- **Shopping Cart**: Interactive cart functionality
+- **Location Information**: Store details with hours of operation
+- **Mobile App Promotion**: Special offers for app users
+- **Modern UI**: Clean design with coffee-inspired color scheme
 
-## Функціональність
+## Technologies Used
+- HTML5
+- CSS3 (Flexbox, Grid, Media Queries)
+- Responsive Web Design Principles
 
-- Завантаження списку товарів (асинхронна операція)
-- Фільтрація товарів за ціною
-- Пошук товарів за назвою
-- Сортування товарів (за популярністю, ціною, новинками)
-- Завантаження додаткових товарів
-- Додавання товарів до кошика
-- Відстеження кількості товарів у кошику
-- **Форма зворотного зв'язку** з валідацією (Formik + Yup)
+## Key Sections
+1. **Header** with navigation and shopping cart
+2. **Menu Header** with category tabs
+3. **Product Filters** (search, category, availability)
+4. **Product Grid** with coffee items
+5. **Location Information** with hours
+6. **Mobile App Promotion**
+7. **Footer** with additional links and social media
 
-## Форма зворотного зв'язку
+## Installation
+No installation required - simply open the `index.html` file in any modern web browser./ Use a direct link to this site https://svetlananesmiyan.github.io/Fullstack-JS_courses/
 
-Проект включає форму зворотного зв'язку з такими полями:
-- Ім'я (обов'язкове, від 2 до 50 символів)
-- Електронна пошта (обов'язкова, валідація формату email)
-- Номер телефону (обов'язковий, валідація формату)
-- Дата народження (обов'язкова, не може бути в майбутньому)
-- Повідомлення (обов'язкове, мінімум 10 символів)
+## Customization
+To customize this project:
+1. Clone the repository
+2. Modify the HTML/CSS files as needed
+3. Update product information in the products grid
+4. Adjust color scheme in CSS variables
 
-Валідація реалізована за допомогою бібліотеки Yup з відображенням повідомлень про помилки біля відповідних полів.
+## License
+This project is open-source and available under the MIT License.
 
-## Структура проекту
-
-```
-cafe/
-├── src/
-│   ├── components/
-│   │   └── Form.jsx          # Компонент форми (Formik + Yup)
-│   ├── redux/
-│   │   ├── store.js          # Конфігурація Redux store
-│   │   └── slices/
-│   │       ├── productsSlice.js  # Слайс товарів з asyncThunk
-│   │       └── cartSlice.js      # Слайс кошика
-│   ├── App.jsx              # Головний компонент
-│   ├── main.jsx             # Точка входу
-│   └── index.css            # Стилі
-├── index.html
-├── package.json
-├── vite.config.js
-└── README.md
-```
-
-## Встановлення
-
-1. Клонуйте репозиторій
-2. Встановіть залежності:
-   ```bash
-   npm install
-   ```
-
-## Запуск проекту
-
-### Режим розробки
-```bash
-npm run dev
-```
-
-### Збірка для продакшену
-```bash
-npm run build
-```
-
-### Попередній перегляд продакшен збірки
-```bash
-npm run preview
-```
-
-## Асинхронні операції
-
-Проект використовує `createAsyncThunk` для:
-
-1. **fetchProducts** - завантаження списку товарів з API (імітовано)
-2. **loadMoreProducts** - завантаження додаткових товарів
-
-Ці операції обробляють стани:
-- `pending` - запит у процесі
-- `fulfilled` - запит успішно виконано
-- `rejected` - запит завершився помилкою
-
-## Демо-версія
-
-Проект розгорнуто на Vercel: **https://cafe-rose-zeta.vercel.app/**
-
-## Технології
-
-- React 18
-- Redux Toolkit
-- Formik
-- Yup
-- Vite
-- CSS3
-
-## Критерії оцінювання
-
-- ✅ Функціональність форми: Форма працює коректно, включаючи валідацію введених даних та відображення повідомлень про помилки
-- ✅ Ефективність валідації: Використання Yup разом з Formik забезпечує надійну валідацію
-- ✅ Чистота коду: Код організований, структурований та читабельний
-- ✅ Доступність: Додано ARIA-мітки до полів вводу
-
-## Ліцензія
-
-© 2023 IMAJI COFFEE, All rights reserved
+## Credits
+Designed and developed by Svitlana Nesmiyan as part of the Fullstack JavaScript course 
