@@ -1,13 +1,8 @@
-import UserProfile from './components/UserProfile'
+import DemoApp from './components/DemoApp'
 import './App.css'
 
 function App() {
-  return (
-    <>
-      <h1>Додаток з профілем користувача</h1>
-      <UserProfile />
-    </>
-  )
+  return <DemoApp />
 }
 
 export default App
