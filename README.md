@@ -1,6 +1,7 @@
 # React Memoization Demo
 
 Демонстраційний React-додаток, який ілюструє використання мемоізації для оптимізації продуктивності.
+View live demo: **https://my-react-app-ten-sigma.vercel.app/**
 
 ## 📋 Опис проекту
 
