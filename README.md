@@ -1,120 +1,139 @@
-# React Demo App - Демонстрація бібліотек
+# Task Manager Application
 
-![React](https://img.shields.io/badge/React-18.3-blue)
-![Vite](https://img.shields.io/badge/Vite-5.4-blueviolet)
-![License](https://img.shields.io/badge/License-MIT-green)
-![ViewDemo]**https://my-react-app-ten-sigma.vercel.app**
+A task manager application built with React, Redux Toolkit, and Vite.
 
-## 📋 Опис проекту
+## Features
 
-Цей проект є демонстраційним React-додатком, створеним для демонстрації інтеграції та використання популярних React-бібліотек:
+- Add new tasks with title and description
+- Mark tasks as completed/incomplete
+- Remove tasks
+- Persistent storage using localStorage (simulating API calls)
+- Responsive design
 
-- **React Icons** - бібліотека для іконок
-- **React Toastify** - система сповіщень
-- **React Idle Timer** - відстеження бездіяльності користувача
-- **Recharts** (додатково) - бібліотека для побудови графіків
-- **React Color** (додатково) - вибір кольорів
+## Technologies Used
 
-## 🚀 Функціональність
+- React 18
+- TypeScript
+- Vite
+- Redux Toolkit
+- React Router DOM
+- CSS (for styling)
 
-### Дашборд
-- Статистичні картки з іконками
-- Інтерактивні сповіщення (success, warning, info)
-- Анімований інтерфейс
+## Getting Started
 
-### Вибір кольору
-- Три типи пікерів: Chrome, Sketch, Twitter
-- Копіювання кольору в буфер обміну
-- Популярні кольори
+### Prerequisites
 
-### Графіки
-- Лінійний графік
-- Стовпчиковий графік
-- Графік областей
-- Кругова діаграма
+- Node.js (version 14 or higher)
+- npm or yarn
 
-### Таймер бездіяльності
-- Відстеження активності користувача
-- Сповіщення при бездіяльності
-- Відображення часу до спрацювання
+### Installation
 
-## 🛠️ Технології
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd my-react-app
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- **React 18** - основна бібліотека
-- **Vite** - збірка проекту
-- **React Icons** - іконки
-- **React Toastify** - toast-сповіщення
-- **React Idle Timer** - таймер бездіяльності
-- **Recharts** - графіки
-- **React Color** - вибір кольору
+### Running the Application
 
-## 📦 Встановлення
-
-```bash
-# Клонування репозиторію
-git clone <repository-url>
-
-# Перехід до директорії проекту
-cd my-react-app
-
-# Встановлення залежностей
-npm install
-
-# Запуск в режимі розробки
-npm run dev
-```
-
-## 🎯 Запуск проекту
-
+To start the development server:
 ```bash
 npm run dev
 ```
 
-Після запуску проект буде доступний за адресою: `http://localhost:5173`
+The application will be available at `http://localhost:5173`.
 
-## 📁 Структура проекту
+### Building for Production
 
-```
-my-react-app/
-├── src/
-│   ├── components/
-│   │   ├── Header.jsx           # Навігаційна панель
-│   │   ├── Dashboard.jsx        # Головна сторінка
-│   │   ├── ColorPickerComponent.jsx  # Вибір кольору
-│   │   ├── ChartComponent.jsx   # Графіки
-│   │   └── IdleTimerComponent.jsx   # Таймер бездіяльності
-│   ├── App.jsx                  # Головний компонент
-│   ├── App.css                  # Стилі
-│   ├── index.css                # Базові стилі
-│   └── main.jsx                 # Точка входу
-├── package.json
-├── vite.config.js
-└── README.md
+To create a production build:
+```bash
+npm run build
 ```
 
-## 🔧 Конфігурація
+To preview the production build:
+```bash
+npm run preview
+```
 
-### React Toastify
-- Різні типи сповіщень: success, error, warning, info
-- Автозакриття через 3 секунди
-- Налаштування позиції
+## Project Structure
 
-### React Idle Timer
-- Таймаут: 10 секунд
-- Throttle: 500ms
-- Події: mousemove, keydown, wheel, touchstart
+```
+src/
+├── app/
+│   ├── store.ts          # Redux store configuration
+│   └── hooks.ts          # Custom hooks for Redux (useAppDispatch, useAppSelector)
+├── components/           # Reusable UI components
+│   └── Header.tsx        # Application header
+├── features/             # Feature modules (using Redux Toolkit slices)
+│   └── tasks/            # Tasks feature
+│       ├── api/          # API simulation (localStorage)
+│       │   └── tasksApi.ts
+│       ├── components/   # Feature-specific UI components
+│       │   └── TaskItem.tsx
+│       ├── model/        # Redux slice and types
+│       │   ├── tasksSlice.ts
+│       │   └── tasksThunks.ts
+│       └── index.ts      # Barrel file for exports
+├── pages/                # Page components
+│   ├── TasksPage.tsx     # Main tasks page
+│   └── AboutPage.tsx     # About page
+├── services/             # Services (currently empty, for future API integration)
+├── shared/               # Shared resources (config, assets, styles)
+├── layouts/              # Page layouts (currently empty)
+├── routes/               # Routing configuration (currently in App.tsx)
+├── utils/                # Utility functions (currently empty)
+├── App.tsx               # Main application component
+├── main.tsx              # Entry point
+└── index.css             # Global styles
+```
 
-## 📱 Адаптивність
+## State Management
 
-Проект повністю адаптивний та коректно відображається на:
-- Мобільних пристроях
-- Планшетах
-- Десктопах
+This application uses Redux Toolkit for state management. The tasks feature includes:
 
-## 🤝 Автор
+- **tasksSlice.ts**: Defines the state shape and reducers for tasks
+- **tasksThunks.ts**: Contains asynchronous thunks for fetching, adding, removing, and toggling tasks
+- **tasksApi.ts**: Simulates API calls using localStorage
 
-Створено як демонстраційний проект для вивчення React-бібліотек.
+## Deployment
 
-## 📄 Ліцензія
+To deploy this application to Vercel or Netlify:
 
-MIT License
+### Vercel
+1. Push the code to a GitHub repository
+2. Import the project in Vercel
+3. Vercel will automatically detect the Vite project and deploy it
+
+### Netlify
+1. Push the code to a GitHub repository
+2. Connect the repository to Netlify
+3. Set the build command to `npm run build` and publish directory to `dist`
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint (if configured)
+
+## Learn More
+
+- [Vite Documentation](https://vitejs.dev/)
+- [React Documentation](https://reactjs.org/)
+- [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
+- [React Router Documentation](https://reactrouter.com/)
+
+## License
+
+This project is licensed under the MIT License.
+
+## Demo 
+
+View **https://my-react-app-ten-sigma.vercel.app**
