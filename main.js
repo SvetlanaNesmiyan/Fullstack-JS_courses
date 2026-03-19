@@ -1,110 +1,60 @@
-console.log('#53. JavaScript homework file');
+console.log('#54. JavaScript homework file');
 
 /*
  * #1
  */
 
-const isDebugMode = () => {
-  const nodeEnv = process.env.NODE_ENV;
-  const isDebug = nodeEnv === 'development';
-  console.log('NODE_ENV:', nodeEnv);
-  console.log('Is Debug Mode:', isDebug);
-  return isDebug;
-};
+import { writeFile } from 'fs/promises';
+
+async function writeFileAsync(filename, content) {
+  try {
+    await writeFile(filename, content);
+    console.log('Файл успішно записано');
+  } catch (error) {
+    console.error('Помилка при записі файлу:', error);
+  }
+}
 
 /*
  * #2
  */
 
-const encodeToBase64 = (...args) => {
+import { readFile } from 'fs/promises';
+
+async function readFileAsync(filename) {
   try {
-    const joinedString = args.join(':');
-    const encoded = Buffer.from(joinedString).toString('base64');
-    console.log('Encoding to Base64:', args, '->', encoded);
-    return encoded;
+    const content = await readFile(filename, 'utf8');
+    console.log('Файл успішно прочитано:', content);
+    return content;
   } catch (error) {
-    console.error('Error encoding to Base64:', error.message);
+    if (error.code === 'ENOENT') {
+      console.error('Файл не існує:', filename);
+    } else {
+      console.error('Помилка при читанні файлу:', error);
+    }
     throw error;
   }
-};
-
-const encodeToHex = (...args) => {
-  try {
-    const joinedString = args.join(':');
-    const encoded = Buffer.from(joinedString).toString('hex');
-    console.log('Encoding to Hex:', args, '->', encoded);
-    return encoded;
-  } catch (error) {
-    console.error('Error encoding to Hex:', error.message);
-    throw error;
-  }
-};
-
-const decodeFromBase64 = (base64String) => {
-  try {
-    const decoded = Buffer.from(base64String, 'base64').toString('utf8');
-    console.log('Decoding from Base64:', base64String, '->', decoded);
-    return decoded;
-  } catch (error) {
-    console.error('Error decoding from Base64:', error.message);
-    throw error;
-  }
-};
-
-const decodeFromHex = (hexString) => {
-  try {
-    const decoded = Buffer.from(hexString, 'hex').toString('utf8');
-    console.log('Decoding from Hex:', hexString, '->', decoded);
-    return decoded;
-  } catch (error) {
-    console.error('Error decoding from Hex:', error.message);
-    throw error;
-  }
-};
-
+}
 
 /*
  * #3
  */
 
-const safeDecodeFromBase64 = (base64String) => {
-  try {
-    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
-    if (!base64String || !base64Regex.test(base64String)) {
-      throw new Error('Invalid base64 string');
-    }
-    
-    const decoded = Buffer.from(base64String, 'base64').toString('utf8');
-    console.log('Safe Base64 Decoded:', decoded);
-    return decoded;
-  } catch (error) {
-    console.error('Error in safeDecodeFromBase64:', error.message);
-    throw new Error('Invalid base64 string');
-  }
-};
+import { unlink } from 'fs/promises';
 
-const safeDecodeFromHex = (hexString) => {
+async function deleteFileAsync(filename) {
   try {
-    const hexRegex = /^[0-9A-Fa-f]+$/;
-    if (!hexString || !hexRegex.test(hexString)) {
-      throw new Error('Invalid hex string');
-    }
-    
-    const decoded = Buffer.from(hexString, 'hex').toString('utf8');
-    console.log('Safe Hex Decoded:', decoded);
-    return decoded;
+    await unlink(filename);
+    console.log('Файл успішно видалено');
   } catch (error) {
-    console.error('Error in safeDecodeFromHex:', error.message);
-    throw new Error('Invalid hex string');
+    if (error.code === 'ENOENT') {
+      console.error('Файл не існує:', filename);
+    } else {
+      console.error('Помилка при видаленні файлу:', error);
+    }
+    throw error;
   }
-};
+}
 
-export {
-  isDebugMode,
-  encodeToBase64,
-  encodeToHex,
-  decodeFromBase64,
-  decodeFromHex,
-  safeDecodeFromBase64,
-  safeDecodeFromHex,
-};
+
+export { writeFileAsync, readFileAsync, deleteFileAsync };
