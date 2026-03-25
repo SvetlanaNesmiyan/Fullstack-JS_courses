@@ -1,20 +1,22 @@
 {
-  "name": "home-work",
+  "name": "express-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "description": "HTTP Server with HTML pages",
+  "type": "module",
+  "main": "src/server.mjs",
   "scripts": {
-    "test": "jest"
+    "start": "node src/server.mjs",
+    "dev": "node src/server.mjs",
+    "test": "vitest run"
   },
-  "keywords": [],
+  "keywords": [
+    "nodejs",
+    "http",
+    "server"
+  ],
   "author": "",
   "license": "ISC",
-  "jest": {
-    "testEnvironment": "node"
-  },
   "devDependencies": {
-    "jest": "^30.3.0",
-    "memfs": "^4.57.1",
-    "unionfs": "^4.6.0"
+    "vitest": "^4.1.1"
   }
 }
