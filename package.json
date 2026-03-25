@@ -1,5 +1,5 @@
 {
-  "name": "work",
+  "name": "home-work",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -9,9 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "devDependencies": {
-    "babel-jest": "^30.0.0",
-    "@babel/preset-env": "^30.0.0",
-    "jest": "^30.3.0"
+    "jest": "^30.3.0",
+    "memfs": "^4.57.1",
+    "unionfs": "^4.6.0"
   }
 }

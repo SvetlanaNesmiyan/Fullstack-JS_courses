@@ -1,50 +1,44 @@
-const { generatePasswordHash } = require('../main.js');
+const { decompressFile } = require('../main')
+const fs = require('fs')
+const { join } = require('path')
+const { tmpdir } = require('os')
+const zlib = require('zlib')
 
-describe('generatePasswordHash', () => {
-  test('should return a hash in hexadecimal format', () => {
-    const password = 'testPassword';
-    const salt = 'fixedSalt';
-    const hash = generatePasswordHash(password, salt);
-    expect(typeof hash).toBe('string');
-    // Length depends on keylen and digest; default keylen=64, digest='sha512' => 512 bits = 64 bytes => 128 hex chars
-    expect(hash.length).toBe(128);
-    expect(/^[0-9a-f]+$/.test(hash)).toBe(true);
-  });
+describe('decompressFile function', () => {
+  let testDir
+  let originalFilePath
+  let compressedFilePath
+  let destinationFilePath
 
-  test('should use default iterations, keylen, and digest when not provided', () => {
-    const password = 'testPassword';
-    const salt = 'fixedSalt';
-    const hash = generatePasswordHash(password, salt);
-    // Default: iterations=10000, keylen=64, digest='sha512'
-    // We can't easily verify the exact hash without reimplementing, but we can verify length and that it's deterministic.
-    const hash2 = generatePasswordHash(password, salt);
-    expect(hash).toBe(hash2);
-  });
+  beforeEach(() => {
+    testDir = fs.mkdtempSync(join(tmpdir(), 'decompress-test-'))
+    originalFilePath = join(testDir, 'source.txt')
+    compressedFilePath = join(testDir, 'source.txt.gz')
+    destinationFilePath = join(testDir, 'source_decompressed.txt')
 
-  test('should produce different hashes for different salts', () => {
-    const password = 'testPassword';
-    const salt1 = 'salt1';
-    const salt2 = 'salt2';
-    const hash1 = generatePasswordHash(password, salt1);
-    const hash2 = generatePasswordHash(password, salt2);
-    expect(hash1).not.toBe(hash2);
-  });
+    const originalContent = 'This is the original content of the file'
+    fs.writeFileSync(originalFilePath, originalContent)
+    const compressedContent = zlib.gzipSync(originalContent)
+    fs.writeFileSync(compressedFilePath, compressedContent)
+  })
 
-  test('should produce different hashes for different passwords', () => {
-    const password1 = 'password1';
-    const password2 = 'password2';
-    const salt = 'fixedSalt';
-    const hash1 = generatePasswordHash(password1, salt);
-    const hash2 = generatePasswordHash(password2, salt);
-    expect(hash1).not.toBe(hash2);
-  });
+  afterEach(() => {
+    fs.rmSync(testDir, { recursive: true, force: true })
+    jest.restoreAllMocks()
+  })
 
-  test('should accept custom iterations, keylen, and digest', () => {
-    const password = 'testPassword';
-    const salt = 'fixedSalt';
-    const hash = generatePasswordHash(password, salt, 5000, 32, 'sha256');
-    // With keylen=32 bytes, digest='sha256' => 256 bits = 32 bytes => 64 hex chars
-    expect(hash.length).toBe(64);
-    expect(/^[0-9a-f]+$/.test(hash)).toBe(true);
-  });
-});
+  test('should create a decompressed file and match the original content', async () => {
+    await decompressFile(compressedFilePath, destinationFilePath)
+    const fileExists = fs.existsSync(destinationFilePath)
+    expect(fileExists).toBe(true)
+
+    const decompressedContent = fs.readFileSync(destinationFilePath, 'utf8')
+    const originalFileContent = fs.readFileSync(originalFilePath, 'utf8')
+    expect(decompressedContent).toEqual(originalFileContent)
+  })
+
+  test('should handle read errors gracefully', async () => {
+    const nonExistentPath = join(testDir, 'nonexistent.gz')
+    await expect(decompressFile(nonExistentPath, destinationFilePath)).rejects.toThrow()
+  })
+})

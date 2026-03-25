@@ -1,30 +1,38 @@
-const { generateHash } = require('../main.js');
+const { compressFile } = require('../main.js')
+const fs = require('fs')
+const { createReadStream, existsSync } = fs
+const { resolve } = require('path')
+const { tmpdir } = require('os')
+const { join } = require('path')
 
-describe('generateHash', () => {
-  test('should return a SHA-256 hash in hexadecimal format', () => {
-    const input = 'Hello, World!';
-    const hash = generateHash(input);
-    expect(typeof hash).toBe('string');
-    expect(hash.length).toBe(64); // SHA-256 produces 64 hex characters
-    expect(/^[0-9a-f]+$/.test(hash)).toBe(true);
-  });
+let testDir
 
-  test('should produce the same hash for the same input', () => {
-    const input = 'test';
-    const hash1 = generateHash(input);
-    const hash2 = generateHash(input);
-    expect(hash1).toBe(hash2);
-  });
+beforeEach(() => {
+  testDir = fs.mkdtempSync(join(tmpdir(), 'compress-test-')
+  fs.writeFileSync(join(testDir, 'source.txt'), 'This is a test file content')
+})
 
-  test('should produce different hashes for different inputs', () => {
-    const hash1 = generateHash('abc');
-    const hash2 = generateHash('abcd');
-    expect(hash1).not.toBe(hash2);
-  });
+afterEach(() => {
+  fs.rmSync(testDir, { recursive: true, force: true })
+  jest.restoreAllMocks()
+})
 
-  test('should handle empty string', () => {
-    const hash = generateHash('');
-    expect(typeof hash).toBe('string');
-    expect(hash.length).toBe(64);
-  });
-});
+test('should compress a file and return the path to the compressed file', async () => {
+  const filePath = join(testDir, 'source.txt')
+  const expectedCompressedPath = join(testDir, 'source.txt.gz')
+  await expect(compressFile(filePath)).resolves.toBe(expectedCompressedPath)
+  expect(existsSync(expectedCompressedPath)).toBeTruthy()
+})
+
+test('should handle existing compressed files by creating a unique filename', async () => {
+  const filePath = join(testDir, 'source.txt')
+  fs.writeFileSync(join(testDir, 'source.txt.gz'), '')
+  const expectedNewCompressedPath = join(testDir, 'source_1.txt.gz')
+  await expect(compressFile(filePath)).resolves.toBe(expectedNewCompressedPath)
+  expect(existsSync(expectedNewCompressedPath)).toBeTruthy()
+})
+
+it('should handle file compression errors', async () => {
+  const failingFilePath = join(testDir, 'nonexistent.txt')
+  await expect(compressFile(failingFilePath)).rejects.toThrow(`file "${failingFilePath}" does not exist`)
+})

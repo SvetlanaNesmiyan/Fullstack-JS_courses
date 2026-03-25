@@ -1,127 +1,99 @@
-console.log('#57. JavaScript homework example file');
+// Imports
+const { createGzip, createGunzip } = require('zlib');
+const { createReadStream, createWriteStream } = require('fs');
+const { access } = require('fs/promises');
+const { constants } = require('fs');
+const { join, dirname, extname, basename } = require('path');
+const { pipeline } = require('stream/promises');
 
-const { createHash, pbkdf2Sync, timingSafeEqual } = require('crypto');
+async function compressFile(filePath) {
+    try {
+        await access(filePath, constants.R_OK);
 
-/*
- *
- * #1
- *
- * Технічне завдання для розробки функції "generateHash"
- *
- * Задача:
- * Розробити функцію, що використовує криптографічний алгоритм SHA-256 для генерації хешу з заданого рядка. Функція має бути реалізована так, щоб її можна було легко тестувати, забезпечувати точність та безпеку генерації хешу.
- *
- * Функціональні вимоги:
- * 1. Вхідні параметри:
- *  - `input`: Рядок, який потрібно хешувати.
- *
- * 2. Вихідні дані:
- *  - Функція повертає хеш заданого рядка у форматі шістнадцяткового рядка.
- *
- * 3. Безпека:
- *  - Використання криптографічно стійкого алгоритму SHA-256.
- *
- * Технічні вимоги:
- * - Використання сучасних можливостей JavaScript (ES6+), включаючи модулі ESM для легкої інтеграції та тестування.
- * - Функція має бути написана таким чином, щоб вона могла бути експортована та використана в інших частинах програми або тестових сценаріях.
- * - Забезпечення документації коду з описом параметрів, процесу роботи та прикладами використання.
- * - Підготовка функції для можливості легкого мокування та тестування за допомогою JEST.
- *
- */
+        const dir = dirname(filePath);
+        const ext = extname(filePath);
+        const name = basename(filePath, ext);
 
-function generateHash(input) {
-  return createHash('sha256').update(input, 'utf8').digest('hex');
+        let counter = 0;
+        let compressedFilePath;
+        while (true) {
+            const suffix = counter === 0 ? '' : `_${counter}`;
+            compressedFilePath = join(dir, `${name}${suffix}${ext}.gz`);
+            try {
+                await access(compressedFilePath, constants.F_OK);
+            } catch (err) {
+                if (err.code === 'ENOENT') {
+                    break;
+                }
+                throw err;
+            }
+            counter++;
+        }
+
+        await pipeline(
+            createReadStream(filePath),
+            createGzip(),
+            createWriteStream(compressedFilePath)
+        );
+
+        return compressedFilePath;
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            throw new Error(`file "${filePath}" does not exist`);
+        }
+        throw err;
+    }
 }
 
-// console.log(generateHash('Hello, World!'))
+async function decompressFile(compressedFilePath, destinationFilePath) {
+    try {
+        await access(compressedFilePath, constants.R_OK);
+        const dir = dirname(destinationFilePath);
+        const ext = extname(destinationFilePath);
+        const name = basename(destinationFilePath, ext);
 
-/*
- *
- * #2
- *
- * Технічне завдання для розробки функції "generatePasswordHash"
- *
- * Задача:
- * Розробити функцію, що використовує PBKDF2 алгоритм для генерації хешу паролю з використанням сілі. Функція повинна забезпечити високий рівень безпеки збережених паролів і бути легкою для тестування та інтеграції в більші системи.
- *
- * Функціональні вимоги:
- * 1. Вхідні параметри:
- *  - `password`: Рядок пароля, який потрібно захешувати.
- *  - `salt`: Сіль, яка використовується для генерації хешу, має бути у форматі рядка.
- *  - `iterations`: Кількість ітерацій хешування (дефолтне значення 10000).
- *  - `keylen`: Довжина ключа у байтах (дефолтне значення 64).
- *  - `digest`: Алгоритм хешування (дефолтне значення 'sha512').
- *
- * 2. Вихідні дані:
- *  - Функція повертає хеш заданого пароля у форматі шістнадцяткового рядка.
- *
- * 3. Безпека:
- *  - Використання алгоритму PBKDF2 для забезпечення стійкості до атак брутфорсом і rainbow tables.
- *
- * Технічні вимоги:
- * - Використання сучасних можливостей JavaScript (ES6+), включаючи модулі ESM для легкої інтеграції та тестування.
- * - Код має бути чистим, добре структурованим, з логічною структурою та зрозумілими назвами змінних та функцій.
- * - Підготовка функції для легкої інтеграції у тести, використовуючи JEST для мокування залежностей і перевірки поведінки функції.
- *
- */
+        let counter = 0;
+        let uniqueDestinationFilePath;
+        while (true) {
+            const suffix = counter === 0 ? '' : `_${counter}`;
+            uniqueDestinationFilePath = join(dir, `${name}${suffix}${ext}`);
+            try {
+                await access(uniqueDestinationFilePath, constants.F_OK);
+            } catch (err) {
+                if (err.code === 'ENOENT') {
+                    break;
+                }
+                throw err;
+            }
+            counter++;
+        }
 
-function generatePasswordHash(password, salt, iterations = 10000, keylen = 64, digest = 'sha512') {
-  const hashBuffer = pbkdf2Sync(password, salt, iterations, keylen, digest);
-  return hashBuffer.toString('hex');
+        await pipeline(
+            createReadStream(compressedFilePath),
+            createGunzip(),
+            createWriteStream(uniqueDestinationFilePath)
+        );
+
+        return uniqueDestinationFilePath;
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            throw new Error(`file "${compressedFilePath}" does not exist`);
+        }
+        throw err;
+    }
 }
 
-// Застосування функції
-// const password = 'superSecret123'
-// const salt = randomBytes(16).toString('hex')
-// const hash = generatePasswordHash(password, salt)
+module.exports = { compressFile, decompressFile };
 
-/*
- *
- * #3
- *
- * Технічне завдання для розробки функції "verifyPassword"
- *
- * Задача:
- * Розробити функцію, яка перевіряє відповідність введеного пароля збереженому хешу, використовуючи алгоритм PBKDF2. Функція повинна підтверджувати або спростовувати відповідність на основі переданих параметрів солі, ітерацій, довжини ключа та алгоритму хешування.
- *
- * Функціональні вимоги:
- * 1. Вхідні параметри:
- *  - `inputPassword`: Рядок, введений користувачем як пароль.
- *  - `storedHash`: Рядок, що містить збережений хеш паролю.
- *  - `salt`: Рядок, який представляє сіль, використану для генерації збереженого хешу.
- *  - `iterations`: Кількість ітерацій хешування (дефолтне значення 10000).
- *  - `keylen`: Довжина ключа у байтах (дефолтне значення 64).
- *  - `digest`: Алгоритм хешування (дефолтне значення 'sha512').
- *
- * 2. Результат:
- *  - Функція повертає булеве значення: `true`, якщо хеш введеного паролю співпадає з збереженим хешем; `false` — в інших випадках.
- *
- * 3. Безпека:
- *  - Використання надійних криптографічних методів для забезпечення захисту відомостей про паролі.
- *
- * Технічні вимоги:
- * - Використання сучасних можливостей JavaScript (ES6+), зокрема модулів ECMAScript для імпорту та експорту функцій.
- * - Чистий, добре структурований код з логічною структурою та зрозумілими назвами змінних і функцій.
- * - Підготовка функції для легкої інтеграції у тести, використовуючи JEST для мокування залежностей і перевірки поведінки функції.
- *
- */
-
-function verifyPassword(
-  inputPassword,
-  storedHash,
-  salt,
-  iterations = 10000,
-  keylen = 64,
-  digest = 'sha512',
-) {
-  const computedHashBuffer = pbkdf2Sync(inputPassword, salt, iterations, keylen, digest);
-  const storedHashBuffer = Buffer.from(storedHash, 'hex');
-  return timingSafeEqual(computedHashBuffer, storedHashBuffer);
-}
-
-// Застосування функції
-// const inputPassword = 'superSecret123'
-// const isCorrect = verifyPassword(inputPassword, hash, salt)
-// console.log(isCorrect ? 'Пароль вірний.' : 'Пароль невірний.')
-
-module.exports = { generateHash, generatePasswordHash, verifyPassword };
+// ! Перевірка роботи функцій стиснення та розпакування файлів
+// async function performCompressionAndDecompression() {
+//   try {
+//     const compressedResult = await compressFile('./files/source.txt')
+//     console.log(compressedResult)
+//     const decompressedResult = await decompressFile(compressedResult, './files/source_decompressed.txt')
+//     console.log(decompressedResult)
+//   } catch (error) {
+//     console.error('Error during compression or decompression:', error)
+//   }
+// }
+// performCompressionAndDecompression()
