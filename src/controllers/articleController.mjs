@@ -1,18 +1,37 @@
-// Контролер для роботи зі статтями
+// Контролер для роботи зі статтями (EJS шаблони)
+import ejs from 'ejs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Мокові дані статей
 const articles = [
-  { id: 1, title: 'Article 1', content: 'Content of article 1' },
-  { id: 2, title: 'Article 2', content: 'Content of article 2' }
+  { id: 1, title: 'Перша стаття', content: 'Зміст першої статті' },
+  { id: 2, title: 'Друга стаття', content: 'Зміст другої статті' },
+  { id: 3, title: 'Третя стаття', content: 'Зміст третьої статті' }
 ];
 
 // Отримати всі статті
-export function getAllArticles(req, res) {
-  res.send(`Articles: ${JSON.stringify(articles)}`);
+export async function getAllArticles(req, res) {
+  const templatePath = path.join(__dirname, '../views/ejs/articles.ejs');
+  const template = await ejs.renderFile(templatePath, { 
+    title: 'Статті',
+    articles 
+  });
+  
+  const layoutPath = path.join(__dirname, '../views/ejs/layout.ejs');
+  const html = await ejs.renderFile(layoutPath, {
+    title: 'Статті',
+    body: template
+  });
+  
+  res.send(html);
 }
 
 // Отримати статтю за ID
-export function getArticleById(req, res) {
+export async function getArticleById(req, res) {
   const articleId = parseInt(req.params.articleId);
   const article = articles.find(a => a.id === articleId);
   
@@ -21,7 +40,19 @@ export function getArticleById(req, res) {
     return;
   }
   
-  res.send(`Article: ${JSON.stringify(article)}`);
+  const templatePath = path.join(__dirname, '../views/ejs/articleDetail.ejs');
+  const template = await ejs.renderFile(templatePath, { 
+    title: article.title,
+    article 
+  });
+  
+  const layoutPath = path.join(__dirname, '../views/ejs/layout.ejs');
+  const html = await ejs.renderFile(layoutPath, {
+    title: article.title,
+    body: template
+  });
+  
+  res.send(html);
 }
 
 // Створити нову статтю
@@ -34,7 +65,7 @@ export function createArticle(req, res) {
   };
   
   articles.push(newArticle);
-  res.status(201).send(`Article created: ${JSON.stringify(newArticle)}`);
+  res.redirect('/articles');
 }
 
 // Оновити статтю
@@ -49,7 +80,7 @@ export function updateArticle(req, res) {
   
   const { title, content } = req.body;
   articles[articleIndex] = { ...articles[articleIndex], title, content };
-  res.send(`Article updated: ${JSON.stringify(articles[articleIndex])}`);
+  res.redirect(`/articles/${articleId}`);
 }
 
 // Видалити статтю
@@ -63,5 +94,5 @@ export function deleteArticle(req, res) {
   }
   
   articles.splice(articleIndex, 1);
-  res.send('Article deleted');
+  res.redirect('/articles');
 }

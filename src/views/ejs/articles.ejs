@@ -1,0 +1,12 @@
+<h1>Список статей</h1>
+<div class="article-list">
+  <% articles.forEach(function(article) { %>
+    <div class="article-card">
+      <div class="article-id">ID: <%= article.id %></div>
+      <div class="article-title">Заголовок: <%= article.title %></div>
+      <div class="article-content"><%= article.content %></div>
+      <a href="/articles/<%= article.id %>">Детальніше</a>
+    </div>
+  <% }); %>
+</div>
+<a href="/articles/new">Створити нову статтю</a>

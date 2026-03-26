@@ -1,0 +1,19 @@
+<h1>Деталі статті</h1>
+<div class="article-detail">
+  <div class="detail-row">
+    <label>ID:</label>
+    <span><%= article.id %></span>
+  </div>
+  <div class="detail-row">
+    <label>Заголовок:</label>
+    <span><%= article.title %></span>
+  </div>
+  <div class="detail-row">
+    <label>Зміст:</label>
+    <span><%= article.content %></span>
+  </div>
+</div>
+<div class="actions">
+  <a href="/articles">Назад до списку</a>
+  <a href="/articles/<%= article.id %>/edit">Редагувати</a>
+</div>

@@ -1,0 +1,17 @@
+extends layout.pug
+
+block content
+  h1 Деталі користувача
+  .user-detail
+    .detail-row
+      label ID:
+      span= user.id
+    .detail-row
+      label Ім'я користувача:
+      span= user.username
+    .detail-row
+      label Email:
+      span= user.email
+  .actions
+    a(href="/users") Назад до списку
+    a(href=`/users/${user.id}/edit`) Редагувати

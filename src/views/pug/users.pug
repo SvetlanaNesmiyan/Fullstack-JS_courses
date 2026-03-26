@@ -1,0 +1,12 @@
+extends layout.pug
+
+block content
+  h1 Список користувачів
+  .user-list
+    each user in users
+      .user-card
+        .user-id ID: #{user.id}
+        .user-name Ім'я: #{user.username}
+        .user-email Email: #{user.email}
+        a(href=`/users/${user.id}`) Детальніше
+  a(href="/users/new") Створити нового користувача

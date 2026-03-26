@@ -1,21 +1,22 @@
-# Express Server з MVC та Middleware
+# Express Server з MVC, Middleware та шаблонізаторами
 
-Express.js сервер з використанням MVC архітектури та мідлварів для логування, аутентифікації, валідації та контролю доступу.
+Express.js сервер з MVC архітектурою, мідлварами та підтримкою шаблонізаторів PUG і EJS.
 
 ## Опис
 
-Цей проект реалізує Express.js сервер з повною MVC архітектурою, включаючи:
-- Мідлвари для логування запитів
-- Мідлвари для аутентифікації користувачів
-- Мідлвари для валідації даних
-- Мідлвари для перевірки прав доступу до статей
-- Мідлвар для обробки помилок
+Цей проект реалізує Express.js сервер з:
+- MVC архітектурою
+- Мідлварами для логування, аутентифікації, валідації та контролю доступу
+- PUG шаблонізатором для маршрутів користувачів
+- EJS шаблонізатором для маршрутів статей
 
 ## Технології
 
 - Node.js
-- Express.js
-- ES Modules
+- Express.js (v4)
+- PUG (шаблонізатор для користувачів)
+- EJS (шаблонізатор для статей)
+- CSS (стилі для сторінок)
 
 ## Структура проекту
 
@@ -23,6 +24,9 @@ Express.js сервер з використанням MVC архітектури
 ├── package.json              # Конфігурація проекту
 ├── README.md                 # Документація
 ├── .gitignore               # Git ігнорування
+├── public/
+│   └── css/
+│       └── style.css        # CSS стилі
 └── src/
     ├── server.js            # Основний файл сервера
     ├── middleware/
@@ -32,11 +36,20 @@ Express.js сервер з використанням MVC архітектури
     │   ├── accessControl.mjs # Мідлвар контролю доступу
     │   └── errorHandler.mjs # Мідлвар обробки помилок
     ├── controllers/
-    │   ├── userController.mjs    # Контролер користувачів
-    │   └── articleController.mjs # Контролер статей
-    └── routes/
-        ├── userRoutes.mjs    # Маршрути користувачів
-        └── articleRoutes.mjs # Маршрути статей
+    │   ├── userController.mjs    # Контролер користувачів (PUG)
+    │   └── articleController.mjs # Контролер статей (EJS)
+    ├── routes/
+    │   ├── userRoutes.mjs    # Маршрути користувачів
+    │   └── articleRoutes.mjs # Маршрути статей
+    └── views/
+        ├── pug/              # PUG шаблони
+        │   ├── layout.pug
+        │   ├── users.pug
+        │   └── userDetail.pug
+        └── ejs/              # EJS шаблони
+            ├── layout.ejs
+            ├── articles.ejs
+            └── articleDetail.ejs
 ```
 
 ## Встановлення
@@ -59,62 +72,66 @@ npm start
 ## Доступні маршрути
 
 ### Головна сторінка
-- **GET /** - повертає текст "Home Page"
+- **GET /** - повертає HTML посилання на користувачів та статті
 
-### Маршрути користувачів (/users)
+### Маршрути користувачів (/users) - PUG шаблони
 Усі маршрути /users використовують мідлвар аутентифікації (basicAuth):
-- **GET /users** - отримати всіх користувачів
-- **GET /users/:userId** - отримати користувача за ID
-- **POST /users** - створити нового користувача (з валідацією)
-- **PUT /users/:userId** - оновити користувача
-- **DELETE /users/:userId** - видалити користувача
+- **GET /users** - отримати всіх користувачів (PUG)
+- **GET /users/:userId** - отримати користувача за ID (PUG)
 
-### Маршрути статей (/articles)
-Усі маршрути /articles використовують мідлвар контролю доступу:
-- **GET /articles** - отримати всі статті
-- **GET /articles/:articleId** - отримати статтю за ID
-- **POST /articles** - створити нову статтю
-- **PUT /articles/:articleId** - оновити статтю
-- **DELETE /articles/:articleId** - видалити статтю
+### Маршрути статей (/articles) - EJS шаблони
+Усі маршрути /articles використовують мідлвар контролю доступу (checkArticleAccess):
+- **GET /articles** - отримати всі статті (EJS)
+- **GET /articles/:articleId** - отримати статтю за ID (EJS)
 
 ## Мідлвари
 
 ### 1. Логування ([`src/middleware/logger.mjs`](src/middleware/logger.mjs))
 Записує інформацію про кожен запит до сервера з timestamp.
-```javascript
-app.use(logRequests); // Глобальний мідлвар
-```
 
 ### 2. Аутентифікація ([`src/middleware/auth.mjs`](src/middleware/auth.mjs))
 Перевіряє наявність заголовка Authorization. Використовується для маршрутів /users.
-```javascript
-router.get('/', basicAuth, userController.getAllUsers);
-```
 
 ### 3. Валідація ([`src/middleware/validation.mjs`](src/middleware/validation.mjs))
 Перевіряє наявність обов'язкових полів username та password у POST запитах.
-```javascript
-router.post('/', basicAuth, validateUserInput, userController.createUser);
-```
 
 ### 4. Контроль доступу ([`src/middleware/accessControl.mjs`](src/middleware/accessControl.mjs))
-Перевіряє права доступу до статей на основі заголовка x-user-role.
-```javascript
-router.get('/', checkArticleAccess, articleController.getAllArticles);
-```
+Перевіряє права доступу до статей на основі заголовка x-user-role. Потрібен заголовок `x-user-role: admin` для доступу.
 
 ### 5. Обробка помилок ([`src/middleware/errorHandler.mjs`](src/middleware/errorHandler.mjs))
 Централізована обробка помилок сервера.
-```javascript
-app.use(errorHandler);
+
+## Шаблонізатори
+
+### PUG (для користувачів)
+- [`src/views/pug/users.pug`](src/views/pug/users.pug) - список користувачів
+- [`src/views/pug/userDetail.pug`](src/views/pug/userDetail.pug) - деталі користувача
+
+### EJS (для статей)
+- [`src/views/ejs/articles.ejs`](src/views/ejs/articles.ejs) - список статей
+- [`src/views/ejs/articleDetail.ejs`](src/views/ejs/articleDetail.ejs) - деталі статті
+
+## Приклади запитів
+
+```bash
+# Головна сторінка
+curl http://localhost:3000/
+
+# Користувачі (потрібен заголовок авторизації)
+curl -H "Authorization: Bearer token" http://localhost:3000/users
+
+# Статті (потрібен заголовок x-user-role)
+curl -H "x-user-role: admin" http://localhost:3000/articles
+
+# CSS стилі
+curl http://localhost:3000/css/style.css
 ```
 
 ## Архітектура MVC
 
 Проект побудований за паттерном MVC:
-
 - **Model** - мокові дані в контролерах (users, articles)
-- **View** - текстові відповіді сервера
+- **View** - PUG та EJS шаблони
 - **Controller** - [`src/controllers/`](src/controllers/) обробляють бізнес-логіку
 - **Routes** - [`src/routes/`](src/routes/) визначають маршрути та їх мідлвари
 - **Middleware** - [`src/middleware/`](src/middleware/) виконують перевірки перед контролерами
@@ -128,4 +145,4 @@ npm test
 
 ## Конфігурація
 
-Сервер запускається на порту 3000 за замовчуванням. Змінити порт можна у файлі [`src/server.js`](src/server.js:29).
+Сервер запускається на порту 3000 за замовчуванням. Змінити порт можна у файлі [`src/server.js`](src/server.js:52).
