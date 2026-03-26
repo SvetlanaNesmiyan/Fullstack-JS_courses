@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "HTTP Server with HTML pages",
   "type": "module",
-  "main": "src/server.mjs",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.mjs",
-    "dev": "node src/server.mjs",
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
     "test": "vitest run"
   },
   "keywords": [
@@ -18,5 +18,8 @@
   "license": "ISC",
   "devDependencies": {
     "vitest": "^4.1.1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
