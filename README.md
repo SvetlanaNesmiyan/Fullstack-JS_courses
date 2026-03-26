@@ -1,6 +1,6 @@
-# Express Server з MVC, Middleware та шаблонізаторами
+# Express Server з MVC, Middleware, Шаблонізаторами, Cookies та JWT
 
-Express.js сервер з MVC архітектурою, мідлварами та підтримкою шаблонізаторів PUG і EJS.
+Express.js сервер з MVC архітектурою, мідлварами, підтримкою PUG/EJS шаблонізаторів, cookies та JWT авторизацією.
 
 ## Опис
 
@@ -9,6 +9,9 @@ Express.js сервер з MVC архітектурою, мідлварами т
 - Мідлварами для логування, аутентифікації, валідації та контролю доступу
 - PUG шаблонізатором для маршрутів користувачів
 - EJS шаблонізатором для маршрутів статей
+- Cookies для збереження налаштувань користувача (тема сайту)
+- JWT авторизацією з збереженням токенів в httpOnly cookies
+- Favicon для всіх сторінок
 
 ## Технології
 
@@ -16,6 +19,8 @@ Express.js сервер з MVC архітектурою, мідлварами т
 - Express.js (v4)
 - PUG (шаблонізатор для користувачів)
 - EJS (шаблонізатор для статей)
+- cookie-parser (робота з cookies)
+- jsonwebtoken (JWT авторизація)
 - CSS (стилі для сторінок)
 
 ## Структура проекту
@@ -25,6 +30,7 @@ Express.js сервер з MVC архітектурою, мідлварами т
 ├── README.md                 # Документація
 ├── .gitignore               # Git ігнорування
 ├── public/
+│   ├── favicon.ico          # Favicon
 │   └── css/
 │       └── style.css        # CSS стилі
 └── src/
@@ -34,13 +40,16 @@ Express.js сервер з MVC архітектурою, мідлварами т
     │   ├── auth.mjs         # Мідлвар аутентифікації
     │   ├── validation.mjs   # Мідлвар валідації
     │   ├── accessControl.mjs # Мідлвар контролю доступу
-    │   └── errorHandler.mjs # Мідлвар обробки помилок
+    │   ├── errorHandler.mjs # Мідлвар обробки помилок
+    │   └── jwtAuth.mjs      # Мідлвар перевірки JWT
     ├── controllers/
     │   ├── userController.mjs    # Контролер користувачів (PUG)
     │   └── articleController.mjs # Контролер статей (EJS)
     ├── routes/
     │   ├── userRoutes.mjs    # Маршрути користувачів
-    │   └── articleRoutes.mjs # Маршрути статей
+    │   ├── articleRoutes.mjs # Маршрути статей
+    │   ├── authRoutes.mjs   # Маршрути авторизації (JWT)
+    │   └── settingsRoutes.mjs # Маршрути налаштувань (cookies)
     └── views/
         ├── pug/              # PUG шаблони
         │   ├── layout.pug
@@ -72,7 +81,7 @@ npm start
 ## Доступні маршрути
 
 ### Головна сторінка
-- **GET /** - повертає HTML посилання на користувачів та статті
+- **GET /** - повертає HTML з посиланнями та поточною темой
 
 ### Маршрути користувачів (/users) - PUG шаблони
 Усі маршрути /users використовують мідлвар аутентифікації (basicAuth):
@@ -80,9 +89,20 @@ npm start
 - **GET /users/:userId** - отримати користувача за ID (PUG)
 
 ### Маршрути статей (/articles) - EJS шаблони
-Усі маршрути /articles використовують мідлвар контролю доступу (checkArticleAccess):
+Усі маршрути /articles використовують мідлвар контролю доступу:
 - **GET /articles** - отримати всі статті (EJS)
 - **GET /articles/:articleId** - отримати статтю за ID (EJS)
+
+### Маршрути авторизації (/auth) - JWT
+- **POST /auth/register** - реєстрація користувача, створює JWT token в httpOnly cookie
+- **POST /auth/login** - вхід користувача, створює JWT token в httpOnly cookie
+- **POST /auth/logout** - вихід, видаляє JWT cookie
+- **GET /auth/me** - перевірка автентифікації (захищений маршрут)
+
+### Маршрути налаштувань (/settings) - Cookies
+- **POST /settings/theme** - зберегти тему оформлення (light/dark)
+- **GET /settings/theme** - отримати поточну тему
+- **DELETE /settings/theme** - очистити тему
 
 ## Мідлвари
 
@@ -96,20 +116,13 @@ npm start
 Перевіряє наявність обов'язкових полів username та password у POST запитах.
 
 ### 4. Контроль доступу ([`src/middleware/accessControl.mjs`](src/middleware/accessControl.mjs))
-Перевіряє права доступу до статей на основі заголовка x-user-role. Потрібен заголовок `x-user-role: admin` для доступу.
+Перевіряє права доступу до статей на основі заголовка x-user-role.
 
-### 5. Обробка помилок ([`src/middleware/errorHandler.mjs`](src/middleware/errorHandler.mjs))
+### 5. JWT авторизація ([`src/middleware/jwtAuth.mjs`](src/middleware/jwtAuth.mjs))
+Перевіряє JWT токен з cookies або заголовка Authorization.
+
+### 6. Обробка помилок ([`src/middleware/errorHandler.mjs`](src/middleware/errorHandler.mjs))
 Централізована обробка помилок сервера.
-
-## Шаблонізатори
-
-### PUG (для користувачів)
-- [`src/views/pug/users.pug`](src/views/pug/users.pug) - список користувачів
-- [`src/views/pug/userDetail.pug`](src/views/pug/userDetail.pug) - деталі користувача
-
-### EJS (для статей)
-- [`src/views/ejs/articles.ejs`](src/views/ejs/articles.ejs) - список статей
-- [`src/views/ejs/articleDetail.ejs`](src/views/ejs/articleDetail.ejs) - деталі статті
 
 ## Приклади запитів
 
@@ -117,15 +130,39 @@ npm start
 # Головна сторінка
 curl http://localhost:3000/
 
+# Favicon
+curl http://localhost:3000/favicon.ico
+
 # Користувачі (потрібен заголовок авторизації)
 curl -H "Authorization: Bearer token" http://localhost:3000/users
 
 # Статті (потрібен заголовок x-user-role)
 curl -H "x-user-role: admin" http://localhost:3000/articles
 
-# CSS стилі
-curl http://localhost:3000/css/style.css
+# Реєстрація
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"username":"newuser","password":"pass123","email":"user@test.com"}' \
+  http://localhost:3000/auth/register
+
+# Вхід
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"admin123"}' \
+  http://localhost:3000/auth/login
+
+# Перевірка автентифікації (з cookie)
+curl -b cookies.txt http://localhost:3000/auth/me
+
+# Збереження теми
+curl -X POST -d "theme=dark" http://localhost:3000/settings/theme
+
+# Отримання теми
+curl http://localhost:3000/settings/theme
 ```
+
+## Тестові користувачі
+
+- Username: `admin`, Password: `admin123`
+- Username: `user1`, Password: `user123`
 
 ## Архітектура MVC
 
@@ -145,4 +182,4 @@ npm test
 
 ## Конфігурація
 
-Сервер запускається на порту 3000 за замовчуванням. Змінити порт можна у файлі [`src/server.js`](src/server.js:52).
+Сервер запускається на порту 3000 за замовчуванням. Змінити порт можна у файлі [`src/server.js`](src/server.js:62).
