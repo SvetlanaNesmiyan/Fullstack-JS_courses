@@ -9,7 +9,6 @@ Express.js сервер з використанням MVC архітектури
 - Мідлвари для аутентифікації користувачів
 - Мідлвари для валідації даних
 - Мідлвари для перевірки прав доступу до статей
-- Мідлвар для обробки помилок
 
 ## Технології
 
@@ -23,20 +22,22 @@ Express.js сервер з використанням MVC архітектури
 ├── package.json              # Конфігурація проекту
 ├── README.md                 # Документація
 ├── .gitignore               # Git ігнорування
-└── src/
-    ├── server.js            # Основний файл сервера
-    ├── middleware/
-    │   ├── logger.mjs       # Мідлвар логування
-    │   ├── auth.mjs         # Мідлвар аутентифікації
-    │   ├── validation.mjs   # Мідлвар валідації
-    │   ├── accessControl.mjs # Мідлвар контролю доступу
-    │   └── errorHandler.mjs # Мідлвар обробки помилок
-    ├── controllers/
-    │   ├── userController.mjs    # Контролер користувачів
-    │   └── articleController.mjs # Контролер статей
-    └── routes/
-        ├── userRoutes.mjs    # Маршрути користувачів
-        └── articleRoutes.mjs # Маршрути статей
+├── src/
+│   ├── server.js            # Основний файл Express сервера
+│   ├── native-http/
+│   │   ├── server.mjs      # HTTP-сервер на нативному http модулі
+│   │   └── querystring.mjs # Модуль-реекспорт querystring
+│   ├── middleware/
+│   │   ├── logger.mjs       # Мідлвар логування
+│   │   ├── auth.mjs         # Мідлвар аутентифікації
+│   │   ├── validation.mjs   # Мідлвар валідації
+│   │   └── accessControl.mjs # Мідлвар контролю доступу
+│   ├── controllers/
+│   │   ├── userController.mjs    # Контролер користувачів
+│   │   └── articleController.mjs # Контролер статей
+│   └── routes/
+│       ├── userRoutes.mjs    # Маршрути користувачів
+│       └── articleRoutes.mjs # Маршрути статей
 ```
 
 ## Встановлення
@@ -49,12 +50,17 @@ Express.js сервер з використанням MVC архітектури
 
 ## Запуск
 
-Запустіть сервер:
+### Express Server (основний)
 ```bash
 npm start
 ```
 
 Сервер буде доступний за адресою: http://localhost:3000
+
+### Native HTTP Server (альтернативний)
+```bash
+node src/native-http/server.mjs
+```
 
 ## Доступні маршрути
 
@@ -77,6 +83,12 @@ npm start
 - **PUT /articles/:articleId** - оновити статтю
 - **DELETE /articles/:articleId** - видалити статтю
 
+### Native HTTP Server Маршрути (src/native-http/server.mjs)
+- **GET /** - головна сторінка
+- **GET /about** - сторінка "Про нас"
+- **GET /contact** - сторінка контактів
+- **POST /submit** - обробка форми підписки
+
 ## Мідлвари
 
 ### 1. Логування ([`src/middleware/logger.mjs`](src/middleware/logger.mjs))
@@ -92,7 +104,7 @@ router.get('/', basicAuth, userController.getAllUsers);
 ```
 
 ### 3. Валідація ([`src/middleware/validation.mjs`](src/middleware/validation.mjs))
-Перевіряє наявність обов'язкових полів username та password у POST запитах.
+Перевіряє наявність обов'язкових полів username та email у POST запитах.
 ```javascript
 router.post('/', basicAuth, validateUserInput, userController.createUser);
 ```
@@ -103,10 +115,37 @@ router.post('/', basicAuth, validateUserInput, userController.createUser);
 router.get('/', checkArticleAccess, articleController.getAllArticles);
 ```
 
-### 5. Обробка помилок ([`src/middleware/errorHandler.mjs`](src/middleware/errorHandler.mjs))
-Централізована обробка помилок сервера.
-```javascript
-app.use(errorHandler);
+## Приклади запитів
+
+### Отримання всіх користувачів (з аутентифікацією)
+```bash
+curl -X GET http://localhost:3000/users \
+  -H "Authorization: Basic YWRtaW46cGFzc3dvcmQ="
+```
+
+### Створення нового користувача
+```bash
+curl -X POST http://localhost:3000/users \
+  -H "Authorization: Basic YWRtaW46cGFzc3dvcmQ=" \
+  -H "Content-Type: application/json" \
+  -d '{"username": "newuser", "email": "newuser@example.com"}'
+```
+
+### Отримання статей (з x-user-role)
+```bash
+curl -X GET http://localhost:3000/articles \
+  -H "x-user-role: admin"
+```
+
+### Доступ до публічних маршрутів Native HTTP Server
+```bash
+curl http://localhost:3000/
+curl http://localhost:3000/about
+curl http://localhost:3000/contact
+
+curl -X POST http://localhost:3000/submit \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "email=test@example.com"
 ```
 
 ## Архітектура MVC
@@ -128,4 +167,4 @@ npm test
 
 ## Конфігурація
 
-Сервер запускається на порту 3000 за замовчуванням. Змінити порт можна у файлі [`src/server.js`](src/server.js:29).
+Express сервер запускається на порту 3000 за замовчуванням. Змінити порт можна у файлі [`src/server.js`](src/server.js:29).

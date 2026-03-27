@@ -1,11 +1,11 @@
 // Мідлвар для валідації даних користувача
 export function validateUserInput(req, res, next) {
-  const { username, password } = req.body;
+  const { username, email } = req.body;
   
-  if (!username || !password) {
-    res.status(400).send('Missing required fields: username and password');
+  if (!username || !email) {
+    res.status(400).send('Missing required fields: username and email');
     return;
   }
-  
+
   next();
 }

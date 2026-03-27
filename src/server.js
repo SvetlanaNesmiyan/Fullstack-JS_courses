@@ -1,6 +1,5 @@
 import express from 'express';
 import { logRequests } from './middleware/logger.mjs';
-import { errorHandler } from './middleware/errorHandler.mjs';
 import userRoutes from './routes/userRoutes.mjs';
 import articleRoutes from './routes/articleRoutes.mjs';
 
@@ -22,9 +21,6 @@ app.use('/users', userRoutes);
 
 // Підключення маршрутів статей з мідлварами
 app.use('/articles', articleRoutes);
-
-// Мідлвар обробки помилок
-app.use(errorHandler);
 
 // Порт сервера
 const PORT = 3000;

@@ -1,7 +1,7 @@
 {
   "name": "express-server",
   "version": "1.0.0",
-  "description": "HTTP Server with HTML pages",
+  "description": "Express Server з MVC та Middleware",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
@@ -11,8 +11,9 @@
   },
   "keywords": [
     "nodejs",
-    "http",
-    "server"
+    "express",
+    "mvc",
+    "middleware"
   ],
   "author": "",
   "license": "ISC",
