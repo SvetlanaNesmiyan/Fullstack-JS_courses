@@ -11,9 +11,11 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 
 const app = express();
 
-// Налаштування PUG шаблонізатора
+// Налаштування PUG та EJS шаблонізаторів
 app.set('view engine', 'pug');
 app.set('views', path.join(projectRoot, 'src', 'views', 'pug'));
+
+// Для EJS шаблонів використовується ejs.renderFile() в контролері
 
 // Підтримка JSON тіла запиту
 app.use(express.json());

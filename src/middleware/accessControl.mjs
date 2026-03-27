@@ -4,9 +4,9 @@ export function checkArticleAccess(req, res, next) {
   // У реальному додатку тут би перевірялися ролі користувача
   const userRole = req.headers['x-user-role'] || 'guest';
   
-  // Для прикладу: тільки авторизовані користувачі можуть отримати доступ до статей
-  if (userRole === 'guest') {
-    res.status(403).send('Access denied. You do not have permission to access articles.');
+  // Для прикладу: тільки admin може отримати доступ до статей
+  if (userRole !== 'admin') {
+    res.status(403).send('Access denied. Only admin can access articles.');
     return;
   }
   

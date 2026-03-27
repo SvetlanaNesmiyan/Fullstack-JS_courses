@@ -14,45 +14,53 @@ const articles = [
 ];
 
 // Отримати всі статті
-export async function getAllArticles(req, res) {
-  const templatePath = path.join(__dirname, '../views/ejs/articles.ejs');
-  const template = await ejs.renderFile(templatePath, { 
-    title: 'Статті',
-    articles 
-  });
-  
-  const layoutPath = path.join(__dirname, '../views/ejs/layout.ejs');
-  const html = await ejs.renderFile(layoutPath, {
-    title: 'Статті',
-    body: template
-  });
-  
-  res.send(html);
+export async function getAllArticles(req, res, next) {
+  try {
+    const templatePath = path.join(__dirname, '../views/ejs/articles.ejs');
+    const template = await ejs.renderFile(templatePath, { 
+      title: 'Статті',
+      articles 
+    });
+    
+    const layoutPath = path.join(__dirname, '../views/ejs/layout.ejs');
+    const html = await ejs.renderFile(layoutPath, {
+      title: 'Статті',
+      body: template
+    });
+    
+    res.send(html);
+  } catch (err) {
+    next(err);
+  }
 }
 
 // Отримати статтю за ID
-export async function getArticleById(req, res) {
-  const articleId = parseInt(req.params.articleId);
-  const article = articles.find(a => a.id === articleId);
-  
-  if (!article) {
-    res.status(404).send('Article not found');
-    return;
+export async function getArticleById(req, res, next) {
+  try {
+    const articleId = parseInt(req.params.articleId);
+    const article = articles.find(a => a.id === articleId);
+    
+    if (!article) {
+      res.status(404).send('Article not found');
+      return;
+    }
+    
+    const templatePath = path.join(__dirname, '../views/ejs/articleDetail.ejs');
+    const template = await ejs.renderFile(templatePath, { 
+      title: article.title,
+      article 
+    });
+    
+    const layoutPath = path.join(__dirname, '../views/ejs/layout.ejs');
+    const html = await ejs.renderFile(layoutPath, {
+      title: article.title,
+      body: template
+    });
+    
+    res.send(html);
+  } catch (err) {
+    next(err);
   }
-  
-  const templatePath = path.join(__dirname, '../views/ejs/articleDetail.ejs');
-  const template = await ejs.renderFile(templatePath, { 
-    title: article.title,
-    article 
-  });
-  
-  const layoutPath = path.join(__dirname, '../views/ejs/layout.ejs');
-  const html = await ejs.renderFile(layoutPath, {
-    title: article.title,
-    body: template
-  });
-  
-  res.send(html);
 }
 
 // Створити нову статтю
