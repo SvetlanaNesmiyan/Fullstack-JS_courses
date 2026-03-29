@@ -4,7 +4,7 @@ import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import ejs from 'ejs';
-import mongoose from 'mongoose';
+import { connectDB } from './config/database.mjs';
 import path from 'path';
 import 'dotenv/config';
 import { fileURLToPath } from 'url';
@@ -21,19 +21,6 @@ import settingsRoutes from './routes/settingsRoutes.mjs';
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const app = express();
-
-// Підключення до MongoDB
-const connectDB = async () => {
-  try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/express-server';
-    await mongoose.connect(mongoUri);
-    console.log('MongoDB підключено успішно');
-  } catch (error) {
-    console.error('Помилка підключення до MongoDB:', error.message);
-    // Продовжуємо роботу без MongoDB для розробки
-    console.log('Сервер працюватиме в режимі демо без збереження даних');
-  }
-};
 
 // Конфігурація Passport
 configurePassport();

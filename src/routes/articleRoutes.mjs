@@ -4,20 +4,36 @@ import { checkArticleAccess } from '../middleware/accessControl.mjs';
 
 const router = express.Router();
 
-// Маршрути для роботи зі статтями
-// GET /articles - отримати всі статті (з перевіркою прав доступу)
-router.get('/', checkArticleAccess, articleController.getAllArticles);
+// ================================================
+// HTML Маршрути (сторінки з EJS шаблонами)
+// ================================================
 
-// GET /articles/:articleId - отримати статтю за ID (з перевіркою прав доступу)
-router.get('/:articleId', checkArticleAccess, articleController.getArticleById);
+// GET /articles - отримати всі опубліковані статті
+router.get('/', articleController.getAllArticles);
 
-// POST /articles - створити нову статтю (з перевіркою прав доступу)
-router.post('/', checkArticleAccess, articleController.createArticle);
+// GET /articles/:articleId - отримати статтю за ID
+router.get('/:articleId', articleController.getArticleById);
 
-// PUT /articles/:articleId - оновити статтю (з перевіркою прав доступу)
-router.put('/:articleId', checkArticleAccess, articleController.updateArticle);
+// POST /articles - створити нову статтю (тільки для автентифікованих)
+router.post('/', articleController.createArticle);
 
-// DELETE /articles/:articleId - видалити статтю (з перевіркою прав доступу)
-router.delete('/:articleId', checkArticleAccess, articleController.deleteArticle);
+// PUT /articles/:articleId - оновити статтю (тільки для автентифікованих)
+router.put('/:articleId', articleController.updateArticle);
+
+// DELETE /articles/:articleId - видалити статтю (тільки для автентифікованих)
+router.delete('/:articleId', articleController.deleteArticle);
+
+// ================================================
+// API Маршрути (JSON відповіді)
+// ================================================
+
+// GET /api/articles/categories - отримати список категорій
+router.get('/api/categories', articleController.getCategories);
+
+// GET /api/articles/category/:category - отримати статті за категорією
+router.get('/api/category/:category', articleController.getArticlesByCategory);
+
+// GET /api/articles/stats - отримати статистику статей
+router.get('/api/stats', articleController.getArticleStats);
 
 export default router;

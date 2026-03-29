@@ -8,16 +8,113 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <nav>
+  <nav class="navbar">
     <div class="container">
-      <a href="/">Головна</a>
-      <a href="/users">Користувачі</a>
-      <a href="/articles">Статті</a>
-      <a href="/auth">Авторизація</a>
+      <div class="nav-brand">
+        <a href="/">Express Server</a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="/">Головна</a></li>
+        <li><a href="/users">Користувачі</a></li>
+        <li><a href="/articles">Статті</a></li>
+        <li><a href="/auth">Авторизація</a></li>
+        <% if (typeof user !== 'undefined' && user) { %>
+          <li><a href="/settings">Налаштування</a></li>
+          <li class="nav-user">
+            <span>Вітаємо, <strong><%= user.username || user.email %></strong></span>
+            <a href="/auth/logout" class="btn-logout">Вихід</a>
+          </li>
+        <% } else { %>
+          <li><a href="/auth/login">Вхід</a></li>
+          <li><a href="/auth/register">Реєстрація</a></li>
+        <% } %>
+      </ul>
     </div>
   </nav>
-  <main class="container">
+  
+  <main class="main-content container">
     <%- body %>
   </main>
+  
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <%= new Date().getFullYear() %> Express Server з MongoDB Atlas</p>
+    </div>
+  </footer>
 </body>
 </html>
+
+<style>
+.navbar {
+  background: #343a40;
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.nav-brand a {
+  color: #fff;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-menu li a {
+  color: #adb5bd;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.nav-menu li a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+.btn-logout {
+  background: #dc3545;
+  color: #fff !important;
+  padding: 5px 12px !important;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.btn-logout:hover {
+  background: #c82333 !important;
+}
+
+.main-content {
+  min-height: calc(100vh - 200px);
+  padding: 40px 20px;
+}
+
+.footer {
+  background: #f8f9fa;
+  padding: 20px 0;
+  text-align: center;
+  color: #6c757d;
+  border-top: 1px solid #dee2e6;
+}
+</style>

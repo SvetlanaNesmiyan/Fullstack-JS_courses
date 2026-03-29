@@ -1,19 +1,193 @@
-<h1>Деталі статті</h1>
-<div class="article-detail">
-  <div class="detail-row">
-    <label>ID:</label>
-    <span><%= article.id %></span>
+<article class="article-detail">
+  <header class="article-header">
+    <% if (article.category) { %>
+      <span class="article-category"><%= article.category %></span>
+    <% } %>
+    <h1 class="article-title"><%= article.title %></h1>
+    
+    <div class="article-meta">
+      <span class="article-date">
+        Опубліковано: <%= new Date(article.publishedAt || article.createdAt).toLocaleDateString('uk-UA', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+      </span>
+      <span class="article-views">Переглядів: <%= article.views || 0 %></span>
+    </div>
+    
+    <% if (article.author) { %>
+      <div class="article-author">
+        Автор: <%= article.author.username || 'Невідомий' %>
+        <% if (article.author.email) { %>
+          (<%= article.author.email %>)
+        <% } %>
+      </div>
+    <% } %>
+  </header>
+  
+  <% if (article.imageUrl) { %>
+    <figure class="article-image-container">
+      <img src="<%= article.imageUrl %>" alt="<%= article.title %>" class="article-image">
+    </figure>
+  <% } %>
+  
+  <div class="article-content">
+    <%- article.content.replace(/\n/g, '<br>') %>
   </div>
-  <div class="detail-row">
-    <label>Заголовок:</label>
-    <span><%= article.title %></span>
-  </div>
-  <div class="detail-row">
-    <label>Зміст:</label>
-    <span><%= article.content %></span>
-  </div>
-</div>
-<div class="actions">
-  <a href="/articles">Назад до списку</a>
-  <a href="/articles/<%= article.id %>/edit">Редагувати</a>
-</div>
+  
+  <% if (article.tags && article.tags.length > 0) { %>
+    <div class="article-tags">
+      <strong>Теги:</strong>
+      <% article.tags.forEach(function(tag) { %>
+        <span class="tag"><%= tag %></span>
+      <% }); %>
+    </div>
+  <% } %>
+  
+  <footer class="article-footer">
+    <a href="/articles" class="btn btn-back">← Назад до списку статей</a>
+    
+    <% if (typeof user !== 'undefined' && user && article.author && user._id.toString() === article.author._id.toString()) { %>
+      <div class="article-management">
+        <a href="/articles/<%= article._id %>/edit" class="btn btn-edit">Редагувати</a>
+        <form action="/articles/<%= article._id %>?_method=DELETE" method="POST" class="delete-form" onsubmit="return confirm('Ви впевнені, що хочете видалити цю статтю?');">
+          <button type="submit" class="btn btn-delete">Видалити</button>
+        </form>
+      </div>
+    <% } %>
+  </footer>
+</article>
+
+<style>
+.article-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.article-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.article-category {
+  display: inline-block;
+  background: #007bff;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  margin-bottom: 15px;
+}
+
+.article-title {
+  font-size: 2.2em;
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.article-meta {
+  display: flex;
+  gap: 20px;
+  color: #666;
+  font-size: 0.95em;
+  margin-bottom: 10px;
+}
+
+.article-author {
+  color: #555;
+  font-style: italic;
+}
+
+.article-image-container {
+  margin: 20px 0;
+}
+
+.article-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.article-content {
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: #333;
+  margin: 30px 0;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.article-tags {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #e9ecef;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  color: #495057;
+}
+
+.article-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-size: 1em;
+}
+
+.btn-back {
+  background: #6c757d;
+  color: #fff;
+}
+
+.btn-back:hover {
+  background: #5a6268;
+}
+
+.btn-edit {
+  background: #28a745;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: #218838;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+}
+
+.article-management {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-form {
+  display: inline;
+}
+</style>
