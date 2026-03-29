@@ -1,27 +1,33 @@
-# Express Server з MVC, Middleware, Шаблонізаторами, Cookies та JWT
+# Express Server з Passport авторизацією та сесіями
 
-Express.js сервер з MVC архітектурою, мідлварами, підтримкою PUG/EJS шаблонізаторів, cookies та JWT авторизацією.
+Express.js сервер з Passport.js авторизацією, збереженням сесій в MongoDB, захищеними маршрутами та підтримкою шаблонізаторів PUG/EJS.
 
 ## Опис
 
 Цей проект реалізує Express.js сервер з:
-- MVC архітектурою
-- Мідлварами для логування, аутентифікації, валідації та контролю доступу
-- PUG шаблонізатором для маршрутів користувачів
-- EJS шаблонізатором для маршрутів статей
-- Cookies для збереження налаштувань користувача (тема сайту)
-- JWT авторизацією з збереженням токенів в httpOnly cookies
-- Favicon для всіх сторінок
+- **Passport.js** для авторизації користувачів
+- **Локальна стратегія** авторизації (email + пароль)
+- **Express sessions** для збереження стану авторизації
+- **MongoDB** для зберігання сесій та даних користувачів (опціонально)
+- **Session cookies** з httpOnly та secure налаштуваннями
+- **MVC архітектурою** з мідлварами
+- **PUG/EJS шаблонізаторами**
+- **Cookies** для збереження налаштувань користувача
+- **JWT** (збережено для сумісності)
 
 ## Технології
 
 - Node.js
 - Express.js (v4)
-- PUG (шаблонізатор для користувачів)
-- EJS (шаблонізатор для статей)
-- cookie-parser (робота з cookies)
-- jsonwebtoken (JWT авторизація)
-- CSS (стилі для сторінок)
+- Passport.js (v0.7)
+- passport-local (локальна стратегія)
+- express-session (управління сесіями)
+- connect-mongo (зберігання сесій в MongoDB)
+- mongoose (MongoDB ODM)
+- bcryptjs (хешування паролів)
+- PUG (шаблонізатор)
+- EJS (шаблонізатор)
+- cookie-parser
 
 ## Структура проекту
 
@@ -29,27 +35,32 @@ Express.js сервер з MVC архітектурою, мідлварами, �
 ├── package.json              # Конфігурація проекту
 ├── README.md                 # Документація
 ├── .gitignore               # Git ігнорування
+├── .env.example             # Приклад змінних середовища
 ├── public/
 │   ├── favicon.ico          # Favicon
 │   └── css/
 │       └── style.css        # CSS стилі
 └── src/
     ├── server.js            # Основний файл сервера
+    ├── config/
+    │   └── passport.mjs      # Конфігурація Passport
     ├── middleware/
     │   ├── logger.mjs       # Мідлвар логування
-    │   ├── auth.mjs         # Мідлвар аутентифікації
+    │   ├── auth.mjs         # Мідлвар аутентифікації Passport
     │   ├── validation.mjs   # Мідлвар валідації
     │   ├── accessControl.mjs # Мідлвар контролю доступу
     │   ├── errorHandler.mjs # Мідлвар обробки помилок
     │   └── jwtAuth.mjs      # Мідлвар перевірки JWT
+    ├── models/
+    │   └── User.mjs         # Модель користувача (Mongoose)
     ├── controllers/
     │   ├── userController.mjs    # Контролер користувачів (PUG)
     │   └── articleController.mjs # Контролер статей (EJS)
     ├── routes/
     │   ├── userRoutes.mjs    # Маршрути користувачів
     │   ├── articleRoutes.mjs # Маршрути статей
-    │   ├── authRoutes.mjs   # Маршрути авторизації (JWT)
-    │   └── settingsRoutes.mjs # Маршрути налаштувань (cookies)
+    │   ├── authRoutes.mjs   # Маршрути авторизації (Passport)
+    │   └── settingsRoutes.mjs # Маршрути налаштувань
     └── views/
         ├── pug/              # PUG шаблони
         │   ├── layout.pug
@@ -68,67 +79,104 @@ Express.js сервер з MVC архітектурою, мідлварами, �
    ```bash
    npm install
    ```
+3. (Опціонально) Налаштуйте MongoDB:
+   - Встановіть MongoDB локально або використовуйте MongoDB Atlas
+   - Скопіюйте `.env.example` в `.env`
+   - Вкажіть `MONGODB_URI`
 
 ## Запуск
 
-Запустіть сервер:
 ```bash
 npm start
 ```
 
 Сервер буде доступний за адресою: http://localhost:3000
 
+**Примітка:** Сервер працює в демо-режимі без MongoDB. Для повноцінної роботи потрібно налаштувати MongoDB.
+
+## Конфігурація
+
+Скопіюйте `.env.example` в `.env` та налаштуйте:
+
+- `PORT` - порт сервера (за замовчуванням: 3000)
+- `MONGODB_URI` - URI MongoDB (необов'язково)
+- `SESSION_SECRET` - секретний ключ для сесій
+- `NODE_ENV` - середовище (development/production)
+
 ## Доступні маршрути
 
 ### Головна сторінка
-- **GET /** - повертає HTML з посиланнями та поточною темой
+- **GET /** - головна сторінка з посиланнями
 
-### Маршрути користувачів (/users) - PUG шаблони
-Усі маршрути /users використовують мідлвар аутентифікації (basicAuth):
-- **GET /users** - отримати всіх користувачів (PUG)
-- **GET /users/:userId** - отримати користувача за ID (PUG)
-- **POST /users** - створити нового користувача (з валідацією)
-- **PUT /users/:userId** - оновити дані користувача
-- **DELETE /users/:userId** - видалити користувача
+### Захищений маршрут
+- **GET /protected** - доступний тільки авторизованим користувачам через Passport
 
-### Маршрути статей (/articles) - EJS шаблони
-Усі маршрути /articles використовують мідлвар контролю доступу:
-- **GET /articles** - отримати всі статті (EJS)
-- **GET /articles/:articleId** - отримати статтю за ID (EJS)
-- **POST /articles** - створити нову статтю
-- **PUT /articles/:articleId** - оновити статтю
-- **DELETE /articles/:articleId** - видалити статтю
+### Маршрути авторизації (/auth) - Passport.js
 
-### Маршрути авторизації (/auth) - JWT
-- **POST /auth/register** - реєстрація користувача, створює JWT token в httpOnly cookie
-- **POST /auth/login** - вхід користувача, створює JWT token в httpOnly cookie
-- **POST /auth/logout** - вихід, видаляє JWT cookie
-- **GET /auth/me** - перевірка автентифікації (захищений маршрут)
+#### HTML сторінки:
+- **GET /auth/login** - сторінка входу
+- **GET /auth/register** - сторінка реєстрації
+- **GET /auth/logout** - вихід користувача
+
+#### API endpoints:
+- **POST /auth/register** - реєстрація нового користувача
+  - Поля: `username`, `email`, `password`, `confirmPassword`
+  - Автоматичний вхід після реєстрації
+- **POST /auth/login** - вхід через Passport
+  - Поля: `email`, `password`
+  - Створює сесію з httpOnly cookie
+- **POST /auth/logout** - вихід (видаляє сесію)
+- **GET /auth/me** - отримати дані поточного користувача (захищений)
+- **GET /auth/profile** - профіль користувача (захищений)
+
+### Маршрути користувачів (/users) - PUG
+- **GET /users** - список користувачів
+- **GET /users/:userId** - деталі користувача
+
+### Маршрути статей (/articles) - EJS
+- **GET /articles** - список статей
+- **GET /articles/:articleId** - деталі статті
 
 ### Маршрути налаштувань (/settings) - Cookies
-- **POST /settings/theme** - зберегти тему оформлення (light/dark)
+- **POST /settings/theme** - зберегти тему (light/dark)
 - **GET /settings/theme** - отримати поточну тему
-- **DELETE /settings/theme** - очистити тему
 
 ## Мідлвари
 
-### 1. Логування ([`src/middleware/logger.mjs`](src/middleware/logger.mjs))
-Записує інформацію про кожен запит до сервера з timestamp.
+### 1. Passport аутентифікація ([`src/middleware/auth.mjs`](src/middleware/auth.mjs))
+- `isAuthenticated()` - перевіряє чи користувач авторизований
+- `isGuest()` - перевіряє чи користувач є гостем
+- Використовує `req.isAuthenticated()` від Passport
 
-### 2. Аутентифікація ([`src/middleware/auth.mjs`](src/middleware/auth.mjs))
-Перевіряє наявність заголовка Authorization. Використовується для маршрутів /users.
+### 2. Логування ([`src/middleware/logger.mjs`](src/middleware/logger.mjs))
+Записує інформацію про кожен запит до сервера.
 
 ### 3. Валідація ([`src/middleware/validation.mjs`](src/middleware/validation.mjs))
-Перевіряє наявність обов'язкових полів username та password у POST запитах.
+Перевіряє наявність обов'язкових полів.
 
 ### 4. Контроль доступу ([`src/middleware/accessControl.mjs`](src/middleware/accessControl.mjs))
-Перевіряє права доступу до статей на основі заголовка x-user-role.
+Перевіряє права доступу.
 
 ### 5. JWT авторизація ([`src/middleware/jwtAuth.mjs`](src/middleware/jwtAuth.mjs))
-Перевіряє JWT токен з cookies або заголовка Authorization.
+Збережено для сумісності.
 
 ### 6. Обробка помилок ([`src/middleware/errorHandler.mjs`](src/middleware/errorHandler.mjs))
-Централізована обробка помилок сервера.
+Централізована обробка помилок.
+
+## Конфігурація Passport
+
+[`src/config/passport.mjs`](src/config/passport.mjs):
+- Локальна стратегія з email/password
+- Серіалізація/десеріалізація користувачів
+- Метод `comparePassword()` для перевірки паролів
+
+## Модель користувача
+
+[`src/models/User.mjs`](src/models/User.mjs):
+- Поля: `username`, `email`, `password`
+- Автоматичне хешування пароля (bcrypt)
+- Метод порівняння паролів
+- Timestamps
 
 ## Приклади запитів
 
@@ -136,61 +184,72 @@ npm start
 # Головна сторінка
 curl http://localhost:3000/
 
-# Favicon
-curl http://localhost:3000/favicon.ico
+# Сторінка входу
+curl http://localhost:3000/auth/login
 
-# Користувачі (потрібен заголовок авторизації)
-curl -H "Authorization: Bearer token" http://localhost:3000/users
+# Сторінка реєстрації
+curl http://localhost:3000/auth/register
 
-# Статті (потрібен заголовок x-user-role)
-curl -H "x-user-role: admin" http://localhost:3000/articles
-
-# Реєстрація
-curl -X POST -H "Content-Type: application/json" \
-  -d '{"username":"newuser","password":"pass123","email":"user@test.com"}' \
+# Реєстрація нового користувача
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=testuser&email=test@example.com&password=test123&confirmPassword=test123" \
   http://localhost:3000/auth/register
 
-# Вхід
-curl -X POST -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}' \
+# Вхід користувача
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "email=admin@example.com&password=admin123" \
   http://localhost:3000/auth/login
 
-# Перевірка автентифікації (з cookie)
-curl -b cookies.txt http://localhost:3000/auth/me
+# Захищений маршрут (потрібна авторизація)
+curl http://localhost:3000/protected
+
+# Вихід
+curl http://localhost:3000/auth/logout
 
 # Збереження теми
 curl -X POST -d "theme=dark" http://localhost:3000/settings/theme
-
-# Отримання теми
-curl http://localhost:3000/settings/theme
 ```
 
-## Тестові користувачі
+## Безпека
 
-- Username: `admin`, Password: `admin123`
-- Username: `user1`, Password: `user123`
+Сесії налаштовані з:
+- `httpOnly: true` - захист від XSS
+- `secure: true` (production) - тільки HTTPS
+- `sameSite: 'lax'` - захист від CSRF
+- Спеціальний секретний ключ сесії
+
+Паролі зберігаються з:
+- bcrypt хешуванням
+- Соллю для кожного пароля
 
 ## Архітектура MVC
 
 Проект побудований за паттерном MVC:
-- **Model** - мокові дані в контролерах (users, articles)
+- **Model** - [`src/models/`](src/models/) (Mongoose)
 - **View** - PUG та EJS шаблони
-- **Controller** - [`src/controllers/`](src/controllers/) обробляють бізнес-логіку
-- **Routes** - [`src/routes/`](src/routes/) визначають маршрути та їх мідлвари
-- **Middleware** - [`src/middleware/`](src/middleware/) виконують перевірки перед контролерами
+- **Controller** - [`src/controllers/`](src/controllers/)
+- **Routes** - [`src/routes/`](src/routes/)
+- **Middleware** - [`src/middleware/`](src/middleware/)
 
 ## Тестування
 
-Для запуску тестів:
 ```bash
 npm test
 ```
 
-## Конфігурація
+## Розширення функціональності
 
-Сервер використовує змінні середовища для налаштування. Скопіюйте `.env.example` в `.env` та налаштуйте за потреби:
+### OAuth авторизація (Google, Facebook)
+```bash
+npm install passport-google-oauth20 passport-facebook
+```
 
-- `PORT` - порт сервера (за замовчуванням: 3000)
-- `JWT_SECRET` - секретний ключ для JWT токенів
+### Відновлення пароля
+Для реалізації потрібно:
+1. Додати поле `resetToken` в модель User
+2. Створити маршрут для запиту відновлення
+3. Налаштувати nodemailer для відправки email
 
-Змінити порт можна у файлі [`src/server.js`](src/server.js:62) або через змінну середовища PORT.
+## Ліцензія
+
+ISC
