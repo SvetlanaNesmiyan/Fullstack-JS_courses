@@ -1,7 +1,7 @@
 // Мідлвар для перевірки JWT токену
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'my-secret-key-12345';
+const JWT_SECRET = process.env.JWT_SECRET || 'my-secret-key-12345';
 
 export function verifyJWT(req, res, next) {
   const token = req.cookies.token || req.headers['authorization']?.replace('Bearer ', '');
@@ -24,5 +24,3 @@ export function verifyJWT(req, res, next) {
 export function generateToken(payload) {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 }
-
-export { JWT_SECRET };

@@ -1,5 +1,6 @@
 import express from 'express';
 import { generateToken, verifyJWT } from '../middleware/jwtAuth.mjs';
+import { validateUserInput } from '../middleware/validation.mjs';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ const users = [
 ];
 
 // Реєстрація
-router.post('/register', (req, res) => {
+router.post('/register', validateUserInput, (req, res) => {
   const { username, password, email } = req.body;
   
   if (!username || !password || !email) {
@@ -47,7 +48,7 @@ router.post('/register', (req, res) => {
 });
 
 // Вхід
-router.post('/login', (req, res) => {
+router.post('/login', validateUserInput, (req, res) => {
   const { username, password } = req.body;
   
   if (!username || !password) {

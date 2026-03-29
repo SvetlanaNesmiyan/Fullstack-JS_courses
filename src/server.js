@@ -1,6 +1,8 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import ejs from 'ejs';
 import path from 'path';
+import 'dotenv/config';
 import { fileURLToPath } from 'url';
 import { logRequests } from './middleware/logger.mjs';
 import { errorHandler } from './middleware/errorHandler.mjs';
@@ -17,6 +19,9 @@ const app = express();
 // Налаштування PUG шаблонізатора
 app.set('view engine', 'pug');
 app.set('views', path.join(projectRoot, 'src', 'views', 'pug'));
+
+// Для EJS шаблонізатора використовуємо res.render() з явним шляхом
+// articleController.mjs використовує ejs.renderFile() для сумісності
 
 // Підтримка JSON тіла запиту
 app.use(express.json());
@@ -81,7 +86,7 @@ app.use('/settings', settingsRoutes);
 app.use(errorHandler);
 
 // Порт сервера
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Запуск сервера
 app.listen(PORT, () => {
