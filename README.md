@@ -214,10 +214,11 @@ MongoDB підключено: cluster0.abcde.mongodb.net
 - **GET /articles** - список опублікованих статей з MongoDB
 - **GET /articles/:articleId** - деталі статті з MongoDB
 
-#### API endpoints:
+#### API endpoints (читання):
 - **GET /articles/api/categories** - отримати список категорій
 - **GET /articles/api/category/:category** - отримати статті за категорією
 - **GET /articles/api/stats** - отримати статистику статей
+- **GET /articles/api/find** - знайти документи з проекцією (див. розділ "Розширене читання з проекцією")
 
 ### Маршрути налаштувань (/settings) - Cookies
 - **POST /settings/theme** - зберегти тему (light/dark)
@@ -312,6 +313,286 @@ curl http://localhost:3000/articles/api/stats
 
 ```bash
 npm test
+```
+
+## API CRUD операції для статей
+
+Всі наступні маршрути повертають JSON відповіді та призначені для програмного керування статтями.
+
+### Створення даних (Create)
+
+#### POST /articles/api/create-one
+**Створити один документ** (insertOne)
+
+```json
+// Запит:
+{
+  "title": "Заголовок нової статті",
+  "content": "Зміст статті...",
+  "excerpt": "Короткий опис",
+  "tags": ["javascript", "node.js"],
+  "category": "технології",
+  "published": true,
+  "imageUrl": "https://example.com/image.jpg"
+}
+
+// Відповідь (201 Created):
+{
+  "success": true,
+  "message": "Статтю створено",
+  "data": {
+    "_id": "65f...",
+    "title": "Заголовок нової статті",
+    "content": "Зміст статті...",
+    "published": true,
+    "publishedAt": "2024-03-29T20:00:00.000Z",
+    "createdAt": "2024-03-29T20:00:00.000Z",
+    ...
+  }
+}
+```
+
+**curl приклад:**
+```bash
+curl -X POST http://localhost:3000/articles/api/create-one \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Нова стаття","content":"Зміст статті","category":"технології","published":true}'
+```
+
+---
+
+#### POST /articles/api/create-many
+**Створити багато документів** (insertMany)
+
+```json
+// Запит:
+{
+  "articles": [
+    { "title": "Стаття 1", "content": "Зміст 1", "category": "новини" },
+    { "title": "Стаття 2", "content": "Зміст 2", "category": "технології" },
+    { "title": "Стаття 3", "content": "Зміст 3", "category": "навчання" }
+  ]
+}
+
+// Відповідь (201 Created):
+{
+  "success": true,
+  "message": "Створено 3 статті",
+  "data": [...],
+  "insertedCount": 3
+}
+```
+
+**curl приклад:**
+```bash
+curl -X POST http://localhost:3000/articles/api/create-many \
+  -H "Content-Type: application/json" \
+  -d '{"articles":[{"title":"Test 1","content":"Content 1"},{"title":"Test 2","content":"Content 2"}]}'
+```
+
+### Оновлення даних (Update)
+
+#### PUT /articles/api/update-one/:id
+**Оновити один документ** (updateOne)
+
+```json
+// Запит:
+{
+  "title": "Оновлений заголовок",
+  "content": "Оновлений зміст",
+  "published": true
+}
+
+// Відповідь (200 OK):
+{
+  "success": true,
+  "message": "Статтю оновлено",
+  "data": {
+    "_id": "65f...",
+    "title": "Оновлений заголовок",
+    ...
+  }
+}
+```
+
+**curl приклад:**
+```bash
+curl -X PUT http://localhost:3000/articles/api/update-one/65f... \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Оновлений заголовок","published":true}'
+```
+
+---
+
+#### PUT /articles/api/update-many
+**Оновити багато документів** (updateMany)
+
+```json
+// Запит:
+{
+  "filter": { "category": "інше" },
+  "update": { "published": false }
+}
+
+// Відповідь (200 OK):
+{
+  "success": true,
+  "message": "Оновлено 5 статей",
+  "data": {
+    "matchedCount": 5,
+    "modifiedCount": 3,
+    "acknowledged": true
+  }
+}
+```
+
+**curl приклад:**
+```bash
+curl -X PUT http://localhost:3000/articles/api/update-many \
+  -H "Content-Type: application/json" \
+  -d '{"filter":{"category":"інше"},"update":{"published":false}}'
+```
+
+---
+
+#### PUT /articles/api/replace-one/:id
+**Замінити один документ** (replaceOne)
+
+Повністю замінює документ (зберігається лише `_id` та `author`).
+
+```json
+// Запит:
+{
+  "title": "Повністю новий заголовок",
+  "content": "Повністю новий зміст",
+  "excerpt": "Новий опис",
+  "tags": ["новий тег"],
+  "category": "новини",
+  "published": true
+}
+
+// Відповідь (200 OK):
+{
+  "success": true,
+  "message": "Статтю замінено",
+  "data": { ... }
+}
+```
+
+**curl приклад:**
+```bash
+curl -X PUT http://localhost:3000/articles/api/replace-one/65f... \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Новий заголовок","content":"Новий зміст","category":"новини"}'
+```
+
+### Видалення даних (Delete)
+
+#### DELETE /articles/api/delete-one/:id
+**Видалити один документ** (deleteOne)
+
+```json
+// Відповідь (200 OK):
+{
+  "success": true,
+  "message": "Статтю видалено",
+  "data": {
+    "_id": "65f...",
+    "title": "Видалена стаття",
+    ...
+  }
+}
+```
+
+**curl приклад:**
+```bash
+curl -X DELETE http://localhost:3000/articles/api/delete-one/65f...
+```
+
+---
+
+#### DELETE /articles/api/delete-many
+**Видалити багато документів** (deleteMany)
+
+```json
+// Запит:
+{
+  "filter": { 
+    "published": false,
+    "createdAt": { "$lt": "2024-01-01" }
+  }
+}
+
+// Відповідь (200 OK):
+{
+  "success": true,
+  "message": "Видалено 10 статей",
+  "data": {
+    "deletedCount": 10,
+    "acknowledged": true
+  }
+}
+```
+
+**curl приклад:**
+```bash
+curl -X DELETE http://localhost:3000/articles/api/delete-many \
+  -H "Content-Type: application/json" \
+  -d '{"filter":{"published":false}}'
+```
+
+### Розширене читання з проекцією (Read)
+
+#### GET /articles/api/find
+**Знайти документи з проекцією** (find з projection)
+
+Підтримує фільтрацію, проекцію, сортування, ліміт та пагінацію.
+
+**Query параметри:**
+| Параметр | Опис | Приклад |
+|----------|------|--------|
+| `filter` | JSON фільтр запиту | `{"category":"технології"}` |
+| `projection` | JSON проекція полів | `{"title":1,"category":1}` |
+| `sort` | JSON сортування | `{"createdAt":-1}` |
+| `limit` | Кількість результатів | `10` |
+| `skip` | Пропуск для пагінації | `0` |
+
+```json
+// Запит:
+GET /articles/api/find?filter={"published":true}&projection={"title":1,"category":1,"views":1}&sort={"createdAt":-1}&limit=10&skip=0
+
+// Відповідь (200 OK):
+{
+  "success": true,
+  "data": [
+    { "_id": "65f...", "title": "Стаття 1", "category": "технології", "views": 100 },
+    { "_id": "65f...", "title": "Стаття 2", "category": "новини", "views": 50 }
+  ],
+  "pagination": {
+    "total": 100,
+    "limit": 10,
+    "skip": 0
+  }
+}
+```
+
+**curl приклади:**
+
+```bash
+# Отримати всі опубліковані статті
+curl "http://localhost:3000/articles/api/find?filter=%7B%22published%22%3Atrue%7D"
+
+# Отримати тільки заголовки опублікованих статей
+curl "http://localhost:3000/articles/api/find?filter=%7B%22published%22%3Atrue%7D&projection=%7B%22title%22%3A1%7D"
+
+# Отримати 5 останніх статей категорії "технології"
+curl "http://localhost:3000/articles/api/find?filter=%7B%22category%22%3A%22%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D1%96%D1%97%22%7D&sort=%7B%22createdAt%22%3A-1%7D&limit=5"
+```
+
+**Приклад проекції полів:**
+```bash
+# Отримати тільки заголовок та дату створення (без _id)
+curl "http://localhost:3000/articles/api/find?projection=%7B%22title%22%3A1%2C%22createdAt%22%3A1%2C%22_id%22%3A0%7D"
 ```
 
 ## Troubleshooting
