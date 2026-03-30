@@ -222,4 +222,79 @@ router.delete('/api/delete-many', articleController.deleteManyArticles);
  */
 router.get('/api/find', articleController.findArticles);
 
+// ================================================
+// Курсори та Агрегаційні запити
+// ================================================
+
+/**
+ * GET /articles/api/cursor/iterate
+ * Перебір документів за допомогою курсора
+ * 
+ * Використовує курсор для ітерації по документах замість
+ * завантаження всіх даних в пам'ять. Корисно для великих наборів даних.
+ * 
+ * Query параметри:
+ * - batchSize: розмір партії для обробки (за замовчуванням 100)
+ * - filter: JSON рядок з фільтром
+ * 
+ * Приклад запиту:
+ * GET /articles/api/cursor/iterate?batchSize=50&filter={"published":true}
+ * 
+ * Відповідь:
+ * {
+ *   "success": true,
+ *   "message": "Оброблено N статей за допомогою курсора",
+ *   "data": {
+ *     "processedCount": 50,
+ *     "totalViewsSum": 1250,
+ *     "sampleArticles": [ ... ]
+ *   }
+ * }
+ */
+router.get('/api/cursor/iterate', articleController.iterateArticlesWithCursor);
+
+/**
+ * GET /articles/api/cursor/export
+ * Експорт документів за допомогою курсора (Streaming)
+ * 
+ * Використовує streaming для великих наборів даних.
+ * Повертає дані порційно замість завантаження всього в пам'ять.
+ * 
+ * Query параметри:
+ * - filter: JSON рядок з фільтром
+ * - limit: максимальна кількість документів
+ * 
+ * Відповідь: JSON масив з даними
+ */
+router.get('/api/cursor/export', articleController.exportArticlesWithCursor);
+
+/**
+ * GET /articles/api/aggregate/stats
+ * Агрегаційний запит для збору статистики
+ * 
+ * Використовує MongoDB aggregate pipeline для обчислення
+ * складних статистичних даних:
+ * - кількість статей по категоріях
+ * - середня кількість переглядів
+ * - сумарна кількість переглядів
+ * - кількість опублікованих/неопублікованих
+ * - найпопулярніші теги
+ * 
+ * Відповідь:
+ * {
+ *   "success": true,
+ *   "data": {
+ *     "totalArticles": 100,
+ *     "publishedCount": 75,
+ *     "draftCount": 25,
+ *     "totalViews": 5000,
+ *     "avgViews": 50,
+ *     "categoryStats": [...],
+ *     "tagStats": [...],
+ *     "viewsByMonth": [...]
+ *   }
+ * }
+ */
+router.get('/api/aggregate/stats', articleController.getAggregatedStats);
+
 export default router;

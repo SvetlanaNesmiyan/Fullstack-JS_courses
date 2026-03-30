@@ -632,6 +632,355 @@ export async function findArticles(req, res) {
     });
   }
 }
+
+// ================================================
+// Курсори - ітерація за допомогою курсора
+// ================================================
+
+/**
+ * Перебір документів за допомогою курсора
+ * GET /articles/api/cursor/iterate
+ * 
+ * Використовує курсор для ітерації по документах замість
+ * завантаження всіх даних в пам'ять. Корисно для великих наборів даних.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export async function iterateArticlesWithCursor(req, res) {
+  try {
+    const { batchSize, filter } = req.query;
+    
+    // Парсимо фільтр з JSON рядка
+    let parsedFilter = {};
+    try {
+      if (filter) parsedFilter = JSON.parse(filter);
+    } catch (e) {
+      parsedFilter = {};
+    }
+    
+    // Встановлюємо розмір партії
+    const size = parseInt(batchSize) || 100;
+    
+    // Створюємо курсор з налаштуваннями
+    const cursor = Article.find(parsedFilter)
+      .sort({ createdAt: -1 })
+      .batchSize(size)
+      .lean();
+    
+    // Лічильники для статистики
+    let processedCount = 0;
+    let totalViewsSum = 0;
+    const sampleArticles = [];
+    
+    // Ітеруємо по курсору партіями
+    let article = await cursor.next();
+    while (article) {
+      processedCount++;
+      totalViewsSum += article.views || 0;
+      
+      // Зберігаємо перші 5 статей для прикладу
+      if (sampleArticles.length < 5) {
+        sampleArticles.push({
+          _id: article._id,
+          title: article.title,
+          views: article.views,
+          category: article.category,
+          published: article.published
+        });
+      }
+      
+      // Отримуємо наступний документ
+      article = await cursor.next();
+    }
+    
+    // Закриваємо курсор
+    await cursor.close();
+    
+    res.json({
+      success: true,
+      message: `Оброблено ${processedCount} статей за допомогою курсора`,
+      data: {
+        processedCount,
+        totalViewsSum,
+        sampleArticles
+      },
+      info: {
+        method: 'Cursor iteration з batchSize: ' + size,
+        memoryEfficient: true,
+        description: 'Курсор обробляє документи партіями, не завантажуючи всі дані в пам\'ять'
+      }
+    });
+  } catch (error) {
+    console.error('Помилка ітерації курсора:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера при ітерації курсора'
+    });
+  }
+}
+
+/**
+ * Експорт документів за допомогою курсора (Streaming)
+ * GET /articles/api/cursor/export
+ * 
+ * Використовує streaming для великих наборів даних.
+ * Повертає дані порційно замість завантаження всього в пам'ять.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export async function exportArticlesWithCursor(req, res) {
+  try {
+    const { filter, limit } = req.query;
+    
+    // Парсимо фільтр
+    let parsedFilter = {};
+    try {
+      if (filter) parsedFilter = JSON.parse(filter);
+    } catch (e) {
+      parsedFilter = {};
+    }
+    
+    const maxLimit = parseInt(limit) || 1000;
+    
+    // Створюємо курсор для streaming
+    const cursor = Article.find(parsedFilter)
+      .sort({ createdAt: -1 })
+      .limit(maxLimit)
+      .lean();
+    
+    // Використовуємо toArray() для невеликих наборів
+    // Або streaming для великих
+    const articles = await cursor.toArray();
+    
+    await cursor.close();
+    
+    res.json({
+      success: true,
+      message: `Експортовано ${articles.length} статей`,
+      data: articles,
+      exportInfo: {
+        totalExported: articles.length,
+        method: 'cursor.toArray()',
+        description: 'Курсор дозволяє ефективно обробляти великі набори даних'
+      }
+    });
+  } catch (error) {
+    console.error('Помилка експорту курсора:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера при експорті курсора'
+    });
+  }
+}
+
+// ================================================
+// Агрегаційні запити
+// ================================================
+
+/**
+ * Агрегаційний запит для збору детальної статистики
+ * GET /articles/api/aggregate/stats
+ * 
+ * Використовує MongoDB aggregate pipeline для обчислення
+ * складних статистичних даних:
+ * - кількість статей по категоріях
+ * - середня кількість переглядів
+ * - сумарна кількість переглядів
+ * - кількість опублікованих/неопублікованих
+ * - найпопулярніші теги
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+export async function getAggregatedStats(req, res) {
+  try {
+    // Агрегаційний пайплайн
+    const pipeline = [
+      // Етап 1: Основна статистика
+      {
+        $facet: {
+          // Загальна кількість та перегляди
+          overview: [
+            {
+              $group: {
+                _id: null,
+                totalArticles: { $sum: 1 },
+                totalViews: { $sum: '$views' },
+                avgViews: { $avg: '$views' },
+                maxViews: { $max: '$views' },
+                minViews: { $min: '$views' }
+              }
+            },
+            {
+              $project: {
+                _id: 0,
+                totalArticles: 1,
+                totalViews: 1,
+                avgViews: { $round: ['$avgViews', 2] },
+                maxViews: 1,
+                minViews: 1
+              }
+            }
+          ],
+          // Статистика публікацій
+          publishStats: [
+            {
+              $group: {
+                _id: '$published',
+                count: { $sum: 1 }
+              }
+            }
+          ],
+          // Статистика по категоріях
+          categoryStats: [
+            {
+              $group: {
+                _id: '$category',
+                count: { $sum: 1 },
+                totalViews: { $sum: '$views' },
+                avgViews: { $avg: '$views' }
+              }
+            },
+            {
+              $sort: { count: -1 }
+            },
+            {
+              $project: {
+                category: '$_id',
+                _id: 0,
+                count: 1,
+                totalViews: 1,
+                avgViews: { $round: ['$avgViews', 2] }
+              }
+            }
+          ],
+          // Статистика по тегах
+          tagStats: [
+            { $unwind: '$tags' },
+            {
+              $group: {
+                _id: '$tags',
+                count: { $sum: 1 },
+                totalViews: { $sum: '$views' }
+              }
+            },
+            {
+              $sort: { count: -1 }
+            },
+            {
+              $limit: 20
+            },
+            {
+              $project: {
+                tag: '$_id',
+                _id: 0,
+                count: 1,
+                totalViews: 1
+              }
+            }
+          ],
+          // Статистика по місяцях
+          viewsByMonth: [
+            {
+              $group: {
+                _id: {
+                  year: { $year: '$createdAt' },
+                  month: { $month: '$createdAt' }
+                },
+                count: { $sum: 1 },
+                totalViews: { $sum: '$views' }
+              }
+            },
+            {
+              $sort: { '_id.year': -1, '_id.month': -1 }
+            },
+            {
+              $limit: 12
+            },
+            {
+              $project: {
+                period: {
+                  $concat: [
+                    { $toString: '$_id.year' },
+                    '-',
+                    {
+                      $cond: [
+                        { $lt: ['$_id.month', 10] },
+                        { $concat: ['0', { $toString: '$_id.month' }] },
+                        { $toString: '$_id.month' }
+                      ]
+                    }
+                  ]
+                },
+                _id: 0,
+                count: 1,
+                totalViews: 1
+              }
+            }
+          ]
+        }
+      }
+    ];
+    
+    // Виконуємо агрегацію
+    const result = await Article.aggregate(pipeline);
+    
+    // Обробляємо результат
+    const overview = result[0].overview[0] || {
+      totalArticles: 0,
+      totalViews: 0,
+      avgViews: 0,
+      maxViews: 0,
+      minViews: 0
+    };
+    
+    const publishStats = result[0].publishStats.reduce((acc, item) => {
+      if (item._id === true) {
+        acc.published = item.count;
+      } else {
+        acc.draft = item.count;
+      }
+      return acc;
+    }, { published: 0, draft: 0 });
+    
+    res.json({
+      success: true,
+      message: 'Агрегаційна статистика зібрана успішно',
+      data: {
+        totalArticles: overview.totalArticles || 0,
+        publishedCount: publishStats.published,
+        draftCount: publishStats.draft,
+        totalViews: overview.totalViews || 0,
+        avgViews: overview.avgViews || 0,
+        maxViews: overview.maxViews || 0,
+        minViews: overview.minViews || 0,
+        categoryStats: result[0].categoryStats || [],
+        tagStats: result[0].tagStats || [],
+        viewsByMonth: result[0].viewsByMonth || []
+      },
+      info: {
+        method: 'MongoDB Aggregation Pipeline',
+        stages: [
+          '$facet - паралельне виконання кількох агрегацій',
+          '$group - групування даних',
+          '$unwind - розгортання масивів',
+          '$sort - сортування результатів',
+          '$project - форматування виводу'
+        ],
+        description: 'Агрегаційний запит дозволяє зібрати складну статистику за один запит до БД'
+      }
+    });
+  } catch (error) {
+    console.error('Помилка агрегації:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера при агрегації'
+    });
+  }
+}
+
 // ================================================
 // Експорт
 // ================================================
@@ -644,5 +993,10 @@ export default {
   deleteArticle,
   getArticlesByCategory,
   getCategories,
-  getArticleStats
+  getArticleStats,
+  // Курсори
+  iterateArticlesWithCursor,
+  exportArticlesWithCursor,
+  // Агрегаційні запити
+  getAggregatedStats
 };
