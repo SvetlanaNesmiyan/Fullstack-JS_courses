@@ -1,9 +1,14 @@
 // Мідлвар для перевірки JWT токену
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'my-secret-key-12345';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export function verifyJWT(req, res, next) {
+  if (!JWT_SECRET) {
+    res.status(500).send('JWT_SECRET is not configured. Please set the JWT_SECRET environment variable.');
+    return;
+  }
+  
   const token = req.cookies.token || req.headers['authorization']?.replace('Bearer ', '');
   
   if (!token) {

@@ -1,4 +1,4 @@
-import { server } from '../src/server.mjs';
+import { app, server } from '../src/server.mjs';
 import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import http from 'http';
 import querystring from 'querystring';

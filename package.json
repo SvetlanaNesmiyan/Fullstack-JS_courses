@@ -3,10 +3,10 @@
   "version": "2.0.0",
   "description": "Express.js сервер з Passport авторизацією, сесіями та захищеними маршрутами",
   "type": "module",
-  "main": "src/server.js",
+  "main": "src/server.mjs",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node src/server.js",
+    "start": "node src/server.mjs",
+    "dev": "node src/server.mjs",
     "test": "vitest run"
   },
   "keywords": [

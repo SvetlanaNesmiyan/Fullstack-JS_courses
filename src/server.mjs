@@ -116,7 +116,7 @@ app.get('/', (req, res) => {
           <a href="/">Головна</a>
           <a href="/users">Користувачі (PUG)</a>
           <a href="/articles">Статті (EJS)</a>
-          <a href="/auth">Авторизація</a>
+          <a href="/auth/login">Авторизація</a>
           ${req.user ? '<a href="/auth/logout">Вихід</a>' : '<a href="/auth/login">Вхід</a>'}
         </div>
       </nav>
@@ -126,7 +126,7 @@ app.get('/', (req, res) => {
         ${req.user ? `<p>Ласкаво просимо, <strong>${req.user.username}</strong>!</p>` : '<p>Будь ласка, <a href="/auth/login">увійдіть</a>, щоб отримати доступ до захищених ресурсів.</p>'}
         <p><a href="/users">Користувачі (PUG)</a></p>
         <p><a href="/articles">Статті (EJS)</a></p>
-        <p><a href="/auth">Авторизація (Passport)</a></p>
+        <p><a href="/auth/login">Авторизація (Passport)</a></p>
         <p><a href="/settings/theme">Налаштування теми</a></p>
         <p><a href="/protected">Захищений маршрут</a></p>
       </main>
@@ -172,27 +172,31 @@ app.use('/articles', articleRoutes);
 app.use('/auth', authRoutes);
 app.use('/settings', settingsRoutes);
 
-// Мідлвар обробки помилок
-app.use(errorHandler);
-
-// Мідлвар для 404
+// Мідлвар для 404 (повинен бути перед error handler)
 app.use((req, res) => {
   res.status(404).send('Сторінку не знайдено');
 });
+
+// Мідлвар обробки помилок (повинен бути після 404)
+app.use(errorHandler);
 
 // Порт сервера
 const PORT = process.env.PORT || 3000;
 
 // Запуск сервера
+let server;
+
 const startServer = async () => {
   await connectDB();
-  app.listen(PORT, () => {
+  server = app.listen(PORT, () => {
     console.log(`Сервер запущено на порту ${PORT}`);
     console.log(`Перейдіть за посиланням: http://localhost:${PORT}`);
   });
+  return server;
 };
 
 startServer();
 
 // Експорт для тестів
 export default app;
+export { server };
