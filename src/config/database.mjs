@@ -25,12 +25,6 @@ const dbConfig = {
     serverSelectionTimeoutMS: 5000,
     // Тайм-аут сокету в мілісекундах
     socketTimeoutMS: 45000,
-    // Автоматичне перепідключення
-    autoReconnect: true,
-    // Використовувати нову топологію сервера
-    useNewUrlParser: true,
-    // Використовувати новий парсер для Unified Topology
-    useUnifiedTopology: true,
   }
 };
 

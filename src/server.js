@@ -159,13 +159,13 @@ app.use('/articles', articleRoutes);
 app.use('/auth', authRoutes);
 app.use('/settings', settingsRoutes);
 
-// Мідлвар обробки помилок
-app.use(errorHandler);
-
 // Мідлвар для 404
 app.use((req, res) => {
   res.status(404).send('Сторінку не знайдено');
 });
+
+// Мідлвар обробки помилок
+app.use(errorHandler);
 
 // Порт сервера
 const PORT = process.env.PORT || 3000;
