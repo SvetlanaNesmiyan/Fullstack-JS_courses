@@ -213,6 +213,9 @@ MongoDB підключено: cluster0.abcde.mongodb.net
 #### HTML сторінки:
 - **GET /articles** - список опублікованих статей з MongoDB
 - **GET /articles/:articleId** - деталі статті з MongoDB
+- **POST /articles** - створити нову статтю (авторизованим користувачам)
+- **PUT /articles/:articleId** - оновити статтю (авторизованим користувачам)
+- **DELETE /articles/:articleId** - видалити статтю (авторизованим користувачам)
 
 #### API endpoints (читання):
 - **GET /articles/api/categories** - отримати список категорій
@@ -223,6 +226,17 @@ MongoDB підключено: cluster0.abcde.mongodb.net
 ### Маршрути налаштувань (/settings) - Cookies
 - **POST /settings/theme** - зберегти тему (light/dark)
 - **GET /settings/theme** - отримати поточну тему
+- **DELETE /settings/theme** - очистити тему
+
+### Маршрути користувачів (/users) - PUG шаблони
+
+#### HTML сторінки:
+- **GET /users** - список користувачів (з аутентифікацією)
+- **GET /users/:userId** - деталі користувача (з аутентифікацією)
+
+#### API endpoints:
+- **POST /users** - створити нового користувача
+- **PUT /users/:userId** - оновити користувача
 
 ## Модель статті (MongoDB)
 
@@ -231,7 +245,7 @@ MongoDB підключено: cluster0.abcde.mongodb.net
 ### Поля:
 - `title` (String, обов'язкове) - заголовок статті
 - `content` (String, обов'язкове) - зміст статті
-- `author` (ObjectId, посилання на User) - автор статті
+- `author` (ObjectId, посилання на User, необов'язкове) - автор статті
 - `excerpt` (String) - короткий опис
 - `tags` (Array[String]) - теги статті
 - `published` (Boolean) - статус публікації

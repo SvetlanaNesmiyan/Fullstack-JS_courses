@@ -27,13 +27,13 @@ router.delete('/:articleId', articleController.deleteArticle);
 // API Маршрути (JSON відповіді)
 // ================================================
 
-// GET /api/articles/categories - отримати список категорій
+// GET /articles/api/categories - отримати список категорій
 router.get('/api/categories', articleController.getCategories);
 
-// GET /api/articles/category/:category - отримати статті за категорією
+// GET /articles/api/category/:category - отримати статті за категорією
 router.get('/api/category/:category', articleController.getArticlesByCategory);
 
-// GET /api/articles/stats - отримати статистику статей
+// GET /articles/api/stats - отримати статистику статей
 router.get('/api/stats', articleController.getArticleStats);
 
 // ================================================
@@ -43,7 +43,7 @@ router.get('/api/stats', articleController.getArticleStats);
 // --- СТВОРЕННЯ ДАНИХ (Create) ---
 
 /**
- * POST /api/articles/create-one
+ * POST /articles/api/create-one
  * Створити один документ (insertOne)
  * 
  * Запит:
@@ -67,7 +67,7 @@ router.get('/api/stats', articleController.getArticleStats);
 router.post('/api/create-one', articleController.insertOneArticle);
 
 /**
- * POST /api/articles/create-many
+ * POST /articles/api/create-many
  * Створити багато документів (insertMany)
  * 
  * Запит:
@@ -91,7 +91,7 @@ router.post('/api/create-many', articleController.insertManyArticles);
 // --- ОНОВЛЕННЯ ДАНИХ (Update) ---
 
 /**
- * PUT /api/articles/update-one/:id
+ * PUT /articles/api/update-one/:id
  * Оновити один документ (updateOne)
  * 
  * Запит:
@@ -111,7 +111,7 @@ router.post('/api/create-many', articleController.insertManyArticles);
 router.put('/api/update-one/:id', articleController.updateOneArticle);
 
 /**
- * PUT /api/articles/update-many
+ * PUT /articles/api/update-many
  * Оновити багато документів (updateMany)
  * 
  * Запит:
@@ -134,7 +134,7 @@ router.put('/api/update-one/:id', articleController.updateOneArticle);
 router.put('/api/update-many', articleController.updateManyArticles);
 
 /**
- * PUT /api/articles/replace-one/:id
+ * PUT /articles/api/replace-one/:id
  * Замінити один документ (replaceOne)
  * Повністю замінює документ (крім _id та author)
  * 
@@ -160,7 +160,7 @@ router.put('/api/replace-one/:id', articleController.replaceOneArticle);
 // --- ВИДАЛЕННЯ ДАНИХ (Delete) ---
 
 /**
- * DELETE /api/articles/delete-one/:id
+ * DELETE /articles/api/delete-one/:id
  * Видалити один документ (deleteOne)
  * 
  * Відповідь:
@@ -173,7 +173,7 @@ router.put('/api/replace-one/:id', articleController.replaceOneArticle);
 router.delete('/api/delete-one/:id', articleController.deleteOneArticle);
 
 /**
- * DELETE /api/articles/delete-many
+ * DELETE /articles/api/delete-many
  * Видалити багато документів (deleteMany)
  * 
  * Запит:
@@ -196,7 +196,7 @@ router.delete('/api/delete-many', articleController.deleteManyArticles);
 // --- РОЗШИРЕННЯ ЧИТАННЯ (Read) ---
 
 /**
- * GET /api/articles/find
+ * GET /articles/api/find
  * Знайти документи з проекцією (find з projection)
  * 
  * Query параметри:
@@ -207,7 +207,7 @@ router.delete('/api/delete-many', articleController.deleteManyArticles);
  * - skip: кількість для пропуску (пагінація)
  * 
  * Приклад запиту:
- * GET /api/articles/find?filter={"published":true}&projection={"title":1,"category":1}&sort={"createdAt":-1}&limit=10&skip=0
+ * GET /articles/api/find?filter={"published":true}&projection={"title":1,"category":1}&sort={"createdAt":-1}&limit=10&skip=0
  * 
  * Відповідь:
  * {

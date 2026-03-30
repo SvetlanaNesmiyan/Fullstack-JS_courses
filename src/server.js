@@ -3,14 +3,13 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import ejs from 'ejs';
 import { connectDB } from './config/database.mjs';
 import path from 'path';
 import 'dotenv/config';
 import { fileURLToPath } from 'url';
 import { logRequests } from './middleware/logger.mjs';
 import { errorHandler } from './middleware/errorHandler.mjs';
-import { isAuthenticated } from './middleware/auth.mjs';
+import { isAuthenticated, attachUser } from './middleware/auth.mjs';
 import { configurePassport } from './config/passport.mjs';
 import userRoutes from './routes/userRoutes.mjs';
 import articleRoutes from './routes/articleRoutes.mjs';
@@ -76,10 +75,7 @@ app.use(passport.session());
 app.use(logRequests);
 
 // Глобальна змінна для передачі користувача в шаблони
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
+app.use(attachUser);
 
 // Головна сторінка
 app.get('/', (req, res) => {
@@ -103,7 +99,7 @@ app.get('/', (req, res) => {
           <a href="/">Головна</a>
           <a href="/users">Користувачі (PUG)</a>
           <a href="/articles">Статті (EJS)</a>
-          <a href="/auth">Авторизація</a>
+          <a href="/auth/login">Авторизація</a>
           ${req.user ? '<a href="/auth/logout">Вихід</a>' : '<a href="/auth/login">Вхід</a>'}
         </div>
       </nav>
@@ -113,7 +109,7 @@ app.get('/', (req, res) => {
         ${req.user ? `<p>Ласкаво просимо, <strong>${req.user.username}</strong>!</p>` : '<p>Будь ласка, <a href="/auth/login">увійдіть</a>, щоб отримати доступ до захищених ресурсів.</p>'}
         <p><a href="/users">Користувачі (PUG)</a></p>
         <p><a href="/articles">Статті (EJS)</a></p>
-        <p><a href="/auth">Авторизація (Passport)</a></p>
+        <p><a href="/auth/login">Авторизація (Passport)</a></p>
         <p><a href="/settings/theme">Налаштування теми</a></p>
         <p><a href="/protected">Захищений маршрут</a></p>
       </main>

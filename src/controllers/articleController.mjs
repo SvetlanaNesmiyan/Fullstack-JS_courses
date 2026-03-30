@@ -485,8 +485,8 @@ export async function replaceOneArticle(req, res) {
     };
     
     // Використовуємо findOneAndReplace
-    const replacedArticle = await Article.findByIdAndReplace(
-      articleId,
+    const replacedArticle = await Article.findOneAndReplace(
+      { _id: articleId },
       replacementDoc,
       { new: true }
     );
@@ -632,21 +632,9 @@ export async function findArticles(req, res) {
     });
   }
 }
-      data: {
-        total: totalArticles,
-        published: publishedArticles,
-        draft: totalArticles - publishedArticles,
-        views: totalViews[0]?.total || 0
-      }
-    });
-  } catch (error) {
-    console.error('Помилка отримання статистики:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Помилка сервера'
-    });
-  }
-}
+// ================================================
+// Експорт
+// ================================================
 
 export default {
   getAllArticles,
