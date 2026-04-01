@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Сервіс Express додатка
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/express-server
+      - SESSION_SECRET=your-secret-key-change-in-production
+    volumes:
+      # Синхронізація коду між локальною системою та контейнером
+      - .:/app
+      # Не синхронізуємо node_modules - використовуємо внутрішні
+      - /app/node_modules
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  # Сервіс MongoDB
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      - MONGO_INITDB_DATABASE=express-server
+    volumes:
+      # Збереження даних MongoDB між перезапусками
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+# Volumes для збереження даних
+volumes:
+  mongo-data:

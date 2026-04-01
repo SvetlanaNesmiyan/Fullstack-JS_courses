@@ -855,3 +855,108 @@ curl http://localhost:3000/articles/api/aggregate/stats
 
 4. **Проекції**: використовуйте проекції, щоб отримувати тільки потрібні поля (як у /articles/api/find)
 
+---
+
+## Docker
+
+Цей проект можна запустити за допомогою Docker та Docker Compose.
+
+### Передумови
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Файли конфігурації
+
+Проект включає:
+
+- [`Dockerfile`](Dockerfile) - конфігурація Docker образу для Express додатка
+- [`docker-compose.yml`](docker-compose.yml) - конфігурація Docker Compose сервісів
+- [`.dockerignore`](.dockerignore) - файли, які потрібно ігнорувати при збірці
+
+### Запуск за допомогою Docker Compose
+
+1. **Запустіть контейнери:**
+
+```bash
+docker-compose up -d
+```
+
+2. **Перевірте статус контейнерів:**
+
+```bash
+docker-compose ps
+```
+
+3. **Перегляньте логи:**
+
+```bash
+docker-compose logs -f app
+```
+
+### Доступ до додатка
+
+Після успішного запуску, додаток буде доступний за адресою:
+
+- **HTTP:** http://localhost:3000
+
+### Перевірка роботи
+
+1. Відкрийте браузер та перейдіть за адресою http://localhost:3000
+2. Ви повинні побачити головну сторінку з вітальним повідомленням
+
+### Змінні середовища
+
+Додаток використовує такі змінні середовища (налаштовані в docker-compose.yml):
+
+| Змінна | Опис | Значення за замовчуванням |
+|--------|------|--------------------------|
+| NODE_ENV | Режим роботи | development |
+| PORT | Порт сервера | 3000 |
+| MONGODB_URI | URI підключення до MongoDB | mongodb://mongo:27017/express-server |
+| SESSION_SECRET | Секретний ключ для сесій | your-secret-key-change-in-production |
+
+### MongoDB
+
+MongoDB буде автоматично запущена разом з додатком. Дані зберігаються в volume `mongo-data`.
+
+### Volumes
+
+Використовуються volumes для:
+
+- Синхронізації коду між локальною системою та контейнером (`.` -> `/app`)
+- Збереження даних MongoDB між перезапусками
+
+### Розробка з Docker
+
+Зміни в коді відображаються автоматично завдяки використанню volumes. При зміні файлів не потрібно перезапускати контейнер.
+
+### Корисні команди
+
+```bash
+# Зупинити контейнери
+docker-compose down
+
+# Зупинити контейнери з видаленням томів
+docker-compose down -v
+
+# Перебудувати образи
+docker-compose build --no-cache
+
+# Запустити з перебудовою
+docker-compose up --build
+
+# Переглянути всі контейнери
+docker ps
+
+# Переглянути логи MongoDB
+docker-compose logs -f mongo
+```
+
+### Створення скріншотів
+
+1. Запустіть додаток: `docker-compose up -d`
+2. Відкрийте http://localhost:3000 у браузері
+3. Зробіть скріншот головної сторінки
+4. Створіть користувача та зробіть скріншот сторінки авторизації
+
