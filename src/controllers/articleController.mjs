@@ -666,7 +666,8 @@ export async function iterateArticlesWithCursor(req, res) {
     const cursor = Article.find(parsedFilter)
       .sort({ createdAt: -1 })
       .batchSize(size)
-      .lean();
+      .lean()
+      .cursor();
     
     // Лічильники для статистики
     let processedCount = 0;
@@ -748,11 +749,14 @@ export async function exportArticlesWithCursor(req, res) {
     const cursor = Article.find(parsedFilter)
       .sort({ createdAt: -1 })
       .limit(maxLimit)
-      .lean();
+      .lean()
+      .cursor();
     
-    // Використовуємо toArray() для невеликих наборів
-    // Або streaming для великих
-    const articles = await cursor.toArray();
+    // Ітеруємо по курсору для streaming
+    const articles = [];
+    for await (const doc of cursor) {
+      articles.push(doc);
+    }
     
     await cursor.close();
     

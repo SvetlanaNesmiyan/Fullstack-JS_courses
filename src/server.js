@@ -3,6 +3,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import methodOverride from 'method-override';
 import { connectDB } from './config/database.mjs';
 import path from 'path';
 import 'dotenv/config';
@@ -36,6 +37,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Підтримка cookie
 app.use(cookieParser());
+
+// Підтримка method-override для DELETE/PUT методів з форм
+app.use(methodOverride('_method'));
 
 // Статичні файли (CSS, favicon)
 app.use(express.static(path.join(projectRoot, 'public')));
@@ -155,13 +159,13 @@ app.use('/articles', articleRoutes);
 app.use('/auth', authRoutes);
 app.use('/settings', settingsRoutes);
 
-// Мідлвар обробки помилок
-app.use(errorHandler);
-
 // Мідлвар для 404
 app.use((req, res) => {
   res.status(404).send('Сторінку не знайдено');
 });
+
+// Мідлвар обробки помилок
+app.use(errorHandler);
 
 // Порт сервера
 const PORT = process.env.PORT || 3000;

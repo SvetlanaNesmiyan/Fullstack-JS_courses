@@ -1,6 +1,7 @@
 import express from 'express';
 import * as articleController from '../controllers/articleController.mjs';
 import { checkArticleAccess } from '../middleware/accessControl.mjs';
+import { isAuthenticated } from '../middleware/auth.mjs';
 
 const router = express.Router();
 
@@ -11,17 +12,17 @@ const router = express.Router();
 // GET /articles - отримати всі опубліковані статті
 router.get('/', articleController.getAllArticles);
 
-// GET /articles/:articleId - отримати статтю за ID
-router.get('/:articleId', articleController.getArticleById);
-
 // POST /articles - створити нову статтю (тільки для автентифікованих)
-router.post('/', articleController.createArticle);
+router.post('/', isAuthenticated, articleController.createArticle);
 
 // PUT /articles/:articleId - оновити статтю (тільки для автентифікованих)
-router.put('/:articleId', articleController.updateArticle);
+router.put('/:articleId', isAuthenticated, articleController.updateArticle);
 
 // DELETE /articles/:articleId - видалити статтю (тільки для автентифікованих)
-router.delete('/:articleId', articleController.deleteArticle);
+router.delete('/:articleId', isAuthenticated, articleController.deleteArticle);
+
+// GET /articles/:articleId - отримати статтю за ID
+router.get('/:articleId', articleController.getArticleById);
 
 // ================================================
 // API Маршрути (JSON відповіді)
@@ -64,7 +65,7 @@ router.get('/api/stats', articleController.getArticleStats);
  *   "data": { ... }
  * }
  */
-router.post('/api/create-one', articleController.insertOneArticle);
+router.post('/api/create-one', isAuthenticated, articleController.insertOneArticle);
 
 /**
  * POST /articles/api/create-many
@@ -86,7 +87,7 @@ router.post('/api/create-one', articleController.insertOneArticle);
  *   "insertedCount": 2
  * }
  */
-router.post('/api/create-many', articleController.insertManyArticles);
+router.post('/api/create-many', isAuthenticated, articleController.insertManyArticles);
 
 // --- ОНОВЛЕННЯ ДАНИХ (Update) ---
 
@@ -108,7 +109,7 @@ router.post('/api/create-many', articleController.insertManyArticles);
  *   "data": { ... }
  * }
  */
-router.put('/api/update-one/:id', articleController.updateOneArticle);
+router.put('/api/update-one/:id', isAuthenticated, articleController.updateOneArticle);
 
 /**
  * PUT /articles/api/update-many
@@ -131,7 +132,7 @@ router.put('/api/update-one/:id', articleController.updateOneArticle);
  *   }
  * }
  */
-router.put('/api/update-many', articleController.updateManyArticles);
+router.put('/api/update-many', isAuthenticated, articleController.updateManyArticles);
 
 /**
  * PUT /articles/api/replace-one/:id
@@ -155,7 +156,7 @@ router.put('/api/update-many', articleController.updateManyArticles);
  *   "data": { ... }
  * }
  */
-router.put('/api/replace-one/:id', articleController.replaceOneArticle);
+router.put('/api/replace-one/:id', isAuthenticated, articleController.replaceOneArticle);
 
 // --- ВИДАЛЕННЯ ДАНИХ (Delete) ---
 
@@ -170,7 +171,7 @@ router.put('/api/replace-one/:id', articleController.replaceOneArticle);
  *   "data": { ... }
  * }
  */
-router.delete('/api/delete-one/:id', articleController.deleteOneArticle);
+router.delete('/api/delete-one/:id', isAuthenticated, articleController.deleteOneArticle);
 
 /**
  * DELETE /articles/api/delete-many
@@ -191,7 +192,7 @@ router.delete('/api/delete-one/:id', articleController.deleteOneArticle);
  *   }
  * }
  */
-router.delete('/api/delete-many', articleController.deleteManyArticles);
+router.delete('/api/delete-many', isAuthenticated, articleController.deleteManyArticles);
 
 // --- РОЗШИРЕННЯ ЧИТАННЯ (Read) ---
 

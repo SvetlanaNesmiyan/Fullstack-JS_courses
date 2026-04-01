@@ -19,6 +19,6 @@ router.post('/', isAuthenticated, validateUserInput, userController.createUser);
 router.put('/:userId', isAuthenticated, userController.updateUser);
 
 // DELETE /users/:userId - видалити користувача (з аутентифікацією)
-router.delete('/:userId', basicAuth, userController.deleteUser);
+router.delete('/:userId', isAuthenticated, userController.deleteUser);
 
 export default router;
