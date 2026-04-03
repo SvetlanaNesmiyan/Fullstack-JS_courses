@@ -8,23 +8,25 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - MONGODB_URI=mongodb://mongo:27017/express-server
-      - SESSION_SECRET=your-secret-key-change-in-production
+      - MONGODB_URI=mongodb://admin:adminpassword@mongo:27017/express-server?authSource=admin
     volumes:
       # Синхронізація коду між локальною системою та контейнером
       - .:/app
       # Не синхронізуємо node_modules - використовуємо внутрішні
       - /app/node_modules
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     restart: unless-stopped
 
   # Сервіс MongoDB
   mongo:
-    image: mongo:latest
+    image: mongo:7.0
     ports:
       - "27017:27017"
     environment:
@@ -35,6 +37,12 @@ services:
       # Збереження даних MongoDB між перезапусками
       - mongo-data:/data/db
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
 
 # Volumes для збереження даних
 volumes:

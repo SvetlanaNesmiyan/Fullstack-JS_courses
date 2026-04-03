@@ -876,23 +876,29 @@ curl http://localhost:3000/articles/api/aggregate/stats
 
 ### Запуск за допомогою Docker Compose
 
-1. **Запустіть контейнери:**
+1. **Створіть `.env` файл:**
 
-```bash
-docker-compose up -d
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-2. **Перевірте статус контейнерів:**
+2. **Запустіть контейнери:**
 
-```bash
-docker-compose ps
-```
+   ```bash
+   docker-compose up -d --build
+   ```
 
-3. **Перегляньте логи:**
+3. **Перевірте статус контейнерів:**
 
-```bash
-docker-compose logs -f app
-```
+   ```bash
+   docker-compose ps
+   ```
+
+4. **Перегляньте логи:**
+
+   ```bash
+   docker-compose logs -f app
+   ```
 
 ### Доступ до додатка
 
@@ -913,8 +919,9 @@ docker-compose logs -f app
 |--------|------|--------------------------|
 | NODE_ENV | Режим роботи | development |
 | PORT | Порт сервера | 3000 |
-| MONGODB_URI | URI підключення до MongoDB | mongodb://mongo:27017/express-server |
+| MONGODB_URI | URI підключення до MongoDB | mongodb://admin:adminpassword@mongo:27017/express-server?authSource=admin |
 | SESSION_SECRET | Секретний ключ для сесій | your-secret-key-change-in-production |
+| JWT_SECRET | Секретний ключ для JWT | your-jwt-secret-key-change-in-production |
 
 ### MongoDB
 
@@ -929,7 +936,7 @@ MongoDB буде автоматично запущена разом з дода�
 
 ### Розробка з Docker
 
-Зміни в коді відображаються автоматично завдяки використанню volumes. При зміні файлів не потрібно перезапускати контейнер.
+Зміни в коді відображаються автоматично завдяки використанню `nodemon` та volumes. При зміні файлів контейнер автоматично перезавантажується.
 
 ### Корисні команди
 

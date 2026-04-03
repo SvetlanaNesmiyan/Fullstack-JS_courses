@@ -1,5 +1,8 @@
-# Використовуємо LTS версію Node.js
-FROM node:lts
+# Використовуємо Alpine версію Node.js 20
+FROM node:20-alpine
+
+# Встановлюємо nodemon для hot-reload
+RUN npm install -g nodemon
 
 # Встановлюємо робочу директорію
 WORKDIR /app
@@ -16,5 +19,5 @@ COPY . .
 # Вказуємо, що додаток слухає порт 3000
 EXPOSE 3000
 
-# Команда для запуску додатка
-CMD ["node", "src/server.js"]
+# Команда для запуску додатка з nodemon для hot-reload
+CMD ["nodemon", "src/server.js"]

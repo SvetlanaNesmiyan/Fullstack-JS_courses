@@ -1,44 +1,9 @@
-# Git
+node_modules
+npm-debug.log
+.env
 .git
 .gitignore
-
-# Node modules (will be installed in container)
-node_modules
-
-# Docker files (keep these for building)
-# Dockerfile
-# docker-compose.yml
-# .dockerignore
-
-# Environment files (will be set via docker-compose)
-.env
-.env.local
-.env.*.local
-
-# IDE
-.vscode
-.idea
-
-# OS files
 .DS_Store
-Thumbs.db
-
-# Logs
-logs
-*.log
-npm-debug.log*
-
-# Test files
-coverage
-.nyc_output
-*.test.js
-test
-
-# Documentation
 README.md
-docs
-
-# Temporary files
-tmp
-temp
-*.tmp
+docker-compose.yml
+Dockerfile
